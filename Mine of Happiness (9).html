@@ -1,0 +1,1852 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Mine of Happiness</title>
+<style>
+:root{--bg:#0f172a;--panel:rgba(15,23,42,.88);--line:rgba(255,255,255,.15);--gold:#facc15;--mut:#94a3b8;--txt:#f1f5f9;--blue:#2563eb;--red:#dc2626;--green:#4ade80;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]:not([hidden=until-found i]){display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#cv{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;inset:0;pointer-events:none;padding:calc(env(safe-area-inset-top,0px) + 8px) 10px 10px;display:flex;flex-direction:column;gap:8px}
+.panel{background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px}
+.bar small{display:block;font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.06em}
+.bar b{font-size:20px;font-weight:900}
+.bar .c{text-align:center}.bar .r{text-align:right}
+#co{color:var(--gold)}#hp{color:#f87171}
+#hpt{height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:4px;overflow:hidden}
+#hpf{height:100%;width:100%;background:#f87171}
+.row{display:flex;gap:6px;align-items:center}
+.row .sp{flex:1}
+.chip{display:flex;align-items:center;gap:8px;padding:4px 12px;font-size:13px;min-width:0;white-space:nowrap}
+#ps{display:flex;align-items:center;justify-content:center;gap:4px;width:38px;height:36px;padding:0}
+#ps i{display:block;width:4px;height:14px;border-radius:2px;background:#fff}
+@media (max-width:380px){#tic{display:none}}
+.in{display:flex;gap:10px;align-items:center}
+.ic{width:32px;height:32px;image-rendering:pixelated;flex:none}
+button{font:inherit;font-size:13px;color:#fff;border:0;border-radius:12px;padding:9px 13px;font-weight:700;background:var(--blue);pointer-events:auto;cursor:pointer}
+button:active{transform:scale(.95)}
+button:disabled{background:#475569;opacity:.6;pointer-events:none}
+#rs{background:rgba(220,38,38,.85)}
+#sh,#shp1,#shp2{background:#4f46e5}
+#boom{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:3;width:80px;height:80px;border-radius:50%;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:radial-gradient(circle at 35% 28%,#ff9a4d,#e11d2e 68%);border:3px solid rgba(255,255,255,.6);box-shadow:0 6px 0 #7f1220,0 12px 24px rgba(0,0,0,.55)}
+#boom img{width:32px;height:32px;image-rendering:pixelated;margin-top:3px;pointer-events:none}
+#boom b{font-size:14px;font-weight:900;letter-spacing:.07em;line-height:1;text-shadow:0 2px 0 rgba(0,0,0,.4);pointer-events:none}
+#boom i{position:absolute;top:-6px;right:-6px;min-width:26px;height:26px;padding:0 5px;border-radius:13px;background:#0f172a;border:2px solid #fde047;color:#fde047;font-style:normal;font-size:14px;font-weight:900;display:grid;place-items:center;pointer-events:none}
+#boom:active{transform:translateY(5px);box-shadow:0 1px 0 #7f1220,0 4px 12px rgba(0,0,0,.5)}
+#boom.empty{filter:grayscale(1) brightness(.62)}
+#boom[hidden]{display:none}
+#hint{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 118px);text-align:center;color:#e2e8f0;font-size:14px;font-weight:600;pointer-events:none;text-shadow:0 1px 4px #000;transition:opacity .4s}
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);z-index:5;padding:16px}
+.modal[hidden]{display:none}
+.box{width:100%;max-width:420px;max-height:100%;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.box h2{margin:0;font-size:24px;font-weight:900}
+.box p{margin:0;color:#cbd5e1}
+.head{display:flex;justify-content:space-between;align-items:center}
+.x{background:none;font-size:28px;padding:0 6px;color:var(--mut)}
+.wallet{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border:1px solid rgba(250,204,21,.3);border-radius:10px;background:rgba(30,41,59,.6)}
+.wallet b{font-size:22px;color:var(--gold)}
+#ul,#pl,#sl{display:flex;flex-direction:column;gap:10px;max-height:50vh;overflow-y:auto}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-radius:12px;background:rgba(30,41,59,.85)}
+.item b{display:block;font-size:14px}
+.item small{display:block;color:var(--mut);font-size:12px;margin:2px 0}
+.item em{font-style:normal;font-size:12px;color:#a5b4fc;font-weight:700}
+.item button{display:flex;flex-direction:column;align-items:center;min-width:76px;white-space:nowrap}
+.item button span{color:#fde047;font-size:11px}
+.two{display:flex;gap:10px}.two button{flex:1;padding:12px}
+#no{background:#475569}#yes{background:var(--red)}
+#back1,#back2{background:#475569}
+.screen{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:14px;padding:calc(env(safe-area-inset-top,0px) + 26px) 0 0;background:radial-gradient(120% 55% at 50% 0%,rgba(251,191,36,.24),transparent 62%),radial-gradient(90% 45% at 50% 100%,rgba(239,68,68,.22),transparent 70%),linear-gradient(#0e0a1c,#1a1030 55%,#27130f);overflow-y:auto}
+.screen::before{content:'';position:fixed;inset:0;background:var(--tile,none) 0 0/64px 64px;image-rendering:pixelated;opacity:.11;pointer-events:none}
+.screen>*{position:relative}
+.screen>*{flex-shrink:0}                                     /* na niskich ekranach elementy menu nie mogą się spłaszczyć do zera (np. ramka z rekordem) */
+.screen{overflow-y:auto;overflow-x:hidden}
+.screen[hidden]{display:none}
+.logo{text-align:center;line-height:1;margin-bottom:6px}
+.crown{width:52px;height:52px;image-rendering:pixelated;display:block;margin:0 auto -6px;position:relative;z-index:1;filter:drop-shadow(0 4px 0 rgba(0,0,0,.4))}
+.l1{font-size:78px;font-weight:900;letter-spacing:-2px;display:flex;justify-content:center}
+.l1 span{display:inline-block;background:linear-gradient(#fff6b0 0%,#fbbf24 42%,#d97706 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:2px #3b1b06;filter:drop-shadow(0 5px 0 #7c2d12) drop-shadow(0 10px 6px rgba(0,0,0,.5))}
+.l1 span:nth-child(1){transform:rotate(-5deg)}.l1 span:nth-child(2){transform:translateY(-4px) rotate(2deg)}
+.l1 span:nth-child(3){transform:translateY(3px) rotate(-2deg)}.l1 span:nth-child(4){transform:rotate(5deg)}
+.l2{font-size:40px;font-weight:900;font-style:italic;margin-top:-4px;background:linear-gradient(#b8f5d9,#34d399 50%,#059669);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px #022c22;filter:drop-shadow(0 4px 0 #064e3b)}
+.l3{font-size:12px;font-weight:800;letter-spacing:.22em;color:#fcd34d;margin-top:10px;opacity:.92}
+.card{width:min(86%,340px);border-radius:14px;overflow:hidden;background:rgba(18,12,32,.78);border:2px solid rgba(251,191,36,.5);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.ch{background:linear-gradient(#fcd34d,#d97706);color:#3b1b06;font-weight:900;text-align:center;padding:6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.cb{color:#fff;display:flex;gap:20px;align-items:center;justify-content:center;padding:12px}
+.cb b{display:block;font-size:24px;line-height:1.1;color:#fde68a}.cb small{color:#b8a98f;font-size:11px}
+.mbtn{display:flex;align-items:center;gap:14px;width:min(86%,340px);padding:14px 18px;border-radius:12px;font-size:19px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#fff;border:0;border-bottom:6px solid var(--bd);background:var(--bg);box-shadow:inset 0 3px 0 rgba(255,255,255,.28),0 8px 18px rgba(0,0,0,.4);text-shadow:0 2px 0 rgba(0,0,0,.3);text-align:left}
+.mbtn .ic{width:36px;height:36px}
+.mbtn.g{--bg:linear-gradient(#34d399,#059669);--bd:#064e3b}
+.mbtn.r{--bg:linear-gradient(#fb7185,#dc2626);--bd:#7f1d1d}
+.mbtn.s{--bg:linear-gradient(#64748b,#475569);--bd:#1e293b;font-size:16px;letter-spacing:.02em}
+.mbtn span{min-width:0;line-height:1.1}
+.soon{opacity:.72;filter:saturate(.55)}
+.mbtn em{margin-left:auto;font-size:11px;font-style:normal;background:rgba(0,0,0,.38);padding:3px 9px;border-radius:99px;text-shadow:none;letter-spacing:0;text-transform:none;white-space:nowrap}
+.ores{display:flex;align-items:flex-start;gap:2px;width:min(92%,340px);margin:auto 0 calc(env(safe-area-inset-bottom,0px) + 38px);padding:14px 6px 10px;border-radius:20px;background:rgba(15,23,42,.55);border:1px solid rgba(251,191,36,.22);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.oi{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;min-width:0}
+.oi small{font-size:10.5px;font-weight:800;color:#fcd34d;opacity:.92;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.ob{width:56px;height:56px;padding:0;border-radius:12px;background:rgba(251,191,36,.20);border:2px solid #fbbf24;display:grid;place-items:center;box-shadow:0 4px 0 rgba(120,53,15,.85)}
+.ob:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(120,53,15,.85)}
+@media (max-height:700px){
+  .screen{gap:10px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+  .logo{margin-bottom:0}.crown{width:44px;height:44px}.l1{font-size:62px}.l2{font-size:32px}.l3{margin-top:6px}
+  .mbtn{padding:10px 16px}.cb{padding:8px 12px}.ores{margin-bottom:calc(env(safe-area-inset-bottom,0px) + 30px);padding:10px 6px 8px}
+}
+@media (max-height:600px){
+  .screen{gap:8px}.crown{width:36px;height:36px}.l1{font-size:50px}.l2{font-size:26px}.l3{display:none}
+  .mbtn{padding:8px 14px;font-size:17px}.mbtn .ic{width:30px;height:30px}.ob{width:46px;height:46px}.ores{margin-bottom:calc(env(safe-area-inset-bottom,0px) + 26px)}
+}
+#code,#store,#tut{z-index:13}
+#code{align-items:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 12vh)}
+#cdi{text-transform:uppercase;letter-spacing:.08em}
+#ctl button{background:#475569;padding:12px}
+#ctl button.on{background:#10b981}
+#lng{width:100%;height:46px;padding:0 12px;border-radius:12px;border:2px solid rgba(251,191,36,.45);background:rgba(15,23,42,.92);color:#fff;font:inherit;font-size:17px;font-weight:700;outline:none}
+.emo{font-size:26px;width:32px;line-height:1;text-align:center;flex:none}
+#ts{display:flex;flex-direction:column;gap:10px;max-height:58vh;overflow-y:auto}
+.tp{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:rgba(30,41,59,.85)}
+.tp b{display:block;font-size:14px;margin-bottom:3px}
+.tp small{display:block;color:#cbd5e1;font-size:12.5px;line-height:1.45}
+#tud{font-size:17px;padding:14px;background:#10b981}
+#chal{z-index:12}
+#cl{display:flex;flex-direction:column;gap:10px;max-height:58vh;overflow-y:auto}
+.item .in>div{min-width:0}
+.item .rw{font-weight:900;color:#fde047;font-size:14px;white-space:nowrap}
+.item.done{border:1px solid rgba(74,222,128,.45)}.item.done .rw{color:#4ade80;font-size:20px}
+.pg{height:6px;border-radius:3px;background:rgba(255,255,255,.12);margin:6px 0 4px;overflow:hidden}
+.pg i{display:block;height:100%;background:linear-gradient(90deg,#34d399,#fbbf24)}
+#toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 176px);transform:translateX(-50%);z-index:4;width:max-content;max-width:90%;padding:10px 16px;border-radius:14px;background:rgba(15,23,42,.95);border:2px solid #fbbf24;color:#fde68a;font-weight:800;font-size:14px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:none}
+#toast[hidden]{display:none}#toast b{display:block;color:#fff;font-size:15px;margin-bottom:2px}
+#cb{align-self:flex-start;max-width:100%;padding:5px 12px;font-size:12.5px;font-weight:800;color:#fde68a;border:1px solid rgba(251,191,36,.55);overflow:hidden;text-overflow:ellipsis}
+#cb[hidden]{display:none}#cb.ok{color:#4ade80;border-color:rgba(74,222,128,.65)}#cb.bad{color:#f87171;border-color:rgba(248,113,113,.65)}
+.item .st{color:#fbbf24;font-size:11px;letter-spacing:1px;margin-left:4px;white-space:nowrap}
+.item button.go{background:linear-gradient(#34d399,#059669);min-width:84px}
+input[type=text]{width:100%;height:46px;padding:0 14px;border-radius:12px;border:2px solid rgba(251,191,36,.45);background:rgba(15,23,42,.92);color:#fff;font:inherit;font-size:18px;font-weight:700;outline:none;user-select:text;-webkit-user-select:text;touch-action:manipulation;pointer-events:auto}
+input[type=text]:focus{border-color:#fbbf24}
+.nrow{display:flex;gap:8px}.nrow input{flex:1;min-width:0}.nrow button{flex:none;min-width:84px}
+.nmsg{min-height:16px;font-size:12px;color:var(--mut);font-weight:600}.nmsg.bad{color:#f87171}
+#nick{z-index:20;align-items:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 12vh)}
+#sett{z-index:13}#conf{z-index:14}
+#nko,#sdone{font-size:17px;padding:14px}
+#nko{background:linear-gradient(#34d399,#059669)}#sdone{background:#10b981}#rs2{background:rgba(220,38,38,.85)}
+#mn{text-transform:none}
+#setb{width:56px;height:56px;padding:0;border-radius:12px;background:rgba(251,191,36,.20);border:2px solid #fbbf24;display:grid;place-items:center;box-shadow:0 4px 0 rgba(120,53,15,.85)}
+#setb:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(120,53,15,.85)}
+#pause h2{text-align:center}
+#pause button{font-size:17px;padding:14px}
+#resume{background:#10b981}#tomenu{background:#475569}
+#pause .two{margin-top:0}
+.box .fine{font-size:12px;color:var(--mut);text-align:center}
+.vol{display:flex;flex-direction:column;gap:6px}
+.vol label{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:15px}
+.vol label small{color:var(--mut);font-weight:600;font-size:11px;margin-left:6px}
+.vol label span{color:var(--gold);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;height:30px;margin:0;accent-color:#f59e0b;touch-action:none;pointer-events:auto}
+#by{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);z-index:30;font-size:12px;font-weight:700;letter-spacing:.04em;color:#fff;opacity:.5;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+#by[hidden]{display:none}
+body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
+#cp{font-size:13px;line-height:1.45;color:var(--mut)}
+#over h2{color:#f87171}
+#over button{font-size:17px;padding:14px}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<div id="menu" class="screen">
+  <div class="logo">
+    <img id="lg" class="crown" alt="">
+    <div class="l1"><span>M</span><span>I</span><span>N</span><span>E</span></div>
+    <div class="l2">of Happiness</div>
+    <div class="l3">KOPALNIA SZCZĘŚCIA</div>
+  </div>
+  <div class="card"><div class="ch">Rekord · <span id="mn"></span></div>
+    <div class="cb"><img id="mc" class="ic" alt=""><div><b id="mb">0 m</b><small>głębokość</small></div><div><b id="mm">0</b><small>monety</small></div></div>
+  </div>
+  <button id="play" class="mbtn g"><img id="mi1" class="ic" alt=""><span>Solo</span></button>
+  <button id="chb" class="mbtn r"><img id="mi2" class="ic" alt=""><span>Wyzwania</span><em id="chn">0 / 0</em></button>
+  <div class="mbtn s soon"><img id="mi3" class="ic" alt=""><span>Tabela wyników</span><em>Wkrótce</em></div>
+  <div class="ores">
+    <div class="oi"><button id="setb" aria-label="Ustawienia"><img id="gi" class="ic" alt=""></button><small>Ustawienia</small></div>
+    <div class="oi"><button id="codeb" class="ob" aria-label="Kod"><img id="o2" class="ic" alt=""></button><small>Kod</small></div>
+    <div class="oi"><button id="storeb" class="ob" aria-label="Sklep premium"><img id="o3" class="ic" alt=""></button><small>Sklep</small></div>
+    <div class="oi"><button id="tutb" class="ob" aria-label="Samouczek"><img id="o4" class="ic" alt=""></button><small>Samouczek</small></div>
+  </div>
+</div>
+
+<div id="chal" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>🏆 Wyzwania</h2><button class="x" id="clsc">×</button></div>
+    <p id="cp"></p>
+    <div id="cl"></div>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
+
+<div id="hud">
+  <div class="panel bar">
+    <div><small>MONETY</small><b id="co">0</b> 🪙</div>
+    <div class="c"><small>GŁĘBOKOŚĆ</small><b id="de">0m</b><small id="zn"></small></div>
+    <div class="r"><small>HP KILOFA</small><b id="hp">0</b><div id="hpt"><div id="hpf"></div></div></div>
+  </div>
+  <div class="row">
+    <div class="panel chip"><img id="tic" class="ic" alt=""><b id="ti">Drewniany</b></div>
+    <span class="sp"></span>
+    <button id="ps" aria-label="Pauza"><i></i><i></i></button>
+    <button id="sh">🛒 Sklep</button>
+  </div>
+  <div class="panel chip" id="cb" hidden></div>
+</div>
+
+<div id="hint">Przeciągnij palcem, żeby sterować kilofem</div>
+<button id="boom" class="empty" aria-label="Bomba"><img id="bi" alt=""><b>BOOM</b><i id="bc">0</i></button>
+
+<div id="over" class="modal" hidden>
+  <div class="panel box">
+    <h2>Zniszczony!</h2>
+    <p id="ovt"></p>
+    <button id="again">Kop ponownie</button>
+    <div class="two"><button id="back2">⬅ Menu</button><button id="shp1">🛒 Sklep</button></div>
+  </div>
+</div>
+
+<div id="pause" class="modal" hidden>
+  <div class="panel box">
+    <h2>Pauza</h2>
+    <div class="vol">
+      <label for="vs"><b>🔊 Dźwięki</b><span id="vsv">100%</span></label>
+      <input id="vs" type="range" min="0" max="100" step="1" value="100">
+    </div>
+    <div class="vol">
+      <label for="vm"><b>🎵 Muzyka</b><span id="vmv">60%</span></label>
+      <input id="vm" type="range" min="0" max="100" step="1" value="60">
+    </div>
+    <button id="resume">▶ Kontynuuj</button>
+    <div class="two"><button id="tomenu">⬅ Menu</button></div>
+    <p class="fine">Wyjście do menu kończy bieżący run.</p>
+  </div>
+</div>
+
+<div id="by" hidden>by Qanny</div>
+
+<div id="nick" class="modal" hidden>
+  <div class="panel box">
+    <h2>Jak się nazywasz, górniku?</h2>
+    <p>Wybierz nick. Zobaczysz go w menu, a w przyszłości w rankingu najlepszych graczy. Zmienisz go później w ustawieniach.</p>
+    <input id="nki" type="text" maxlength="16" placeholder="Twój nick" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Nick">
+    <div class="nmsg" id="nkm"></div>
+    <button id="nko" disabled>Zaczynamy ⛏</button>
+  </div>
+</div>
+
+<div id="sett" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>⚙ Ustawienia</h2><button class="x" id="sx" aria-label="Zamknij">×</button></div>
+    <div class="vol">
+      <label for="si"><b>👤 Nick</b></label>
+      <div class="nrow"><input id="si" type="text" maxlength="16" placeholder="Twój nick" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="done"><button id="sno" disabled>Zapisz</button></div>
+      <div class="nmsg" id="sm"></div>
+    </div>
+    <div class="vol">
+      <label for="vs2"><b>🔊 Dźwięki</b><span id="vsv2">100%</span></label>
+      <input id="vs2" type="range" min="0" max="100" step="1" value="100">
+    </div>
+    <div class="vol">
+      <label for="vm2"><b>🎵 Muzyka</b><span id="vmv2">60%</span></label>
+      <input id="vm2" type="range" min="0" max="100" step="1" value="60">
+    </div>
+    <div class="vol">
+      <label><b>🎮 Sterowanie</b></label>
+      <div class="two" id="ctl"><button id="ctt">👆 Palec</button><button id="ctg">📱 Żyroskop</button></div>
+      <div class="nmsg" id="ctm"></div>
+    </div>
+    <div class="vol">
+      <label for="lng"><b>🌐 Język</b></label>
+      <select id="lng"><option value="pl">Polski</option><option value="en">English</option><option value="zh">中文</option><option value="es">Español</option><option value="de">Deutsch</option></select>
+    </div>
+    <div class="two"><button id="sdone">Gotowe</button></div>
+    
+  </div>
+</div>
+
+<div id="conf" class="modal" hidden>
+  <div class="panel box">
+    <h2>Zresetować wszystko?</h2>
+    <p>Stracisz monety, ulepszenia i bomby ze sklepu. Rekord głębokości (a z nim odblokowane kilofy), ukończone wyzwania i nick zostają.</p>
+    <div class="two"><button id="no">Anuluj</button><button id="yes">Resetuj</button></div>
+  </div>
+</div>
+
+<div id="code" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>🔑 Kod</h2><button class="x" id="cdx" aria-label="Zamknij">×</button></div>
+    <p>Wpisz kod, żeby go aktywować.</p>
+    <div class="nrow"><input id="cdi" type="text" maxlength="24" placeholder="Wpisz kod" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Kod"><button id="cdo" disabled>Użyj</button></div>
+    <div class="nmsg" id="cdm"></div>
+  </div>
+</div>
+
+<div id="store" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>💎 Sklep premium</h2><button class="x" id="stx" aria-label="Zamknij">×</button></div>
+    <p>Płatne dodatki są w przygotowaniu. Na razie nic tu nie kupisz.</p>
+    <div id="sl">
+      <div class="item"><div class="in"><span class="emo">🚫</span><div><b>Brak reklam</b><small>Gra bez żadnych reklam, na stałe.</small><em>Niedostępne</em></div></div><button disabled>Wkrótce</button></div>
+      <div class="item"><div class="in"><span class="emo">🪙</span><div><b>Podwójne monety</b><small>Dwa razy więcej monet z rud, na stałe.</small><em>Niedostępne</em></div></div><button disabled>Wkrótce</button></div>
+      <div class="item"><div class="in"><span class="emo">🎁</span><div><b>Pakiet startowy</b><small>Duża porcja monet na dobry początek.</small><em>Niedostępne</em></div></div><button disabled>Wkrótce</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="tut" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>📖 Samouczek</h2><button class="x" id="tux" aria-label="Zamknij">×</button></div>
+    <div id="ts">
+      <div class="tp"><span class="emo">👆</span><div><b>Sterowanie</b><small>Przeciągaj palcem w lewo i w prawo, żeby kierować kilofem (albo przechylaj telefon, gdy w Ustawieniach wybierzesz żyroskop). Kilof sam opada i uderza w bloki pod sobą, a Ty wybierasz, którędy kopie.</small></div></div>
+      <div class="tp"><span class="emo">❤️</span><div><b>HP kilofa</b><small>Każde uderzenie zużywa HP kilofa. Gdy spadnie do zera, run się kończy. Na koniec dostajesz premię w monetach za głębokość.</small></div></div>
+      <div class="tp"><span class="emo">🪙</span><div><b>Rudy i monety</b><small>Węgiel, żelazo, złoto, diament, lazuryt i netheryt dają monety. Im rzadsza ruda, tym więcej jest warta, a głębiej jest ich więcej.</small></div></div>
+      <div class="tp"><span class="emo">🔥</span><div><b>Lawa i TNT</b><small>Uderzenie w lawę zabiera dodatkowe HP, tym więcej, im głębiej. Skrzynia TNT wybucha i niszczy bloki wokół siebie, a ruda z nich też daje monety.</small></div></div>
+      <div class="tp"><span class="emo">🛠️</span><div><b>Stół craftingu</b><small>Zniszczony stół ulepsza kilof na kolejny i odnawia połowę HP. Obsydianowy kilof jest już najlepszy, więc stół go tylko naprawia.</small></div></div>
+      <div class="tp"><span class="emo">💚</span><div><b>Blok naprawczy</b><small>Zielony blok z krzyżem odnawia od 10% do 60% HP kilofa. Jest trochę częstszy niż stół craftingu, ale nie ulepsza kilofa.</small></div></div>
+      <div class="tp"><span class="emo">🛒</span><div><b>Sklep za monety</b><small>Kupisz w nim Wzmocniony Trzonek (więcej HP), Ostrą Końcówkę (mocniejsze uderzenia) i bombę BOOM, która wysadza bloki dookoła kilofa.</small></div></div>
+      <div class="tp"><span class="emo">⛏️</span><div><b>Kilofy</b><small>Lepsze kilofy odblokowujesz rekordem głębokości. Przed każdym runem wybierasz kilof, a nowy kupujesz za monety.</small></div></div>
+      <div class="tp"><span class="emo">🏆</span><div><b>Wyzwania</b><small>Wybierasz jedno zadanie na grę, a nagroda wpada raz, po ukończeniu. W wyzwaniach nie działa sklep, ulepszenia kilofa ani bomba BOOM. Wyjątek to „Wielki wybuch”, który daje bomby za darmo.</small></div></div>
+      <div class="tp"><span class="emo">🔑</span><div><b>Ikony w menu</b><small>Kod to miejsce na wpisywanie kodów. Sklep premium to płatne dodatki, na razie niedostępne. Samouczek to ta pomoc.</small></div></div>
+    </div>
+    <button id="tud">Rozumiem, kopiemy!</button>
+  </div>
+</div>
+
+<div id="pick" class="modal" hidden>
+  <div class="panel box">
+    <h2>Wybierz kilof</h2>
+    <div class="wallet"><span>Twoje monety</span><b id="pc">0</b></div>
+    <p id="pn"></p>
+    <div id="pl"></div>
+    <div class="two"><button id="back1">⬅ Menu</button><button id="shp2">🛒 Sklep</button></div>
+  </div>
+</div>
+
+<div id="shop" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>🛒 Warsztat</h2><button class="x" id="cls">×</button></div>
+    <div class="wallet"><span>Twoje monety</span><b id="sc">0</b></div>
+    <div id="ul"></div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+
+/* ---------- Dźwięki (generowane w przeglądarce, bez plików) ---------- */
+let actx=null,sfxOut=null;
+function getAudioContext(){
+  try{
+    if(!actx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;actx=new AC();sfxOut=actx.createGain();sfxOut.connect(actx.destination);applyVolumes();}
+    if(actx.state==='suspended')actx.resume();
+  }catch(e){return null;}
+  return actx;
+}
+const lastPlay={},MIN_GAP={hit:.18,break_common:.12,break_rare:.12};
+function noiseSrc(ac,dur){
+  const n=Math.max(1,Math.floor(ac.sampleRate*dur)),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
+  const s=ac.createBufferSource();s.buffer=b;return s;
+}
+function bombSound(ac,type){
+  const now=ac.currentTime,out=sfxOut||ac.destination;
+  if(type==='fuse'){                                        // syk i trzaski palącego się lontu + cienka iskra
+    const s=noiseSrc(ac,.16),f=ac.createBiquadFilter(),g=ac.createGain();
+    f.type='highpass';f.frequency.value=2400;
+    s.connect(f);f.connect(g);g.connect(out);
+    g.gain.setValueAtTime(.0001,now);
+    for(let t=0;t<.13;t+=.006)g.gain.setValueAtTime(.12+Math.random()*.2,now+t);
+    g.gain.setValueAtTime(.0001,now+.14);
+    s.start(now);s.stop(now+.16);
+    const o=ac.createOscillator(),og=ac.createGain();
+    o.type='triangle';o.frequency.setValueAtTime(900,now);o.frequency.exponentialRampToValueAtTime(2600,now+.1);
+    og.gain.setValueAtTime(.06,now);og.gain.exponentialRampToValueAtTime(.0001,now+.11);
+    o.connect(og);og.connect(out);o.start(now);o.stop(now+.12);
+    return;
+  }
+  const comp=ac.createDynamicsCompressor();comp.connect(out);   // kompresor: mocny wybuch bez przesterowania
+  const click=noiseSrc(ac,.06),cf=ac.createBiquadFilter(),cg=ac.createGain();   // ostry trzask na początku
+  cf.type='highpass';cf.frequency.value=1100;click.connect(cf);cf.connect(cg);cg.connect(comp);
+  cg.gain.setValueAtTime(.3,now);cg.gain.exponentialRampToValueAtTime(.0001,now+.06);click.start(now);click.stop(now+.07);
+  const rum=noiseSrc(ac,1.4),rf=ac.createBiquadFilter(),rg=ac.createGain();     // huk i dudnienie
+  rf.type='lowpass';rf.Q.value=.7;rf.frequency.setValueAtTime(3400,now);rf.frequency.exponentialRampToValueAtTime(130,now+1.15);
+  rum.connect(rf);rf.connect(rg);rg.connect(comp);
+  rg.gain.setValueAtTime(.55,now);rg.gain.exponentialRampToValueAtTime(.0001,now+1.3);rum.start(now);rum.stop(now+1.4);
+  const o=ac.createOscillator(),og=ac.createGain();                              // głęboki „thump”
+  o.type='sine';o.frequency.setValueAtTime(150,now);o.frequency.exponentialRampToValueAtTime(24,now+.6);
+  og.gain.setValueAtTime(.0001,now);og.gain.linearRampToValueAtTime(.75,now+.012);og.gain.exponentialRampToValueAtTime(.0001,now+.8);
+  o.connect(og);og.connect(comp);o.start(now);o.stop(now+.85);
+  const o2=ac.createOscillator(),g2=ac.createGain();                             // chropowata dolna warstwa
+  o2.type='sawtooth';o2.frequency.setValueAtTime(75,now);o2.frequency.exponentialRampToValueAtTime(28,now+.45);
+  g2.gain.setValueAtTime(.2,now);g2.gain.exponentialRampToValueAtTime(.0001,now+.5);
+  o2.connect(g2);g2.connect(comp);o2.start(now);o2.stop(now+.55);
+}
+function playSound(type){
+  try{
+    const ac=getAudioContext();if(!ac||save.sfx<=0)return;
+    if(type==='fuse'||type==='bomb'){bombSound(ac,type);return;}
+    const gap=MIN_GAP[type];
+    if(gap){if(ac.currentTime-(lastPlay[type]??-9)<gap)return;lastPlay[type]=ac.currentTime;}
+    const osc=ac.createOscillator(),gain=ac.createGain();
+    osc.connect(gain);gain.connect(sfxOut||ac.destination);
+    const now=ac.currentTime;
+    if(type==='hit'){
+      osc.type='sine';
+      osc.frequency.setValueAtTime(170,now);osc.frequency.exponentialRampToValueAtTime(90,now+.1);
+      gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(.06,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.11);
+      osc.start(now);osc.stop(now+.12);
+    }else if(type==='break_common'){
+      osc.type='square';
+      osc.frequency.setValueAtTime(220,now);osc.frequency.exponentialRampToValueAtTime(80,now+.12);
+      gain.gain.setValueAtTime(.2,now);gain.gain.linearRampToValueAtTime(.01,now+.12);
+      osc.start(now);osc.stop(now+.12);
+    }else if(type==='break_rare'){
+      osc.type='sine';
+      osc.frequency.setValueAtTime(440,now);osc.frequency.setValueAtTime(660,now+.06);osc.frequency.setValueAtTime(880,now+.12);
+      gain.gain.setValueAtTime(.25,now);gain.gain.linearRampToValueAtTime(.01,now+.25);
+      osc.start(now);osc.stop(now+.25);
+    }else if(type==='repair'){
+      osc.type='sine';
+      osc.frequency.setValueAtTime(300,now);osc.frequency.exponentialRampToValueAtTime(800,now+.2);
+      gain.gain.setValueAtTime(.3,now);gain.gain.linearRampToValueAtTime(.01,now+.2);
+      osc.start(now);osc.stop(now+.2);
+    }else if(type==='upgrade'){
+      osc.type='triangle';
+      osc.frequency.setValueAtTime(523.25,now);osc.frequency.setValueAtTime(659.25,now+.1);osc.frequency.setValueAtTime(783.99,now+.2);
+      gain.gain.setValueAtTime(.3,now);gain.gain.linearRampToValueAtTime(.01,now+.35);
+      osc.start(now);osc.stop(now+.35);
+    }else if(type==='tnt'){
+      osc.type='sawtooth';
+      osc.frequency.setValueAtTime(100,now);osc.frequency.exponentialRampToValueAtTime(30,now+.3);
+      gain.gain.setValueAtTime(.4,now);gain.gain.linearRampToValueAtTime(.01,now+.3);
+      osc.start(now);osc.stop(now+.3);
+    }
+  }catch(e){}
+}
+const cv=$('cv'),ctx=cv.getContext('2d');
+const COLS=8;
+let W=0,H=0,ts=0;
+
+const dk=document.createElement('canvas'),dkx=dk.getContext('2d'),LS=6;   // niska rozdzielczość: warstwa ciemności jaskini
+function resize(){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  W=innerWidth;H=innerHeight;
+  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false;
+  ts=W/COLS;
+  dk.width=Math.ceil(W/LS)+1;dk.height=Math.ceil(H/LS)+1;
+}
+addEventListener('resize',resize);resize();
+
+/* ---------- Zapis stanu gry ---------- */
+/* ---------- Nick gracza (3–16 znaków: litery, cyfry, spacja, _ . -) ---------- */
+const NICK_MIN=3,NICK_MAX=16,NICK_HINT='3–16 znaków: litery, cyfry, spacja, _ . -';
+let NICK_RE;try{NICK_RE=new RegExp('^[\\p{L}\\p{N}][\\p{L}\\p{N} ._-]*$','u');}catch(e){NICK_RE=/^[A-Za-z0-9ĄąĆćĘęŁłŃńÓóŚśŹźŻż][A-Za-z0-9ĄąĆćĘęŁłŃńÓóŚśŹźŻż ._-]*$/;}
+function cleanNick(v){
+  if(typeof v!=='string')return '';
+  try{v=v.normalize('NFC');}catch(e){}
+  return v.replace(/\s+/g,' ').trim();
+}
+function nickErr(v){                       // zwraca opis błędu albo '' gdy nick jest poprawny
+  v=cleanNick(v);
+  if(!v)return 'Wpisz nick';
+  const n=[...v].length;
+  if(n<NICK_MIN)return 'Za krótki – minimum '+NICK_MIN+' znaki';
+  if(n>NICK_MAX)return 'Za długi – maksimum '+NICK_MAX+' znaków';
+  if(!NICK_RE.test(v))return 'Dozwolone: litery, cyfry, spacja, _ . -';
+  return '';
+}
+let activeCh=null,chState=0,chBombs=0;   // wyzwanie wybrane na tę grę; chState: 0 trwa, 1 zaliczone, 2 nieudane; chBombs = bomby z wyzwania „Wielki wybuch”
+let bombBuys=0;   // ile bomb kupiono w tej grze (cena rośnie, nie spada po użyciu); zerowane przy końcu runu / wyjściu do menu
+const CHB=5;   // ile darmowych bomb dostajesz w wyzwaniu „Wielki wybuch”
+const BOMB={r:5,fuse:.07,cd:.35,max:10,base:500,step:100};   // r = promień w kratkach, fuse = lont w sekundach, cd = przerwa między bombami
+const KEY='minerSaveV7';
+const save={coins:0,maxHpLvl:1,dmgLvl:1,bombs:0,best:0,sfx:100,music:60,tiers:0,infHp:0,ctrl:'touch',lang:'pl',nick:'',ch:{},chb:{}};
+try{
+  const s=localStorage.getItem(KEY)||localStorage.getItem('minerSaveV6');
+  if(s)Object.assign(save,JSON.parse(s));
+}catch(e){}
+{
+  const num=(v,d,lo,hi)=>{v=Math.round(Number(v));return Number.isFinite(v)?Math.min(hi,Math.max(lo,v)):d;};
+  save.coins=num(save.coins,0,0,1e12);save.maxHpLvl=num(save.maxHpLvl,1,1,99);save.dmgLvl=num(save.dmgLvl,1,1,99);
+  save.bombs=num(save.bombs,0,0,BOMB.max);save.best=num(save.best,0,0,1e6);
+  save.sfx=num(save.sfx,100,0,100);save.music=num(save.music,60,0,100);
+  save.tiers=num(save.tiers,0,0,63);save.infHp=save.infHp?1:0;save.ctrl=save.ctrl==='tilt'?'tilt':'touch';save.lang=/^(pl|en|zh|es|de)$/.test(save.lang)?save.lang:'pl';
+  save.nick=cleanNick(save.nick);if(nickErr(save.nick))save.nick='';   // brak / zły nick = trzeba utworzyć nowy
+  for(const k of ['ch','chb']){                                     // ukończone wyzwania i najlepszy postęp
+    const o=save[k]&&typeof save[k]==='object'&&!Array.isArray(save[k])?save[k]:{},n={};
+    for(const id of Object.keys(o))n[id]=k==='ch'?(o[id]?1:0):num(o[id],0,0,1e6);
+    save[k]=n;
+  }
+  if('autoMinerLvl' in save){                // Górnik zniknął ze sklepu: oddajemy monety wydane na jego poziomy
+    const l=num(save.autoMinerLvl,0,0,99);let refund=0;
+    for(let i=0;i<l;i++)refund+=Math.round(400*Math.pow(1.9,i));
+    save.coins=Math.min(1e12,save.coins+refund);delete save.autoMinerLvl;
+    try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}
+  }
+}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
+setInterval(persist,5000);
+addEventListener('pagehide',persist);
+
+/* ---------- Muzyka: domyślnie generowana w przeglądarce; własny plik wpisz w MUSIC_SRC ---------- */
+const MUSIC_SRC='';   // np. 'muzyka.mp3' albo pełny URL; puste = spokojna muzyka syntezowana w grze (poniżej)
+let music=null,musicOn=false;
+/* ---------- Muzyka generatywna: spokojny ambient w stylu Minecrafta (syntezowana w przeglądarce, bez plików) ---------- */
+const mHz=n=>440*Math.pow(2,(n-69)/12);                       // numer MIDI -> Hz
+const MMODES=[                                                // nastrój zależy od głębokości; ch = [dźwięk basowy (MIDI), interwały akordu]
+  {bpm:62,rest:.40,pad:.040,mel:[72,74,76,79,81,84,86],drip:0,                       // powierzchnia: C-dur, pogodnie
+   ch:[[48,[0,4,7,11,14]],[45,[0,3,7,10,14]],[41,[0,4,7,11,14]],[43,[0,4,7,9,14]]]},
+  {bpm:52,rest:.52,pad:.050,mel:[62,65,67,69,72,74,77],drip:.018,                    // jaskinia: d-moll, ciemniej i wolniej
+   ch:[[38,[0,3,7,10,14]],[34,[0,4,7,11,14]],[41,[0,4,7,11,14]],[36,[0,4,7,14]]]},
+  {bpm:44,rest:.64,pad:.060,mel:[52,55,57,59,62,64,67],drip:.03,                     // głębiny: e-moll, rzadkie dźwięki
+   ch:[[40,[0,3,7,10,14]],[36,[0,4,7,11]],[45,[0,3,7,10]],[35,[0,5,7,12]]]}
+];
+let MS={started:false};
+const musWantMode=()=>$('menu').hidden?(depth>=600?2:depth>=60?1:0):0;
+const musVol=()=>Math.pow(save.music/100,2)*1.15;
+function musInit(ac,dest,vol){
+  const bus=ac.createGain();bus.gain.value=vol;bus.connect(dest);
+  const send=ac.createGain();send.gain.value=.55;                                   // wysyłka na pogłos
+  const cv=ac.createConvolver(),n=Math.floor(ac.sampleRate*3.4),ir=ac.createBuffer(2,n,ac.sampleRate);
+  for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}
+  cv.buffer=ir;const wet=ac.createGain();wet.gain.value=.9;send.connect(cv);cv.connect(wet);wet.connect(bus);
+  const pw=ac.createPeriodicWave(new Float32Array(8),new Float32Array([0,1,.30,.13,.06,.03,.015,.01]));   // miękki „filcowy” fortepian
+  MS={started:true,ac,bus,send,pw,t:ac.currentTime+.3,step:0,ci:0,mode:0,last:3,arp:0};
+  return MS;
+}
+function mNote(t,hz,vel,dur){                                                       // jedna nuta pianina
+  const ac=MS.ac,o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain();
+  o.setPeriodicWave(MS.pw);o.frequency.value=hz;
+  f.type='lowpass';f.frequency.value=Math.min(7000,500+hz*3.2);f.Q.value=.4;
+  g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vel,t+.012);
+  g.gain.exponentialRampToValueAtTime(vel*.4,t+.4);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(f);f.connect(g);g.connect(MS.bus);g.connect(MS.send);
+  o.start(t);o.stop(t+dur+.05);
+}
+function mPad(t,hz,vel,dur){                                                        // długa, powoli narastająca „poduszka”
+  const ac=MS.ac,g=ac.createGain(),f=ac.createBiquadFilter();
+  f.type='lowpass';f.frequency.value=700;
+  g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vel,t+2.2);
+  g.gain.setValueAtTime(vel,t+dur-1);g.gain.linearRampToValueAtTime(.0001,t+dur+2.5);
+  for(const dt of [-5,5]){const o=ac.createOscillator();o.type='triangle';o.frequency.value=hz;o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+dur+2.6);}
+  f.connect(g);g.connect(MS.bus);g.connect(MS.send);
+}
+function mStep(){                                                                   // jedna ósemka; akord trwa 16 ósemek (8 uderzeń)
+  if(MS.step%16===0){const w=musWantMode();if(w!==MS.mode){MS.mode=w;MS.ci=0;}}    // zmiana nastroju tylko na granicy akordu
+  const M=MMODES[MS.mode],sd=30/M.bpm,t=MS.t,s=MS.step%16,ch=M.ch[MS.ci%M.ch.length],root=ch[0],iv=ch[1],R=Math.random;
+  const at=t+(R()-.5)*.03,live=1-M.rest;
+  if(s===0){
+    mNote(at,mHz(root),.20,5.5);
+    for(let k=0;k<3;k++)mPad(t,mHz(root+12+iv[k]),M.pad,sd*16);
+  }
+  if(s%2===0?R()<.55*live:R()<.16*live){                                            // rozłożony akord
+    const i=MS.arp++%iv.length;mNote(at,mHz(root+24+iv[i]),.06+R()*.05,2.8);
+  }
+  const pm=(s%4===0?.34:s%2===0?.20:.05)*(1.1-M.rest);
+  if(s<14&&R()<pm){                                                                 // melodia: powolny spacer po pentatonice
+    const w=[-2,-1,-1,0,1,1,2][R()*7|0];MS.last=Math.max(0,Math.min(M.mel.length-1,MS.last+w));
+    mNote(at,mHz(M.mel[MS.last]),.09+R()*.06,3.6);
+    if(R()<.12){const j=Math.max(0,Math.min(M.mel.length-1,MS.last+(R()<.5?-1:1)));mNote(at+sd*2,mHz(M.mel[j]),.07+R()*.04,3.2);}
+  }
+  if(R()<.025)mNote(at,mHz(M.mel[R()*M.mel.length|0]+12),.05,5);                     // rzadki wysoki dzwonek
+  if(M.drip&&R()<M.drip)mNote(at,mHz(84+(R()*12|0)),.035,1.4);                      // „kropla” w jaskini
+  MS.t+=sd;MS.step++;if(MS.step%16===0)MS.ci++;
+}
+function musTick(){
+  if(!actx||!MS.started||document.hidden||save.music<=0)return;                     // głośność 0 = nie planujemy nut
+  const now=actx.currentTime;if(MS.t<now)MS.t=now+.1;
+  while(MS.t<now+1.4)mStep();
+}
+function musStart(){
+  const ac=getAudioContext();if(!ac||(MS.started&&MS.ac===ac))return;
+  musInit(ac,ac.destination,musVol());
+  setInterval(musTick,220);musTick();
+}
+function applyVolumes(){
+  if(sfxOut)sfxOut.gain.value=Math.pow(save.sfx/100,2);
+  if(MS.started&&MS.bus){try{MS.bus.gain.setTargetAtTime(musVol(),MS.ac.currentTime,.05);}catch(e){try{MS.bus.gain.value=musVol();}catch(e2){}}}
+  if(music){
+    music.volume=Math.pow(save.music/100,2);
+    if(save.music<=0)music.pause();
+    else if(musicOn&&music.paused&&!document.hidden)music.play().catch(()=>{});
+  }
+}
+function musicPlay(){
+  if(!MUSIC_SRC){try{musStart();}catch(e){}return;}
+  try{
+    if(!music){music=new Audio(MUSIC_SRC);music.loop=true;}
+    musicOn=true;applyVolumes();
+  }catch(e){}
+}
+addEventListener('pointerdown',musicPlay,{passive:true});
+addEventListener('click',musicPlay,{passive:true});
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){persist();autoPause();if(music)music.pause();try{if(MS.started&&actx&&actx.state==='running')actx.suspend();}catch(e){}}
+  else{if(musicOn)applyVolumes();try{if(MS.started&&actx&&actx.state==='suspended')actx.resume();}catch(e){}}
+});
+
+/* ---------- Definicje kilofów i bloków ---------- */
+/* ---------- BALANS GRY: tu regulujesz trudność i tempo ---------- */
+const BAL={
+  hpGrowth:.0055,   // o ile rośnie wytrzymałość bloków z każdym metrem (wykładniczo) – główny regulator trudności
+  oreRamp:1000,     // na jakiej głębokości rudy osiągają maksymalną częstość
+  safeRows:12,      // pierwsze rzędy bez lawy i TNT (łatwy start)
+  lavaMax:.07,      // maksymalna szansa na lawę
+  lavaRamp:400,     // głębokość, na której lawa osiąga maksimum
+  lavaBase:10,      // obrażenia lawy na początku
+  lavaPer:30,       // co ile metrów lawa zadaje +1 obrażeń więcej
+  lapisMin:20,      // od jakiej głębokości pojawia się Lazuryt
+  lapisBase:.010,   // szansa na Lazuryt (na pole) na głębokości lapisMin
+  lapisMax:.030,    // ... i przy oreRamp
+  netherMin:200,    // Netheryt pojawia się dopiero od tej głębokości (najrzadszy surowiec)
+  netherBase:.0015, // szansa na Netheryt (na pole) na głębokości netherMin
+  netherMax:.008,   // ... i przy oreRamp (zawsze rzadszy niż diament)
+  upChance:.0011,   // szansa na zielony blok (ulepszenie / naprawa) przy powierzchni
+  upFade:.004,      // zielone bloki są coraz rzadsze z głębokością
+  upHeal:.5,        // jaką część maks. HP odnawia stół craftingu
+  fixChance:.0017,  // szansa na blok naprawczy (trochę częstszy niż stół craftingu)
+  fixFade:.003,     // blok naprawczy rzednie z głębokością wolniej niż stół
+  fixMin:.10,       // najmniej HP, jakie odnawia blok naprawczy (część maks. HP)
+  fixMax:.60,       // najwięcej HP, jakie odnawia blok naprawczy
+  coinGrowth:0,     // o ile rośnie wartość rud z każdym metrem (0 = stała)
+  tierMul:.5,       // jak mocno lepszy kilof podbija zarobki z rud (0.5 = ×1, ×1.5, ×2...)
+  coinScale:.7,     // globalny mnożnik zarobków (monety z rud i premia za głębokość)
+  dmgStep:1.11,     // o ile razy rośnie siła kilofa z każdym poziomem „Ostrej Końcówki”
+  hpStep:15         // ile HP daje każdy poziom „Wzmocnionego Trzonka”
+};
+const TIERS=[
+  {name:'Drewniany',color:'#d97706',dmg:18,hp:170},
+  {name:'Kamienny',color:'#94a3b8',dmg:32,hp:220},
+  {name:'Żelazny',color:'#f8fafc',dmg:70,hp:300},
+  {name:'Złoty',color:'#facc15',dmg:120,hp:400},
+  {name:'Diamentowy',color:'#38bdf8',dmg:200,hp:520},
+  {name:'Obsydianowy',color:'#c084fc',dmg:400,hp:680}
+];
+const T=[null,
+  {c:'#64748b',hp:10,v:0},
+  {c:'#1e293b',hp:30,v:2},
+  {c:'#cbd5e1',hp:70,v:5},
+  {c:'#eab308',hp:150,v:15},
+  {c:'#38bdf8',hp:350,v:60},
+  {c:'#ef4444',hp:1,v:0,k:'tnt'},
+  {c:'#b08650',hp:2,v:0,k:'up'},
+  {c:'#ea580c',hp:40,v:0,k:'lava'},
+  {c:'#2f55d6',hp:260,v:25},    // 9  Lazuryt
+  {c:'#7a5560',hp:800,v:200},  // 10 Netheryt
+  {c:'#22c55e',hp:2,v:0,k:'fix'}  // 11 Blok naprawczy (odnawia losowo 10–60% HP)
+];
+for(const t of T)if(t&&t.hp>1)t.hp=Math.round(t.hp*2.5);
+const ZONES=[[0,'Powierzchnia'],[30,'Glina'],[100,'Kamień'],[220,'Rudy'],[420,'Głębiny'],[700,'Obsydian'],[1000,'Piekło']];
+const zoneOf=d=>{let z=ZONES[0][1];for(const [m,n] of ZONES)if(d>=m)z=n;return z;};
+const hpFor=t=>TIERS[t].hp+((activeCh?1:save.maxHpLvl)-1)*BAL.hpStep;   // w wyzwaniach ulepszenia kilofa ze sklepu nie działają
+const maxHp=()=>hpFor(tier);
+const dmgMul=()=>Math.pow(BAL.dmgStep,activeCh?1:save.dmgLvl);
+
+/* ---------- Generator tekstur proceduralnych (32x32) ---------- */
+function rnd(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
+function shade(h,k){const n=parseInt(h.slice(1),16),f=v=>Math.max(0,Math.min(255,Math.round(v*k)));return 'rgb('+f(n>>16&255)+','+f(n>>8&255)+','+f(n&255)+')';}
+function mkc(){const c=document.createElement('canvas');c.width=c.height=32;return c;}
+function tntSprite(){
+  const cv=mkc(),g=cv.getContext('2d'),R=rnd(7);
+  for(let y=0;y<32;y++)for(let x=0;x<32;x++){g.fillStyle=shade('#dc2626',.85+R()*.25-(x%8==0?.3:0));g.fillRect(x,y,1,1);}
+  g.fillStyle='#f1f5f9';g.fillRect(0,11,32,10);g.fillStyle='#cbd5e1';g.fillRect(0,20,32,1);
+  g.fillStyle='#111827';g.font='bold 9px sans-serif';g.textAlign='center';g.fillText('TNT',16,19);
+  g.fillStyle='#450a0a';g.fillRect(0,0,32,1);g.fillRect(0,31,32,1);g.fillRect(0,0,1,32);g.fillRect(31,0,1,32);
+  return cv;
+}
+function craftSprite(){
+  const cv=mkc(),g=cv.getContext('2d'),R=rnd(21);
+  const px=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(x,y,w,h);};
+  for(let y=0;y<32;y++)for(let x=0;x<32;x++){g.fillStyle=shade('#a9824f',.86+R()*.24);g.fillRect(x,y,1,1);}
+  px(0,0,32,13,'#6b4a2a');                                   // blat: ciemna rama
+  for(let r=0;r<3;r++)for(let c=0;c<3;c++){                 // siatka 3x3 jak w Minecrafcie
+    const x=3+c*9,y=2+r*3;
+    for(let j=0;j<2;j++)for(let i=0;i<8;i++){g.fillStyle=shade('#d3ad74',.9+R()*.2);g.fillRect(x+i,y+j,1,1);}
+  }
+  px(0,13,32,1,'#3b2610');px(0,14,32,1,'#c19a62');          // krawędź blatu
+  px(0,22,32,1,'#6a4c28');px(0,30,32,1,'#6a4c28');          // łączenia desek
+  px(15,23,1,7,'#6a4c28');px(7,14,1,8,'#8d6a3c');px(24,14,1,8,'#8d6a3c');
+  // piła (lewa strona)
+  px(3,15,3,8,'#4a2c12');px(4,16,1,6,'#8a5a2b');
+  px(6,16,10,5,'#cfd5de');px(6,16,10,1,'#ffffff');px(6,20,10,1,'#8b95a3');
+  for(let i=6;i<16;i+=2)px(i,21,1,1,'#8b95a3');
+  // młotek (prawa strona)
+  px(19,15,10,5,'#2f3945');px(19,15,10,1,'#94a3b8');px(19,15,1,5,'#64748b');
+  px(22,20,4,10,'#4a2c12');px(23,20,2,10,'#8a5a2b');
+  // obrys
+  px(0,0,32,1,'#2e1d0e');px(0,31,32,1,'#2e1d0e');px(0,0,1,32,'#2e1d0e');px(31,0,1,32,'#2e1d0e');
+  return cv;
+}
+function fixSprite(){                       // zielony blok z białym krzyżem = naprawa
+  const cv=mkc(),g=cv.getContext('2d'),R=rnd(55);
+  const px=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(x,y,w,h);};
+  for(let y=0;y<32;y++)for(let x=0;x<32;x++){g.fillStyle=shade('#2f8f4e',.8+R()*.4);g.fillRect(x,y,1,1);}
+  px(2,2,28,1,'#6fd08a');px(2,2,1,28,'#6fd08a');px(2,29,28,1,'#1c5a31');px(29,2,1,28,'#1c5a31');   // fazowanie ramki
+  px(13,7,8,20,'#14532d');px(7,13,20,8,'#14532d');          // cień krzyża
+  px(12,6,8,20,'#f0fdf4');px(6,12,20,8,'#f0fdf4');          // krzyż
+  px(12,6,8,2,'#ffffff');px(6,12,2,8,'#ffffff');            // światło
+  px(12,24,8,2,'#bbf7d0');px(24,12,2,8,'#bbf7d0');          // cień wewnętrzny
+  px(0,0,32,1,'#0f3d20');px(0,31,32,1,'#0f3d20');px(0,0,1,32,'#0f3d20');px(31,0,1,32,'#0f3d20');     // obrys
+  return cv;
+}
+function netherSprite(){
+  const cv=mkc(),g=cv.getContext('2d'),R=rnd(77);
+  const px=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(x,y,w,h);};
+  for(let y=0;y<32;y++)for(let x=0;x<32;x++){g.fillStyle=shade('#4a383c',.78+R()*.4);g.fillRect(x,y,1,1);}
+  px(0,0,32,2,'#2b1f22');px(0,30,32,2,'#2b1f22');px(0,0,2,32,'#2b1f22');px(30,0,2,32,'#2b1f22');
+  const m=[];for(let y=0;y<32;y++)m.push(new Array(32).fill(0));
+  const plate=(x,y,w,h)=>{
+    for(let j=0;j<h;j++){const a=R()*4|0,b=R()*4|0;for(let i=a;i<w-b;i++)m[y+j][x+i]=1;}
+  };
+  plate(4,4,24,10);plate(4,17,24,11);plate(11,12,10,6);
+  for(let y=1;y<31;y++)for(let x=1;x<31;x++){
+    if(!m[y][x])continue;
+    let c=shade('#a67f66',.8+R()*.35);
+    if(!m[y-1][x])c='#e0bb94';else if(!m[y][x-1])c='#d2aa82';
+    if(!m[y+1][x])c='#4b3328';else if(!m[y][x+1])c='#5a3d30';
+    px(x,y,1,1,c);
+  }
+  for(let i=0;i<3;i++){let x=6+(R()*18|0),y=5+(R()*20|0);for(let j=0;j<6;j++){if(m[y]&&m[y][x])px(x,y,1,1,'#3a2630');x+=R()<.5?1:0;y+=1;}}
+  for(let i=0;i<6;i++){const x=6+(R()*20|0),y=5+(R()*21|0);if(m[y][x])px(x,y,1,1,'#f3d2a4');}
+  return cv;
+}
+function lavaFrame(f){
+  const cv=mkc(),g=cv.getContext('2d');
+  const H=(ix,iy,s)=>{let h=(ix*374761393+iy*668265263+s*1274126177)|0;h=(h^(h>>>13))*1274126177|0;return ((h^(h>>>16))>>>0)/4294967296;};
+  const vn=(x,y,cell,s)=>{
+    const n=32/cell,gx=x/cell,gy=y/cell,x0=Math.floor(gx),y0=Math.floor(gy),fx=gx-x0,fy=gy-y0,
+          sx=fx*fx*(3-2*fx),sy=fy*fy*(3-2*fy),w=i=>((i%n)+n)%n,
+          a=H(w(x0),w(y0),s),b=H(w(x0+1),w(y0),s),c=H(w(x0),w(y0+1),s),d=H(w(x0+1),w(y0+1),s);
+    return a+(b-a)*sx+(c-a)*sy+(a-b-c+d)*sx*sy;
+  };
+  const ramp=['#7f1d0c','#c2340a','#ea580c','#fb923c','#fbbf24','#fde68a'];
+  for(let y=0;y<32;y++)for(let x=0;x<32;x++){
+    let v=.5*vn(x,y+f*4,8,1)+.3*vn(x-f*4,y,4,2)+.2*vn(x,y-f*4,16,3);
+    v=Math.max(0,Math.min(.999,(v-.22)*1.9));
+    g.fillStyle=ramp[v*ramp.length|0];g.fillRect(x,y,1,1);
+  }
+  return cv;
+}
+/* ---------- Grafika v17: tekstury „16x16 pikseli” (każdy piksel = 2x2 px sprite'a) ---------- */
+const hash2=(a,b,s)=>{let h=(a*374761393+b*668265263+(s|0)*1274126177)|0;h=(h^(h>>>13))*1274126177|0;return((h^(h>>>16))>>>0)/4294967296;};
+function tex(fn){const cv=mkc(),g=cv.getContext('2d');fn((x,y,c,w,h)=>{g.fillStyle=c;g.fillRect(x*2,y*2,(w||1)*2,(h||1)*2);},g);return cv;}
+function bmp(rows,pal){                                   // mała bitmapa z opisu znakowego, 1 znak = 1 piksel
+  const w=rows[0].length,cv=document.createElement('canvas');cv.width=w;cv.height=rows.length;
+  const g=cv.getContext('2d');
+  rows.forEach((s,y)=>{for(let x=0;x<w;x++){const c=pal[s[x]];if(c){g.fillStyle=c;g.fillRect(x,y,1,1);}}});
+  return cv;
+}
+function flipV(cv){const o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const g=o.getContext('2d');g.translate(0,cv.height);g.scale(1,-1);g.drawImage(cv,0,0);return o;}
+
+/* Warstwy ziemi – kolor bloków zmienia się ze strefą (ZONES): ziemia → glina → kamień → deepslate → obsydian → netherrack */
+const ZB=[
+  {c:['#5e3b1f','#7a4e2a','#946236'],sp:'#3f2713',fx:'dirt'},
+  {c:['#8f4f38','#aa6347','#c07a58'],sp:'#6e3a29',fx:'strata'},
+  {c:['#6f7782','#868e99','#9ea6b0'],sp:'#4f565f',fx:'crack'},
+  {c:['#5d6572','#717a88','#8892a0'],sp:'#434a55',fx:'crack'},
+  {c:['#33394a','#414859','#515970'],sp:'#23283a',fx:'strata'},
+  {c:['#1d1330','#2b1d47','#3b2762'],sp:'#0f0820',fx:'obs'},
+  {c:['#6b1f22','#8a2a2a','#a63b30'],sp:'#45121a',fx:'rack'}
+];
+const ZN=ZONES.map(z=>z[0]);
+function zoneAt(r,c){                                      // strefa kafla; tuż przed granicą strefy kafle „przeskakują” losowo na następną
+  let z=0;for(let i=1;i<ZN.length;i++)if(r>=ZN[i])z=i;
+  const nx=ZN[z+1];
+  if(nx!==undefined&&r>=nx-6&&hash2(r,c,5)<(r-(nx-6)+1)/7)z++;
+  return z;
+}
+function baseTex(z,seed){
+  const Z=ZB[z],R=rnd(seed*7919+z*104729),f=[];
+  for(let y=0;y<16;y++){f.push([]);for(let x=0;x<16;x++)f[y].push(R());}
+  return tex(P=>{
+    for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+      const v=f[y][x]*.5+f[y][(x+1)&15]*.25+f[(y+1)&15][x]*.25;       // plamki zamiast szumu
+      P(x,y,v<.36?Z.c[0]:v>.66?Z.c[2]:Z.c[1]);
+    }
+    if(Z.fx==='dirt'){for(let i=0;i<7;i++){const x=R()*15|0,y=R()*15|0;P(x,y,Z.sp);if(R()<.5)P(x+1,y,Z.sp);}}
+    if(Z.fx==='strata'){for(let y=3;y<16;y+=5){const a=R()*6|0,l=6+(R()*8|0);for(let x=a;x<Math.min(16,a+l);x++)P(x,y+(R()<.15?1:0),Z.sp);}}
+    if(Z.fx==='crack'){for(let i=0;i<2;i++){let x=R()*14|0,y=R()*11|0;for(let j=0;j<5;j++){P(x,y,Z.sp);if(R()<.5)x+=R()<.5?1:-1;else y+=1;x=Math.max(0,Math.min(15,x));}}}
+    if(Z.fx==='obs'){for(let i=0;i<5;i++){const x=1+(R()*13|0),y=1+(R()*12|0);P(x,y,'#7a4fd6');P(x+1,y+1,'#b394ff');}}
+    if(Z.fx==='rack'){for(let i=0;i<6;i++)P(R()*15|0,R()*15|0,'#e0562e');for(let i=0;i<4;i++)P(R()*14|0,R()*15|0,Z.sp,2,1);}
+    P(0,0,'rgba(255,255,255,.16)',16,1);P(0,1,'rgba(255,255,255,.06)',16,1);P(0,0,'rgba(255,255,255,.10)',1,16);   // fazowanie krawędzi
+    P(0,15,'rgba(0,0,0,.34)',16,1);P(0,14,'rgba(0,0,0,.14)',16,1);P(15,0,'rgba(0,0,0,.28)',1,16);
+  });
+}
+const BASE=ZB.map((_,z)=>baseTex(z,1));
+
+/* Rudy: ta sama „żyła” (ten sam wzór) na tle każdej strefy */
+const ORES={
+  2:{c:['#0b0d10','#1c2128','#3a424e'],n:5},      // węgiel
+  3:{c:['#8a5f3f','#d6a981','#f5dcc2'],n:5},      // żelazo
+  4:{c:['#a8760a','#f2b705','#fff3a0'],n:4},      // złoto
+  5:{c:['#0c7f8f','#27d9e0','#d6ffff'],n:4},      // diament
+  9:{c:['#10277a','#2850d0','#86a6ff'],n:5}       // lazuryt
+};
+const OSH=[[[1,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2]],[[0,0],[1,0],[0,1],[1,1],[2,1],[1,2],[2,2]],[[0,0],[1,0],[2,0],[3,0],[1,1],[2,1],[3,1]],[[0,0],[0,1],[1,1],[0,2],[1,2],[1,3]],[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[1,2]]];
+function oreTex(t,z){
+  const O=ORES[t],R=rnd(t*1013+77),cv=mkc(),g=cv.getContext('2d'),used=[];
+  g.drawImage(BASE[z],0,0);
+  const px=(x,y,c)=>{if(x>=0&&x<16&&y>=0&&y<16){g.fillStyle=c;g.fillRect(x*2,y*2,2,2);}};
+  for(let i=0,tr=0;i<O.n&&tr<200;tr++){
+    const cx=1+(R()*12|0),cy=1+(R()*12|0);
+    if(used.some(u=>Math.abs(u[0]-cx)+Math.abs(u[1]-cy)<4))continue;
+    used.push([cx,cy]);i++;
+    const sh=OSH[R()*OSH.length|0],has=(x,y)=>sh.some(p=>p[0]===x&&p[1]===y);
+    for(const [dx,dy] of sh){
+      let c=O.c[1];
+      if(!has(dx,dy-1)&&!has(dx-1,dy))c=O.c[2];else if(!has(dx,dy+1)&&!has(dx+1,dy))c=O.c[0];
+      if(R()<.12)c=O.c[1];
+      px(cx+dx,cy+dy,c);
+    }
+  }
+  return cv;
+}
+const TEXZ={1:BASE};
+[2,3,4,5,9].forEach(t=>TEXZ[t]=ZB.map((_,z)=>oreTex(t,z)));
+
+/* Trawa na górnej warstwie */
+const GRASS=tex(P=>{
+  const R=rnd(404),cl=['#3f9c35','#58b947','#7ed957'];
+  for(let x=0;x<16;x++){
+    const d=3+(R()<.45?1:0)+(R()<.2?1:0);
+    for(let y=0;y<d;y++)P(x,y,y===0?cl[2]:(R()<.6?cl[1]:cl[0]));
+    P(x,d-1,cl[0]);
+  }
+  P(0,0,'rgba(255,255,255,.14)',16,1);
+});
+
+/* Ściana jaskini widoczna w wykopanych polach (4 warianty na strefę) */
+function wallTex(z,v){
+  const Z=ZB[z],R=rnd(5000+z*31+v*977),cell=[];
+  for(let i=0;i<16;i++)cell.push(R()*3|0);
+  const lv=[.26,.33,.41];
+  return tex(P=>{
+    for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+      const jx=hash2(x,y,v+1)<.25?1:0,jy=hash2(y,x,v+2)<.25?1:0;
+      const l=cell[(((y+jy)>>2)&3)*4+(((x+jx)>>2)&3)];
+      P(x,y,shade(Z.c[1],lv[l]*(.92+hash2(x,y,v+3)*.16)));
+    }
+    for(let i=0;i<2;i++){let x=R()*14|0,y=R()*12|0;for(let j=0;j<4;j++){P(x,y,shade(Z.c[0],.2));x+=R()<.5?1:0;y++;}}
+  });
+}
+const WALLZ=ZB.map((_,z)=>[0,1,2,3].map(v=>wallTex(z,v)));
+function aoTex(side){                                      // cień przy krawędzi wykopu (4 stopnie, żeby zostać w stylu pixel-art)
+  const cv=mkc(),g=cv.getContext('2d'),k=side==='b'?.6:1;
+  [.5,.34,.2,.1].forEach((al,i)=>{
+    g.fillStyle='rgba(0,0,0,'+(al*k)+')';
+    if(side==='t')g.fillRect(0,i*2,32,2);else if(side==='b')g.fillRect(0,30-i*2,32,2);
+    else if(side==='l')g.fillRect(i*2,0,2,32);else g.fillRect(30-i*2,0,2,32);
+  });
+  return cv;
+}
+const AO={t:aoTex('t'),l:aoTex('l'),r:aoTex('r'),b:aoTex('b')};
+
+/* Dekoracje jaskini */
+const STALMAP=['sssssss','.sssSS.','..ssS..','..ssS..','...sS..','...S...'];
+const STAL=ZB.map(Z=>bmp(STALMAP,{s:shade(Z.c[2],.55),S:shade(Z.c[0],.7)}));
+const STAG=STAL.map(flipV);
+const MOSS=(()=>{const R=rnd(77),rows=[];for(let y=0;y<5;y++)rows.push(new Array(16).fill('.'));
+  for(let x=0;x<16;x++){const L=R()<.55?1+(R()*4|0):0;rows[0][x]='d';for(let y=1;y<=L&&y<5;y++)rows[y][x]=y===L?'l':'g';}
+  return bmp(rows,{d:'#1f5c2a',g:'#2f8a3d',l:'#58c46a'});})();
+const CRYMAP=['....c..','..c.cb.','..cbbb.','.cbbba.','.cbbbaa','cbbbbaa','bbbaaa.','.aaa...'];
+const CRYP=[null,null,['#0e7490','#22d3ee','#cffafe','34,211,238'],['#0f766e','#2dd4bf','#ccfbf1','45,212,191'],['#4338ca','#818cf8','#e0e7ff','129,140,248'],['#a21caf','#e879f9','#fae8ff','232,121,249'],['#c2410c','#fb923c','#ffedd5','251,146,60']];
+const CRY=CRYP.map(p=>p&&bmp(CRYMAP,{a:p[0],b:p[1],c:p[2]}));
+const TORCH=bmp(['cC','sS','sS','sS','sS','sS','sS'],{c:'#4a4a4a',C:'#2a2a2a',s:'#b07a3c',S:'#74481f'});
+const FLAME=[['.y..','.yo.','yoor','.orr'],['..y.','.yoy','.oor','.orr'],['.y..','yyo.','.oor','.orr']].map(r=>bmp(r,{y:'#fff2a0',o:'#ffb02e',r:'#ff6a1a'}));
+
+/* Niebo, góry, drzewa, chmury (bitmapy skalowane całkowitą wielokrotnością – ostre piksele) */
+function cloudBmp(w,h,seed){
+  const R=rnd(seed),m=[];for(let y=0;y<h;y++)m.push(new Array(w).fill(0));
+  const nb=3+(R()*2|0);
+  for(let i=0;i<nb;i++){
+    const cx=w*.15+R()*w*.7,rx=w*(.16+R()*.14),ry=h*(.35+R()*.3),cy=h-1-ry*.8;
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){const dx=(x+.5-cx)/rx,dy=(y+.5-cy)/ry;if(dx*dx+dy*dy<=1)m[y][x]=1;}
+  }
+  const rows=m.map((row,y)=>row.map((v,x)=>!v?'.':(y===h-1||!m[y+1][x])?'s':'w'));
+  return bmp(rows,{w:'#ffffff',s:'#cfe3f3'});
+}
+const CL=[cloudBmp(14,5,3),cloudBmp(18,6,11),cloudBmp(11,4,23)];
+function treeBmp(seed){
+  const R=rnd(seed),rows=[],cano=[[3,8],[1,10],[0,11],[0,11],[0,11],[1,10],[2,9]];
+  for(let y=0;y<14;y++)rows.push(new Array(12).fill('.'));
+  cano.forEach(([a,b],y)=>{for(let x=a;x<=b;x++){const v=R();rows[y][x]=y>=5?(v<.6?'d':'L'):(v<.25?'l':v<.85?'L':'d');}});
+  for(let y=7;y<14;y++){rows[y][5]='k';rows[y][6]='K';}
+  rows[13][4]='k';rows[13][7]='K';
+  return bmp(rows,{L:'#4fae3f',l:'#78d65a',d:'#2f7d32',k:'#8a5a2b',K:'#5f3b1c'});
+}
+const TREES=[treeBmp(5),treeBmp(9)];
+const BUSH=(()=>{const R=rnd(31),rows=[];for(let y=0;y<4;y++)rows.push(new Array(7).fill('.'));
+  [[1,5],[0,6],[0,6],[0,6]].forEach(([a,b],y)=>{for(let x=a;x<=b;x++){const v=R();rows[y][x]=y===3?'d':v<.2?'l':v<.8?'L':'d';}});
+  return bmp(rows,{L:'#4fae3f',l:'#78d65a',d:'#2f7d32'});})();
+const FLW=[
+  bmp(['.r.','rYr','.g.','.g.'],{r:'#ef4444',Y:'#fde047',g:'#3f9c35'}),
+  bmp(['.y.','yWy','.g.','.g.'],{y:'#fde047',W:'#f97316',g:'#3f9c35'}),
+  bmp(['.p.','pWp','.g.','.g.'],{p:'#c084fc',W:'#fde047',g:'#3f9c35'})
+];
+const TUFT=bmp(['.g...g.','gg.G.gg','ggGgGgg'],{g:'#3f9c35',G:'#58b947'});
+
+/* Pęknięcia: 5 stopni, kolejne etapy rozbudowują te same pęknięcia */
+function crackTex(stage){
+  const n=[2,3,5,7,9][stage],len=[3,4,6,7,9][stage];
+  return tex(P=>{
+    for(let i=0;i<n;i++){
+      const Rb=rnd(900+i*31);
+      let a=i*.698+Rb()*.6,x=7.5+Rb()-.5,y=7.5+Rb()-.5;
+      for(let j=0;j<len;j++){
+        const xi=Math.round(x),yi=Math.round(y);
+        if(xi>=0&&xi<16&&yi>=0&&yi<16)P(xi,yi,'rgba(0,0,0,.62)');
+        a+=(Rb()-.5)*.9;x+=Math.cos(a);y+=Math.sin(a);
+      }
+    }
+  });
+}
+/* Kilof: ta sama sylwetka co hitbox fizyki (łuk głowicy + trzonek), tylko ładniej cieniowana */
+function pickSprite(col){
+  const rg=[[5,6],[4,6],[4,6],[3,5],[2,4],[1,3],[1,3],[1,3]];
+  const M=[];for(let y=0;y<16;y++)M.push(new Array(16).fill('.'));
+  const body=[];for(let y=0;y<16;y++)body.push(new Array(16).fill(0));
+  rg.forEach(([a,b],i)=>{for(let y=a;y<=b;y++){body[y][i+1]=1;body[y][14-i]=1;}});
+  for(let y=0;y<16;y++)for(let x=0;x<16;x++)if(body[y][x])M[y][x]=(y===0||!body[y-1][x])?'H':(y===15||!body[y+1][x])?'L':'M';
+  for(let y=4;y<=14;y++){M[y][7]='s';M[y][8]='S';}
+  for(let x=7;x<=8;x++){M[4][x]='b';M[10][x]='w';M[11][x]='w';}
+  const out=M.map(r=>r.slice());
+  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+    if(M[y][x]!=='.')continue;
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,xx=x+dx;if(yy>=0&&yy<16&&xx>=0&&xx<16&&M[yy][xx]!=='.'){out[y][x]='o';}}
+  }
+  const cv=bmp(out,{o:'#0b0f1a',H:shade(col,1.38),M:col,L:shade(col,.62),s:'#b9833f',S:'#7a4f24',b:shade(col,.4),w:'#4a2f14'});
+  const big=mkc(),g=big.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(cv,0,0,32,32);
+  g.fillStyle='rgba(255,255,255,.75)';g.fillRect(10,4,2,2);      // błysk na głowicy
+  return big;
+}
+
+const LAVA=[0,1,2,3,4,5,6,7].map(lavaFrame);let LF=0;
+const LAVA_MS=1e12; // animacja lawy wyłączona (np. 1800 = jedna klatka na 1,8 s)
+const BS=[null,BASE[2]];[2,3,4,5,9].forEach(t=>BS[t]=TEXZ[t][2]);   // ikony do sklepu/menu (na tle kamienia)
+BS[6]=tntSprite();BS[7]=craftSprite();BS[8]=LAVA[0];BS[10]=netherSprite();BS[11]=fixSprite();
+const CR=[0,1,2,3,4].map(crackTex);
+const PS=TIERS.map(t=>pickSprite(t.color));
+const IMG={};
+PS.forEach((c,i)=>IMG['p'+i]=c.toDataURL());
+BS.forEach((c,i)=>{if(c)IMG['b'+i]=c.toDataURL();});
+const BOMBSPR=tex(P=>{
+  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+    const d=Math.hypot(x-7.5,y-9.6);
+    if(d>5.7)continue;
+    let c=d>4.7?'#05070d':'#2b3648';
+    if(d<=4.7&&(x-7.5)+(y-9.6)>2.6)c='#161d2b';
+    P(x,y,c);
+  }
+  [[4,7,'#9fb3cf'],[4,8,'#6a7f9d'],[5,6,'#9fb3cf'],[5,7,'#6a7f9d'],[6,6,'#6a7f9d'],[5,5,'#53647f']].forEach(([x,y,c])=>P(x,y,c));
+  P(6,2,'#9ca3af',4,1);P(6,3,'#6b7280',4,1);P(6,4,'#374151',4,1);               // szyjka
+  P(8,1,'#a16207');P(9,1,'#a16207');P(10,0,'#d97706');                          // lont
+  P(11,0,'#fff7bf');P(12,1,'#fde047');P(11,2,'#fb923c');P(12,0,'#fb923c');      // iskra
+});
+IMG.bomb=BOMBSPR.toDataURL();
+const GEARSPR=(()=>{                                      // pixel-artowa zębatka 16x16: korpus, 8 zębów, dziura, obrys
+  const N=16,c=7.5,M=[];
+  for(let y=0;y<N;y++){M.push([]);for(let x=0;x<N;x++){
+    const dx=x-c,dy=y-c,d=Math.hypot(dx,dy),q=Math.PI/4,u=((Math.atan2(dy,dx)%q)+q)%q,ad=Math.min(u,q-u);
+    const on=d>=2.1&&(d<=4.7||(d>=3.8&&d<=6.5&&ad<=.27));
+    M[y].push(on?((dx+dy)<-1.5?'H':(dx+dy)>2.5?'L':'M'):'.');
+  }}
+  const out=M.map(r=>r.slice());
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    if(M[y][x]!=='.')continue;
+    for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++){const yy=y+j,xx=x+i;if(yy>=0&&yy<N&&xx>=0&&xx<N&&M[yy][xx]!=='.')out[y][x]='o';}
+  }
+  return bmp(out.map(r=>r.join('')),{o:'#0b0f1a',H:'#f1f5f9',M:'#a8b4c6',L:'#64748b'});
+})();
+IMG.gear=GEARSPR.toDataURL();
+/* Ikony przycisków pod menu (16x16): kłódka = kod, torba z monetą = sklep premium, książka z „?” = samouczek */
+const mkIcon=(rows,pal)=>bmp(rows.map(s=>s.padEnd(16,'.')),pal).toDataURL();
+IMG.code=mkIcon(['','....oooooooo','...oSSSSSSSSo','...oSSooooTTo','...oSo....oTo','...oSo....oTo','...oSo....oTo','..oooooooooooo','..oHHHHHHHHHHo','..oYYYYYYYYYYo','..oYYYYooYYYYo','..oYYYooooYYYo','..oYYYYooYYYYo','..oYYYYooYYYYo','..oLLLLLLLLLLo','..oooooooooooo'],{o:'#0b0f1a',S:'#e2e8f0',T:'#94a3b8',H:'#fde68a',Y:'#fbbf24',L:'#d97706'});
+IMG.shop=mkIcon(['','.....WWWWWW','....W......W','....W......W','..oooooooooooo','..oHHHHHHHHHHo','..oRRRRRRRRRRo','..oRRRYYYYRRRo','..oRRYYYYYYRRo','..oRRYYDDYYRRo','..oRRYYDDYYRRo','..oRRYYYYYYRRo','..oRRRYYYYRRRo','..oQQQQQQQQQQo','..oooooooooooo',''],{o:'#0b0f1a',W:'#e5e7eb',H:'#fda4af',R:'#ef4444',Q:'#b91c1c',Y:'#fde047',D:'#ca8a04'});
+IMG.cup=mkIcon(['','...oooooooooo','.oooHHYYYYLLooo','.o.oHHYYYYLLo.o','.o.oHHYYYYLLo.o','.oooHHYYYYLLooo','...oHHYYYYLLo','....oHYYYYLo','.....oYYYYo','......oYYo','......oLLo','....oooooooo','....oHYYYYLo','....oLLLLLLo','....oooooooo',''],{o:'#0b0f1a',H:'#fff3a0',Y:'#fbbf24',L:'#d97706'});
+IMG.podium=mkIcon(['.ooo','oYYYo.WWWWWWWWW','oYHYo.WWWWWWWWW','oYYYo.WWWWWWWWW','.ooo','.ooo','oSSSo.WWWWWWW','oSHSo.WWWWWWW','oSSSo.WWWWWWW','.ooo','.ooo','oBBBo.WWWWW','oBHBo.WWWWW','oBBBo.WWWWW','.ooo',''],{o:'#0b0f1a',Y:'#fbbf24',H:'#fff3a0',S:'#cbd5e1',B:'#d97706',W:'#e2e8f0'});
+IMG.help=mkIcon(['','..oooooooooooo','..oDBBBBBBBBBo','..oDBBBBBBBBBo','..oDBBBWWWBBBo','..oDBBWBBBWBBo','..oDBBBBBBWBBo','..oDBBBBBWBBBo','..oDBBBBWBBBBo','..oDBBBBBBBBBo','..oDBBBBWBBBBo','..oDBBBBBBBBBo','..oDBBBBBBBBBo','..oPPPPPPPPPPo','..oooooooooooo',''],{o:'#0b0f1a',D:'#1e3a8a',B:'#3b82f6',W:'#ffffff',P:'#fef3c7'});
+
+/* ---------- Stan gry ---------- */
+let rows,genTo,dur,maxDur,tier,over,cam,depth,parts,texts,cd,lock=-1,lockT=0,steer=null;
+const p={x:0,y:0,vx:0,vy:0,r:.34,a:Math.PI,w:0};
+
+function genRow(r){
+  const row=[],d=Math.min(r/BAL.oreRamp,1),hz=Math.min(r/BAL.lavaRamp,1),safe=r<BAL.safeRows,
+        hm=Math.exp(BAL.hpGrowth*r),upc=BAL.upChance*(activeCh&&activeCh.upMul||1)/(1+r*BAL.upFade),fxc=BAL.fixChance/(1+r*BAL.fixFade);
+  for(let c=0;c<COLS;c++){
+    let t=1;
+    if(r>2){
+      const x=Math.random();
+      const nth=r>=BAL.netherMin?BAL.netherBase+(BAL.netherMax-BAL.netherBase)*Math.min(1,(r-BAL.netherMin)/Math.max(1,BAL.oreRamp-BAL.netherMin)):0,
+            lapP=r>=BAL.lapisMin?BAL.lapisBase+(BAL.lapisMax-BAL.lapisBase)*d:0,
+            dia=nth+d*.06,lap=dia+lapP,gold=lap+.02+d*.08,iron=gold+.08+d*.05,coal=iron+.15,
+            tnt=coal+(safe?0:.02),lava=tnt+(safe?0:hz*BAL.lavaMax),up=lava+upc,fx=up+fxc;
+      t=x<nth?10:x<dia?5:x<lap?9:x<gold?4:x<iron?3:x<coal?2:x<tnt?6:x<lava?8:x<up?7:x<fx?11:1;
+    }
+    const k=T[t].k,mx=(!k||k==='lava')?Math.max(1,Math.round(T[t].hp*hm)):T[t].hp;
+    row.push({t,hp:mx,mx});
+  }
+  rows[r]=row;
+}
+function genRows(n){for(let i=0;i<n;i++)genRow(genTo++);}
+
+function newRun(t){
+  rows=[];genTo=0;tier=Math.min(t|0,TIERS.length-1);maxDur=maxHp();dur=maxDur;over=false;
+  cam=Math.max(-12,-.5-H/ts*.62);depth=0;parts=[];texts=[];cd=0;lock=-1;lockT=0;fuses=[];blasts=[];shake=0;flash=0;bombCd=0;RS={ore:{},wood:0,bombs:0,ups:0,lava:0,tnt:0,blast:0,t:0};chState=0;chBombs=activeCh&&activeCh.bombs||0;
+  genRows(30);
+  p.x=COLS/2;p.y=-.5;p.vx=0;p.vy=2;p.a=Math.PI;p.w=(Math.random()-.5)*2;
+  $('over').hidden=true;
+}
+
+function text(x,y,s,col){texts.push({x,y,s:tr(s),col,l:1});}
+function burst(c,r,col,n){
+  if(parts.length>900)return;
+  for(let i=0;i<n;i++)parts.push({x:c+.5,y:r+.5,vx:(Math.random()-.5)*8,vy:(Math.random()-.5)*8-1,l:1,d:1.8+Math.random()*1.8,s:2+Math.random()*3,col});
+}
+function earn(t,r){
+  const v=T[t].v;if(!(v>0))return 0;
+  const e=Math.max(1,Math.round(v*(1+tier*BAL.tierMul)*(1+r*BAL.coinGrowth)*BAL.coinScale));
+  save.coins+=e;RS.ore[t]=(RS.ore[t]||0)+1;return e;
+}
+function payout(t,r,c){const e=earn(t,r);if(e)text(c+.5,r,'+'+e,'#facc15');}
+function explode(r0,c0){
+  RS.tnt++;playSound('tnt');
+  for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){
+    const r=r0+dr,c=c0+dc,b=rows[r]&&rows[r][c];
+    if(!b)continue;
+    payout(b.t,r,c);burst(c,r,T[b.t].c,6);rows[r][c]=null;
+  }
+}
+function hit(r,c){
+  const b=rows[r][c],ty=T[b.t];
+  dur-=1;
+  b.hp-=TIERS[tier].dmg*dmgMul();
+  if(ty.k==='lava'){RS.lava++;const ld=BAL.lavaBase+Math.floor(r/BAL.lavaPer);dur-=ld;text(c+.5,r,'-'+ld+' HP','#ef4444');burst(c,r,'#ea580c',3);}
+  if(b.hp>0){playSound('hit');return false;}
+  rows[r][c]=null;
+  {const zc=ZB[b.z===undefined?zoneAt(r,c):b.z].c[1];
+   if(b.t===1)burst(c,r,zc,10);else if(TEXZ[b.t]){burst(c,r,ty.c,5);burst(c,r,zc,5);}else burst(c,r,ty.c,10);}
+  if(ty.k!=='tnt'&&ty.k!=='up'&&ty.k!=='fix')playSound((b.t>=3&&b.t<=5)||b.t>=9?'break_rare':'break_common');
+  if(ty.k==='tnt'){text(c+.5,r,'BOOM!','#ef4444');explode(r,c);}
+  else if(ty.k==='up'){
+    if(tier<TIERS.length-1){tier++;RS.ups++;save.tiers|=1<<tier;maxDur=maxHp();text(c+.5,r,'LEVEL UP!','#38bdf8');playSound('upgrade');}
+    else{text(c+.5,r,'NAPRAWA!','#4ade80');playSound('repair');}
+    dur=Math.min(maxDur,dur+maxDur*BAL.upHeal);
+  }else if(ty.k==='fix'){
+    const f=BAL.fixMin+Math.random()*(BAL.fixMax-BAL.fixMin);   // losowo od 10% do 60% maks. HP
+    dur=Math.min(maxDur,dur+maxDur*f);text(c+.5,r,'NAPRAWA +'+Math.round(f*100)+'%','#4ade80');playSound('repair');
+  }else payout(b.t,r,c);
+  return true;
+}
+
+/* ---------- Bomba: przycisk BOOM -> lont (~70 ms) -> wybuch w miejscu kilofa ---------- */
+let fuses=[],blasts=[],shake=0,flash=0,bombCd=0;
+const bombsLeft=()=>activeCh?(activeCh.bombs?chBombs:0):save.bombs;
+function useBomb(){
+  if(!running()||bombCd>0)return;
+  if(activeCh&&!activeCh.bombs)return;                       // w wyzwaniach bomba BOOM nie działa (poza „Wielkim wybuchem”)
+  if(bombsLeft()<=0){text(p.x,p.y-.9,'Brak bomb!','#f87171');bombCd=.4;return;}
+  if(activeCh)chBombs--;else{save.bombs--;persist();}
+  RS.bombs++;bombCd=BOMB.cd;
+  fuses.push({x:p.x,y:p.y,t:BOMB.fuse});
+  playSound('fuse');
+}
+function fireball(x,y){
+  const cols=['#fff7bf','#fde047','#fb923c','#ef4444','#7c2d12'];
+  for(let i=0;i<46;i++){
+    const a=Math.random()*6.283,sp=3+Math.random()*13;
+    parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1,l:1,d:1.3+Math.random()*1.4,s:3+Math.random()*6,col:cols[(Math.random()*cols.length)|0]});
+  }
+}
+function detonate(x,y){
+  const R=BOMB.r,cr=Math.floor(y),cc=Math.floor(x),lim=R*R+R,tnts=[];   // koło o promieniu 6 kratek w każdą stronę
+  let gain=0,n=0;
+  playSound('bomb');
+  for(let dr=-R;dr<=R;dr++)for(let dc=-R;dc<=R;dc++){
+    if(dr*dr+dc*dc>lim)continue;
+    const r=cr+dr,c=cc+dc,row=rows[r];
+    if(!row||c<0||c>=COLS||!row[c])continue;
+    const b=row[c],ty=T[b.t];
+    gain+=earn(b.t,r);n++;
+    burst(c,r,b.t===1?ZB[b.z===undefined?zoneAt(r,c):b.z].c[1]:ty.c,3);
+    if(ty.k==='tnt')tnts.push([r,c]);
+    row[c]=null;
+  }
+  for(const [r,c] of tnts){text(c+.5,r,'BOOM!','#ef4444');explode(r,c);}   // TNT w zasięgu odpala swój wybuch
+  RS.blast=Math.max(RS.blast,n);
+  fireball(x,y);
+  blasts.push({x,y,l:1});shake=.4;flash=.5;
+  text(x,y-.6,'BOOM!','#fde047');
+  if(gain>0)text(x,y+.3,'+'+gain,'#facc15');
+  return n;
+}
+
+/* ---------- Wyzwania: wybierasz JEDNO na grę, liczy się tylko ono; nagroda w monetach, jednorazowa ---------- */
+let RS={ore:{},wood:0,bombs:0,ups:0,lava:0,tnt:0,blast:0,t:0};   // statystyki bieżącego runu
+// activeCh i chState są zadeklarowane na początku skryptu
+/* star = trudność (1–3), goal = cel, rw = nagroda, get = bieżący wynik, fail = warunek porażki (zwraca powód),
+   tier = wymuszony kilof na start (darmowy), upMul = mnożnik częstości stołów awansu, lim = limit czasu (s), u = jednostka */
+const CH=[
+  {id:'lapis',n:'Łowca Lazurytu',d:'Zbierz 12 Lazurytu w jednej grze.',goal:12,rw:3000,star:2,ic:'b9',get:()=>RS.ore[9]||0},
+  {id:'gold',n:'Złota gorączka',d:'Zbierz 50 sztuk złota w jednej grze.',goal:50,rw:2500,star:2,ic:'b4',get:()=>RS.ore[4]||0},
+  {id:'dia',n:'Diamentowa żyła',d:'Zbierz 15 diamentów w jednej grze.',goal:15,rw:2500,star:2,ic:'b5',get:()=>RS.ore[5]||0},
+  {id:'mix',n:'Kolekcjoner rud',d:'Zbierz w jednej grze po 8 sztuk każdej rudy: węgla, żelaza, złota, diamentu i lazurytu.',goal:5,rw:3000,star:2,ic:'b3',
+   get:()=>[2,3,4,5,9].filter(t=>(RS.ore[t]||0)>=8).length,lab:()=>'rudy '+[2,3,4,5,9].filter(t=>(RS.ore[t]||0)>=8).length+' / 5 (po 8)'},
+  {id:'wood',n:'Drewniany twardziel',d:'Dokop na 50 m drewnianym kilofem (dostajesz go za darmo). Awans na lepszy kilof kończy wyzwanie.',goal:50,rw:1500,star:2,ic:'p0',u:' m',tier:0,
+   get:()=>RS.wood,fail:()=>tier>0?'Awansowałeś kilof':false},
+  {id:'evo',n:'Ewolucja',d:'Zacznij drewnianym kilofem i awansuj na obsydianowy w jednej grze – przez bloki crafting (w tym wyzwaniu jest ich kilka razy więcej).',goal:5,rw:2500,star:2,ic:'p5',tier:0,upMul:4,
+   get:()=>RS.ups,lab:()=>TIERS[tier].name+' · awanse '+RS.ups+' / 5'},
+  {id:'deep',n:'Głębinowiec',d:'Dotrzyj na 400 m w jednej grze.',goal:400,rw:1800,star:2,ic:'p3',u:' m',get:()=>depth},
+  {id:'blast',n:'Wielki wybuch',d:'Jedną bombą zniszcz co najmniej 70 bloków naraz – najlepiej w świeżej, nietkniętej skale, w środku planszy. W tym wyzwaniu dostajesz '+CHB+' bomb za darmo.',goal:70,rw:1500,star:3,ic:'bomb',bombs:CHB,get:()=>RS.blast,
+   lab:()=>Math.min(70,RS.blast)+' / 70 bloków · bomby: '+chBombs,fail:()=>RS.bombs>=CHB&&!fuses.length?'Skończyły się bomby':false},
+  {id:'tnt',n:'Piromaniak',d:'Wysadź 15 skrzyń TNT w jednej grze (kopiąc je albo bombą).',goal:15,rw:1000,star:1,ic:'b6',get:()=>RS.tnt},
+  {id:'lava',n:'Zimna krew',d:'Dokop na 80 m ani razu nie uderzając w lawę. Jedno dotknięcie i po wyzwaniu.',goal:80,rw:1800,star:3,ic:'b8',u:' m',
+   get:()=>depth,fail:()=>RS.lava>0?'Dotknąłeś lawy':false},
+  {id:'sprint',n:'Sprinter',d:'Dokop na 100 m w 50 sekund. Pauza nie liczy się do czasu.',goal:100,rw:1500,star:2,ic:'p4',u:' m',lim:50,
+   get:()=>depth,fail:()=>RS.t>50?'Czas minął':false,lab:()=>Math.min(100,depth)+' / 100 m · '+Math.max(0,Math.ceil(50-RS.t))+' s'},
+  {id:'nether',n:'Łowca Netherytu',d:'Wykop 2 sztuki Netherytu w jednej grze (pojawia się od 200 m).',goal:2,rw:4000,star:3,ic:'b10',get:()=>RS.ore[10]||0}
+];
+const toastQ=[];let toastT=0;
+function toast(h){toastQ.push(h);}
+function chDone(){return CH.filter(c=>save.ch[c.id]).length;}
+function chVal(c){return Math.min(c.goal,c.get());}
+function chCheck(){
+  const c=activeCh;if(!c||chState)return;                 // liczy się tylko wyzwanie wybrane na tę grę
+  const v=chVal(c);
+  if(v>(save.chb[c.id]||0))save.chb[c.id]=v;
+  if(v>=c.goal){
+    chState=1;
+    if(!save.ch[c.id]){save.ch[c.id]=1;save.coins+=c.rw;persist();}
+    toast('<b>🏆 Wyzwanie ukończone!</b>'+c.n+' · +'+c.rw+' 🪙');
+    text(p.x,p.y-1.1,'WYZWANIE! +'+c.rw,'#fde047');playSound('upgrade');
+    return;
+  }
+  const f=c.fail&&c.fail();
+  if(f){chState=2;toast('<b>💥 Wyzwanie nieudane</b>'+c.n+' · '+f);playSound('tnt');}
+}
+function chLabel(){
+  const c=activeCh;if(!c)return '';
+  if(chState===1)return '🏆 '+c.n+' · zaliczone!';
+  if(chState===2)return '✗ '+c.n+' · nieudane';
+  return '🎯 '+c.n+' · '+(c.lab?c.lab():chVal(c)+(c.u||'')+' / '+c.goal+(c.u||''));
+}
+function renderChal(){
+  $('cp').textContent='Ukończone: '+chDone()+' / '+CH.length+'. Wybierasz jedno wyzwanie na grę i tylko ono się liczy. Nagroda wpada od razu po ukończeniu (raz). W wyzwaniach nie działają sklep, ulepszenia kilofa ani bomba BOOM. Wyjątek: wyzwanie Wielki wybuch daje bomby za darmo.';
+  $('cl').innerHTML=CH.map((c,i)=>{
+    const done=!!save.ch[c.id],v=done?c.goal:Math.min(c.goal,save.chb[c.id]||0),pct=Math.round(v/c.goal*100),u=c.u||'';
+    return '<div class="item'+(done?' done':'')+'"><div class="in"><img class="ic" src="'+IMG[c.ic]+'"><div><b>'+c.n+'<span class="st">'+'★'.repeat(c.star)+'☆'.repeat(3-c.star)+'</span></b><small>'+c.d+'</small>'+
+      '<div class="pg"><i style="width:'+pct+'%"></i></div><em>'+(done?'Ukończone':'Najlepszy wynik: '+v+u+' / '+c.goal+u)+'</em></div></div>'+
+      (done?'<div class="rw">✓</div>':'<button class="go" data-i="'+i+'">▶ Graj<span>+'+c.rw+' 🪙</span></button>')+'</div>';
+  }).join('');
+}
+function startChallenge(c){
+  if(!c||save.ch[c.id])return;
+  getAudioContext();activeCh=c;chState=0;$('chal').hidden=true;$('menu').hidden=true;
+  if(c.tier!==undefined)newRun(c.tier);else openPick();   // „wymuszony” kilof: start od razu, bez wyboru
+}
+$('chb').addEventListener('click',()=>{renderChal();$('chal').hidden=false;});
+$('clsc').addEventListener('click',()=>{$('chal').hidden=true;});
+$('cl').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;startChallenge(CH[+b.dataset.i]);});
+
+/* ---------- Fizyka ruchu kilofa ---------- */
+const HR=.07,KW=120,KD=12,REST=.5,MU=.3,INERT=.08;
+const HB=[0,.25,.5,.75,1].map(t=>[(t-.5)*.54,(9*Math.pow(2*t-1,2)-4)*.0234]).concat([.16,.28,.4,.5].map(y=>[0,y]));
+function step(dt){
+  if(!(Math.abs(p.x)<1e4&&Math.abs(p.y)<1e6&&Math.abs(p.vx)<1e3&&Math.abs(p.vy)<1e3&&Math.abs(p.w)<1e3)){
+    p.x=COLS/2;p.vx=0;p.vy=0;p.w=0;p.a=Math.PI;if(!Number.isFinite(p.y))p.y=depth;
+  }
+  p.vy=Math.max(-12,p.vy);
+  p.vy=Math.min(p.vy+30*dt,8);
+  p.vx-=p.vx*1.3*dt;
+  if(steer!==null){p.vx+=(steer-p.x)*12*dt;p.vx-=p.vx*4*dt;}
+  p.vx=Math.max(-5,Math.min(5,p.vx));
+  
+  const sp=Math.hypot(p.vx,p.vy),tg=p.vy>.5?Math.atan2(p.vy,p.vx):Math.PI/2;
+  let ea=tg-(p.a-Math.PI/2);ea=Math.atan2(Math.sin(ea),Math.cos(ea));
+  p.w+=(KW*ea*Math.min(1,.3+sp/5)-KD*p.w)*dt;
+  p.w=Math.max(-14,Math.min(14,p.w));
+  p.x+=p.vx*dt;p.y+=p.vy*dt;p.a+=p.w*dt;
+  if(p.x<p.r){p.x=p.r;p.vx=Math.abs(p.vx)*.3;}
+  if(p.x>COLS-p.r){p.x=COLS-p.r;p.vx=-Math.abs(p.vx)*.3;}
+  
+  const cs=Math.cos(p.a),sn=Math.sin(p.a),cons=[];
+  let best=null;
+  for(const [hx,hy] of HB){
+    const rx=hx*cs-hy*sn,ry=hx*sn+hy*cs;
+    let cx=p.x+rx;
+    if(cx<HR){p.x+=HR-cx;if(p.vx<0)p.vx*=-.3;cx=HR;}
+    else if(cx>COLS-HR){p.x-=cx-(COLS-HR);if(p.vx>0)p.vx*=-.3;cx=COLS-HR;}
+    const cy=p.y+ry;
+    for(let r=Math.floor(cy-HR);r<=Math.floor(cy+HR);r++){
+      const row=rows[r];if(!row)continue;
+      for(let c=Math.floor(cx-HR);c<=Math.floor(cx+HR);c++){
+        if(!row[c])continue;
+        const dx=cx-Math.max(c,Math.min(cx,c+1)),dy=cy-Math.max(r,Math.min(cy,r+1)),d=Math.sqrt(dx*dx+dy*dy);
+        if(d<HR){
+          const o=d>1e-6?{nx:dx/d,ny:dy/d}:{nx:0,ny:-1};
+          o.r=r;o.c=c;o.pen=HR-d;o.rx=rx;o.ry=ry;cons.push(o);
+          if(!best||o.pen>best.pen)best=o;
+        }
+      }
+    }
+  }
+  if(!best){lock=-1;return;}
+  p.x+=best.nx*best.pen;p.y+=best.ny*best.pen;
+  let dead=false;
+  const k=best.r*16+best.c;
+  if(k!==lock||lockT>.25){
+    const again=k===lock;
+    dead=hit(best.r,best.c);lock=k;lockT=0;
+    p.w+=(Math.random()-.5)*12;p.vx+=(Math.random()-.5)*10;
+    if(again&&best.ny<-.3)p.vy=Math.min(p.vy,-3.2-Math.random()*1.2);
+  }else lockT+=dt;
+  for(const o of cons){
+    if(!rows[o.r][o.c])continue;
+    const vcx=p.vx-p.w*o.ry,vcy=p.vy+p.w*o.rx,vn=vcx*o.nx+vcy*o.ny;
+    if(vn>=0)continue;
+    const rn=o.rx*o.ny-o.ry*o.nx,j=-(1+REST)*vn/(1+rn*rn/INERT);
+    p.vx+=j*o.nx;p.vy+=j*o.ny;p.w+=rn*j/INERT;
+    const tx=-o.ny,ty=o.nx,vt=vcx*tx+vcy*ty,rt=o.rx*ty-o.ry*tx,mx=MU*j;
+    const jt=Math.max(-mx,Math.min(mx,-vt/(1+rt*rt/INERT)));
+    p.vx+=jt*tx;p.vy+=jt*ty;p.w+=rt*jt/INERT;
+  }
+  if(dead){p.vy=Math.min(p.vy*.15,-1.6);p.vx*=.6;p.w*=.5;}
+}
+
+/* ---------- Renderowanie grafiki ---------- */
+function drawBlock(b,r,c){
+  const x=Math.floor(c*ts),y=Math.floor(r*ts),w=Math.floor((c+1)*ts)-x,h=Math.floor((r+1)*ts)-y;
+  let img;
+  if(b.t===8)img=LAVA[LF];
+  else{const set=TEXZ[b.t];if(set){if(b.z===undefined)b.z=zoneAt(r,c);img=set[b.z];}else img=BS[b.t];}
+  ctx.drawImage(img,x,y,w,h);
+  if(r===0)ctx.drawImage(GRASS,x,y,w,h);
+  if(b.hp<b.mx){
+    const k=Math.max(0,b.hp/b.mx);
+    ctx.drawImage(CR[Math.min(4,(1-k)*5|0)],x,y,w,h);
+    ctx.fillStyle='rgba(0,0,0,.85)';ctx.fillRect(x+4,y+h-9,w-8,6);
+    ctx.fillStyle=k>.5?'#4ade80':k>.25?'#facc15':'#f87171';ctx.fillRect(x+5,y+h-8,(w-10)*k,4);
+  }
+}
+const EM=[];   // źródła światła w tej klatce: [x,y,promień(kafle),siła dziury w ciemności,'r,g,b',alfa poświaty,rodzaj,ziarno]
+function solid(r,c){return c<0||c>=COLS||!!(r>=0&&rows[r]&&rows[r][c]);}
+function drawCave(r,c){
+  const x=Math.floor(c*ts),y=Math.floor(r*ts),w=Math.floor((c+1)*ts)-x,h=Math.floor((r+1)*ts)-y,z=zoneAt(r,c);
+  ctx.drawImage(WALLZ[z][(hash2(r,c,3)*4)|0],x,y,w,h);
+  const up=solid(r-1,c)&&r>0,dn=solid(r+1,c),pu=Math.max(2,Math.round(ts/11)),hd=hash2(r,c,9),cx=x+w/2;
+  if(hd<.025){                                                           // pochodnia na ścianie
+    const ty=y+h*.38;ctx.drawImage(TORCH,Math.round(cx-pu),Math.round(ty),pu*2,pu*7);
+    EM.push([cx,ty,3.6,.95,'255,150,50',.30,'t',hd*40]);
+  }else if(hd<.05&&z>=2){                                                // świecący kryształ
+    const P=CRYP[z],ch=CRY[z];ctx.drawImage(ch,Math.round(cx-pu*3.5),y+h-pu*8-2,pu*7,pu*8);
+    EM.push([cx,y+h*.7,2.4,.8,P[3],.22,'c',0]);
+  }else if(hd<.14&&z>=1){                                                // stalaktyt / stalagmit
+    if(up)ctx.drawImage(STAL[z],Math.round(cx-pu*3.5),y,pu*7,pu*6);
+    else if(dn)ctx.drawImage(STAG[z],Math.round(cx-pu*3.5),y+h-pu*6,pu*7,pu*6);
+  }else if(hd<.21&&z<=3&&up)ctx.drawImage(MOSS,x,y,w,Math.round(w/16*5));   // mech
+  if(up)ctx.drawImage(AO.t,x,y,w,h);
+  if(solid(r,c-1))ctx.drawImage(AO.l,x,y,w,h);
+  if(solid(r,c+1))ctx.drawImage(AO.r,x,y,w,h);
+  if(dn)ctx.drawImage(AO.b,x,y,w,h);
+}
+function drawPick(){
+  ctx.save();
+  ctx.translate(p.x*ts,p.y*ts);
+  ctx.rotate(p.a);
+  const s=ts*.75;
+  ctx.drawImage(PS[tier],-s/2,-s*.25,s,s);
+  ctx.restore();
+}
+
+/* Niebo: pasy z ditheringiem (cache), kwadratowe słońce, chmury, góry i wzgórza z paralaksą, drzewa, kwiaty */
+const SKYC=['#c9ecff','#b2e0fb','#98d2f7','#7ec3f2','#64b3ec','#4ea3e4','#3d93da','#3084cf'];
+let skyKey='',skyCv=null;
+function skyCache(){
+  const key=W+'|'+ts;if(skyKey===key)return skyCv;
+  const bh=Math.round(ts*.9),u=Math.max(2,Math.round(ts/8)),n=SKYC.length+1;
+  skyKey=key;skyCv=document.createElement('canvas');skyCv.width=Math.ceil(W);skyCv.height=bh*n;
+  const g=skyCv.getContext('2d');
+  for(let i=0;i<n;i++){
+    const yb=skyCv.height-i*bh,yt=yb-bh,c=SKYC[Math.min(i,SKYC.length-1)],c2=SKYC[Math.min(i+1,SKYC.length-1)];
+    g.fillStyle=c;g.fillRect(0,yt,skyCv.width,bh);
+    if(i<n-1){g.fillStyle=c2;for(let k=0;k<2;k++)for(let x=(k&1)*u;x<skyCv.width;x+=2*u)g.fillRect(x,yt+k*u,u,u);}
+  }
+  return skyCv;
+}
+function ridge(base,hmax,col,top,seed,st,sharp,sy){
+  for(let x=0;x<W;x+=st){
+    const a=Math.sin(x*.011+seed),b=Math.sin(x*.029+seed*2.3),c=Math.sin(x*.067+seed*.5);
+    const n=sharp?(1-Math.abs(a))*.6+(1-Math.abs(b))*.3+(.5+.5*c)*.1:(.5+.5*a)*.55+(.5+.5*b)*.3+(.5+.5*c)*.15;
+    const t=Math.round((base-hmax*(.25+.75*n))/st)*st;
+    if(sy>t){ctx.fillStyle=col;ctx.fillRect(x,t,st,sy-t);ctx.fillStyle=top;ctx.fillRect(x,t,st,st);}
+  }
+}
+function drawSky(sy){
+  const u=Math.max(2,Math.round(ts/8)),tm=performance.now()/1000,sc=skyCache();
+  ctx.fillStyle=SKYC[SKYC.length-1];ctx.fillRect(0,0,W,sy);
+  ctx.drawImage(sc,0,sy-sc.height);
+  {const s=Math.round(ts*.5),x=Math.round(W*.74),y=Math.round(sy-ts*6.2);                  // słońce (kwadratowe jak w Minecrafcie)
+   {const R=s*5.5,gr=ctx.createRadialGradient(x,y,s*.7,x,y,R);
+    gr.addColorStop(0,'rgba(255,248,190,.60)');gr.addColorStop(.3,'rgba(255,244,175,.26)');gr.addColorStop(1,'rgba(255,244,175,0)');
+    ctx.fillStyle=gr;ctx.fillRect(x-R,y-R,R*2,R*2);}
+   ctx.fillStyle='#fff7bf';ctx.fillRect(x-s,y-s,s*2,s*2);
+   ctx.fillStyle='#ffe566';ctx.fillRect(Math.round(x-s*.62),Math.round(y-s*.62),Math.round(s*1.24),Math.round(s*1.24));}
+  const cu=Math.max(2,Math.round(ts/7));                                                    // chmury
+  [[0,0,5.2,.8],[1,.37,7.6,1],[2,.71,4.4,.7],[0,.15,9.3,.9],[1,.55,8.4,.6]].forEach(([k,fx,dy,s],i)=>{
+    const im=CL[k],q=Math.max(1,Math.round(cu*s)),w=im.width*q,L=W+w*2,x=((fx*L+tm*(5+i*2))%L)-w;
+    ctx.drawImage(im,Math.round(x),Math.round(sy-ts*dy),w,im.height*q);
+  });
+  ridge(sy*.80,ts*3.2,'#8db9d6','#a9cde4',1.7,u*2,true,sy);                                 // dalekie góry
+  ridge(sy*.92,ts*2.0,'#3f9a45','#5cbc58',4.1,u,false,sy);                                  // bliższe wzgórza
+  const tu=Math.max(2,Math.round(ts/6));                                                    // drzewa, krzaki, kwiaty
+  [[.55,0,1],[6.85,1,.85]].forEach(([c,k,s])=>{const q=Math.max(1,Math.round(tu*s)),im=TREES[k];ctx.drawImage(im,Math.round(c*ts-im.width*q/2),sy-im.height*q+q,im.width*q,im.height*q);});
+  [[2.2,.75],[5.5,.75]].forEach(([c,s])=>{const q=Math.max(1,Math.round(tu*s));ctx.drawImage(BUSH,Math.round(c*ts),sy-BUSH.height*q+q,BUSH.width*q,BUSH.height*q);});
+  const fu=Math.max(2,Math.round(ts/12));
+  for(let c=0;c<COLS*2;c++){
+    const hh=hash2(c,1,77),x=Math.round(c*ts/2+hh*ts*.3);
+    if(hh<.45)ctx.drawImage(TUFT,x,sy-TUFT.height*fu+1,TUFT.width*fu,TUFT.height*fu);
+    else if(hh<.7){const im=FLW[(hash2(c,2,78)*3)|0];ctx.drawImage(im,x,sy-im.height*fu+1,im.width*fu,im.height*fu);}
+  }
+}
+
+/* Ciemność jaskini z kręgiem światła wokół kilofa, pochodni, kryształów i lawy */
+const DKC=[[0,[8,12,28]],[420,[8,8,34]],[700,[18,6,38]],[1000,[40,8,10]]];
+function dkCol(d){
+  let i=0;while(i<DKC.length-1&&d>=DKC[i+1][0])i++;
+  const A=DKC[i],B=DKC[Math.min(i+1,DKC.length-1)],t=B[0]===A[0]?0:Math.min(1,(d-A[0])/(B[0]-A[0]));
+  return A[1].map((v,k)=>Math.round(v+(B[1][k]-v)*t));
+}
+function darkAmount(){return Math.min(.66,Math.max(0,(p.y-4)/300*.66));}
+function holeAt(x,y,R,k){
+  const g=dkx,gr=g.createRadialGradient(x,y,R*.08,x,y,R);
+  gr.addColorStop(0,'rgba(0,0,0,'+k+')');gr.addColorStop(.5,'rgba(0,0,0,'+(k*.7)+')');gr.addColorStop(1,'rgba(0,0,0,0)');
+  g.fillStyle=gr;g.fillRect(x-R,y-R,R*2,R*2);
+}
+function drawDark(sy){
+  const a=darkAmount();if(a<.012)return;
+  const col=dkCol(p.y),k=1/LS,g=dkx;
+  g.globalCompositeOperation='source-over';g.clearRect(0,0,dk.width,dk.height);
+  g.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+a.toFixed(3)+')';g.fillRect(0,0,dk.width,dk.height);
+  g.globalCompositeOperation='destination-out';
+  holeAt(p.x*ts*k,(p.y*ts+sy)*k,ts*5.6*k,1);
+  for(const e of EM)holeAt(e[0]*k,(e[1]+sy)*k,e[2]*ts*k,e[3]);
+  g.globalCompositeOperation='source-over';
+  ctx.drawImage(dk,0,0,dk.width*LS,dk.height*LS);
+}
+const GLC={};
+function glowSpr(col){
+  let s=GLC[col];
+  if(!s){s=GLC[col]=document.createElement('canvas');s.width=s.height=64;
+    const g=s.getContext('2d'),gr=g.createRadialGradient(32,32,3,32,32,32);
+    gr.addColorStop(0,'rgba('+col+',1)');gr.addColorStop(1,'rgba('+col+',0)');g.fillStyle=gr;g.fillRect(0,0,64,64);}
+  return s;
+}
+function drawEmissive(){
+  const tm=performance.now(),pu=Math.max(2,Math.round(ts/11));
+  ctx.globalCompositeOperation='lighter';ctx.imageSmoothingEnabled=true;
+  for(const e of EM){
+    const R=e[2]*ts*.42;
+    ctx.globalAlpha=e[5];ctx.drawImage(glowSpr(e[4]),e[0]-R,e[1]-R,R*2,R*2);
+  }
+  const a=darkAmount();
+  if(a>.05&&!over){const R=ts*2.4;ctx.globalAlpha=a*.2;ctx.drawImage(glowSpr('255,190,120'),p.x*ts-R,p.y*ts-R,R*2,R*2);}
+  ctx.globalAlpha=1;ctx.imageSmoothingEnabled=false;ctx.globalCompositeOperation='source-over';
+  for(const e of EM)if(e[6]==='t')ctx.drawImage(FLAME[((tm/120+e[7])|0)%3],Math.round(e[0]-pu*2),Math.round(e[1]-pu*3.4),pu*4,pu*4);
+}
+function draw(){
+  ctx.fillStyle='#070a12';ctx.fillRect(0,0,W,H);
+  ctx.save();
+  if(shake>0){const a=Math.min(1,shake/.3)*Math.max(5,ts*.24);ctx.translate((Math.random()-.5)*2*a,(Math.random()-.5)*2*a);}
+  const sy=-Math.round(cam*ts);if(sy>0)drawSky(sy);
+  ctx.save();ctx.translate(0,sy);
+  const r0=Math.max(0,Math.floor(cam)),r1=Math.min(genTo-1,Math.ceil(cam+H/ts));
+  LF=(performance.now()/LAVA_MS|0)%8;
+  EM.length=0;
+  for(let r=r0;r<=r1;r++)for(let c=0;c<COLS;c++){
+    const b=rows[r][c];
+    if(b){drawBlock(b,r,c);if(b.t===8)EM.push([(c+.5)*ts,(r+.5)*ts,2.6,.9,'255,110,20',.30,'l',0]);}
+    else drawCave(r,c);
+  }
+  for(const b of blasts)EM.push([b.x*ts,b.y*ts,BOMB.r+3.5-3*(1-b.l),1,'255,190,110',.6*b.l,'b',0]);   // wybuch rozświetla jaskinię
+  for(const q of parts){
+    ctx.globalAlpha=Math.max(0,q.l);ctx.fillStyle=q.col;
+    ctx.fillRect(Math.round(q.x*ts),Math.round(q.y*ts),q.s,q.s);
+  }
+  ctx.globalAlpha=1;
+  ctx.restore();
+  drawDark(sy);
+  ctx.save();ctx.translate(0,sy);
+  drawEmissive();
+  for(const f of fuses){const s=ts*.9;ctx.drawImage(BOMBSPR,f.x*ts-s/2,f.y*ts-s/2,s,s);}   // bomba z palącym się lontem
+  if(!over)drawPick();
+  if(blasts.length){
+    ctx.imageSmoothingEnabled=true;ctx.globalCompositeOperation='lighter';
+    for(const b of blasts){
+      const k=1-b.l,R=ts*(2+5*Math.min(1,k*2.4));
+      ctx.globalAlpha=Math.min(1,b.l*1.3);ctx.drawImage(glowSpr('255,200,110'),b.x*ts-R,b.y*ts-R,R*2,R*2);
+    }
+    ctx.globalCompositeOperation='source-over';ctx.imageSmoothingEnabled=false;
+    for(const b of blasts){                                                                  // fala uderzeniowa
+      const k=1-b.l,rr=(BOMB.r+.5)*ts*Math.min(1,k*2.2);
+      ctx.globalAlpha=Math.max(0,b.l*.9);ctx.strokeStyle='#ffe9b0';ctx.lineWidth=Math.max(2,ts*.14*b.l);
+      ctx.beginPath();ctx.arc(b.x*ts,b.y*ts,rr,0,6.2832);ctx.stroke();
+    }
+    ctx.globalAlpha=1;ctx.strokeStyle='#000';
+  }
+  ctx.font='bold 16px sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#000';
+  for(const t of texts){
+    ctx.globalAlpha=Math.max(0,t.l);ctx.fillStyle=t.col;
+    ctx.strokeText(t.s,t.x*ts,t.y*ts);ctx.fillText(t.s,t.x*ts,t.y*ts);
+  }
+  ctx.globalAlpha=1;
+  ctx.restore();
+  ctx.restore();
+  if(flash>0){ctx.fillStyle='rgba(255,236,190,'+(Math.min(1,flash)*.55).toFixed(3)+')';ctx.fillRect(0,0,W,H);}
+}
+
+/* ---------- Obsługa interfejsu (UI) ---------- */
+function set(id,v){const e=$(id);if(e._v!==v){e._v=v;e.textContent=v;}}
+function ui(){
+  set('co',Math.floor(save.coins));
+  set('de',depth+'m');
+  set('zn','Strefa: '+zoneOf(depth));
+  set('hint',tiltOn()?'Przechylaj telefon w lewo i w prawo, żeby sterować kilofem':'Przeciągnij palcem, żeby sterować kilofem');
+  if(tiltOn()&&depth>=3)$('hint').style.opacity=0;
+  set('hp',save.infHp?'∞':Math.max(0,Math.ceil(dur)));
+  set('ti',TIERS[tier].name);
+  if($('tic')._t!==tier){$('tic')._t=tier;$('tic').src=IMG['p'+tier];}
+  $('ti').style.color=TIERS[tier].color;
+  $('hpf').style.width=Math.max(0,dur/maxDur*100)+'%';
+  {const sb=!$('menu').hidden||!$('pause').hidden;if($('by')._v!==sb){$('by')._v=sb;$('by').hidden=!sb;}}
+  {const t=chLabel(),e=$('cb'),cl=!activeCh?'':chState===1?'ok':chState===2?'bad':'';
+   if(e._t!==t){e._t=t;e.textContent=t;}
+   if(e._h!==!activeCh){e._h=!activeCh;e.hidden=!activeCh;}
+   if(e._c!==cl){e._c=cl;e.className='panel chip'+(cl?' '+cl:'');}}
+  {const nb=bombsLeft();set('bc',nb);const e=nb<=0;if($('boom')._e!==e){$('boom')._e=e;$('boom').className=e?'empty':'';}}
+  {const hb=!!activeCh&&!activeCh.bombs;if($('boom')._hb!==hb){$('boom')._hb=hb;$('boom').hidden=hb;}}                 // w wyzwaniach: bez przycisku BOOM
+  {const lk=!!activeCh;if($('sh')._lk!==lk){$('sh')._lk=lk;$('sh').hidden=lk;$('shp1').hidden=lk;$('shp2').hidden=lk;}}   // w wyzwaniach: bez sklepu
+}
+
+const UP=[
+  {k:'maxHpLvl',n:'Wzmocniony Trzonek',d:'+'+BAL.hpStep+' Max HP kilofa',max:40,ic:'p0',cost:l=>Math.round(40*Math.pow(1.28,l-1))},
+  {k:'dmgLvl',n:'Ostra Końcówka',d:'+11% obrażeń zadawanych blokom',max:40,ic:'p4',cost:l=>Math.round(80*Math.pow(1.30,l-1))},
+  {k:'bombs',n:'Bomba',d:'Wybucha '+BOMB.r+' kratek w każdą stronę od kilofa (przycisk BOOM w grze). Cena rośnie z każdą kupioną w tej grze.',max:BOMB.max,ic:'bomb',bomb:true,cost:()=>BOMB.base+BOMB.step*bombBuys}
+];
+for(const u of UP)save[u.k]=Math.min(save[u.k],u.max);
+let shopSig='',pickSig='';
+function renderShop(){
+  shopSig=shopState();
+  $('sc').textContent=Math.floor(save.coins);
+  $('ul').innerHTML=UP.map((u,i)=>{
+    const l=save[u.k],mx=l>=u.max,c=u.cost(l);
+    return '<div class="item"><div class="in"><img class="ic" src="'+IMG[u.ic]+'"><div><b>'+u.n+'</b><small>'+u.d+'</small><em>'+(u.bomb?'Masz: ':'Lvl ')+l+' / '+u.max+'</em></div></div>'+
+      '<button data-i="'+i+'"'+(mx||save.coins<c?' disabled':'')+'>'+(mx?'MAX':(l&&!u.bomb?'Ulepsz':'Kup')+'<span>'+c+' 🪙</span>')+'</button></div>';
+  }).join('');
+}
+$('ul').addEventListener('click',e=>{
+  const b=e.target.closest('button');
+  if(!b||b.disabled)return;
+  const u=UP[+b.dataset.i],c=u.cost(save[u.k]);
+  if(save[u.k]>=u.max||save.coins<c)return;
+  save.coins-=c;save[u.k]++;if(u.bomb)bombBuys++;
+  playSound('upgrade');
+  if(u.k==='maxHpLvl'){maxDur=maxHp();dur=Math.min(maxDur,dur+BAL.hpStep);}
+  persist();renderShop();
+});
+const openShop=()=>{if(activeCh)return;getAudioContext();renderShop();$('shop').hidden=false;};
+$('sh').addEventListener('click',openShop);
+$('shp1').addEventListener('click',openShop);
+$('shp2').addEventListener('click',openShop);
+$('cls').addEventListener('click',()=>{$('shop').hidden=true;if(!$('pick').hidden)renderPick();});
+const PICK=[0,1,2,3,4,5],PRICE={0:0,1:80,2:300,3:1500,4:7000,5:30000},NEED={0:0,1:40,2:100,3:220,4:420,5:700};
+function renderPick(){
+  pickSig=pickState();
+  $('pc').textContent=Math.floor(save.coins);
+  $('pn').textContent=(activeCh?'🎯 Wyzwanie: '+activeCh.n+' – '+activeCh.d+' ':'')+'Rekord: '+save.best+' m. Kilof kupujesz przed każdym runem, lepsze odblokowujesz głębokością.';
+  $('pl').innerHTML=PICK.map(i=>{
+    const t=TIERS[i],pr=PRICE[i],lock=save.best<NEED[i];
+    const lab=lock?'🔒 '+NEED[i]+' m':(pr?'Kup<span>'+pr+' 🪙</span>':'Kop');
+    return '<div class="item"><div class="in"><img class="ic" src="'+IMG['p'+i]+'"><div><b style="color:'+t.color+'">'+t.name+'</b><small>Obrażenia '+t.dmg+' · monety ×'+(1+i*BAL.tierMul)+'</small><em>HP '+hpFor(i)+'</em></div></div><button data-i="'+i+'"'+(lock||save.coins<pr?' disabled':'')+'>'+lab+'</button></div>';
+  }).join('');
+}
+function openPick(){renderPick();$('over').hidden=true;$('pick').hidden=false;}
+$('pl').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||b.disabled)return;
+  const i=+b.dataset.i;
+  if(save.best<NEED[i]||save.coins<PRICE[i])return;
+  save.coins-=PRICE[i];save.tiers|=1<<i;persist();$('pick').hidden=true;playSound('upgrade');newRun(i);
+});
+let resetCtx='pause';
+// reset gry: tylko przez kod TESER w oknie „Kod” (przycisków Reset już nie ma)
+
+$('no').addEventListener('click',()=>{$('conf').hidden=true;});
+$('yes').addEventListener('click',()=>{
+  Object.assign(save,{coins:0,maxHpLvl:1,dmgLvl:1,bombs:0});bombBuys=0;activeCh=null;chState=0;persist();$('conf').hidden=true;
+  if(resetCtx==='menu'){$('sett').hidden=true;menuStats();}          // z ustawień: zostajemy w menu
+  else{$('pause').hidden=true;openPick();}
+});
+$('again').addEventListener('click',()=>{
+  if(activeCh&&chState===1)activeCh=null;                          // zaliczone: następna gra bez wyzwania
+  if(activeCh&&activeCh.tier!==undefined){$('over').hidden=true;newRun(activeCh.tier);}
+  else openPick();
+});
+
+function shopState(){return UP.map(u=>{const l=save[u.k];return l>=u.max||save.coins<u.cost(l)?1:0;}).join('');}
+function pickState(){return PICK.map(i=>save.best<NEED[i]||save.coins<PRICE[i]?1:0).join('');}
+function refreshLive(){
+  if(!$('shop').hidden){$('sc').textContent=Math.floor(save.coins);if(shopState()!==shopSig)renderShop();}
+  if(!$('pick').hidden){$('pc').textContent=Math.floor(save.coins);if(pickState()!==pickSig)renderPick();}
+  if(!$('menu').hidden)menuStats();
+}
+
+/* ---------- Pauza ---------- */
+const running=()=>!over&&$('chal').hidden&&$('shop').hidden&&$('pick').hidden&&$('conf').hidden&&$('menu').hidden&&$('pause').hidden;
+function openPause(){
+  $('hint').style.opacity=0;
+  $('vs').value=save.sfx;$('vm').value=save.music;
+  $('vsv').textContent=save.sfx+'%';$('vmv').textContent=save.music+'%';
+  $('pause').hidden=false;
+}
+function closePause(){persist();$('pause').hidden=true;}
+function autoPause(){if(running())openPause();}
+$('ps').addEventListener('click',()=>{getAudioContext();openPause();});
+$('resume').addEventListener('click',closePause);
+$('tomenu').addEventListener('click',()=>{persist();showMenu();});
+$('vs').addEventListener('input',e=>{save.sfx=+e.target.value;$('vsv').textContent=save.sfx+'%';applyVolumes();});
+$('vs').addEventListener('change',()=>{persist();playSound('break_common');});
+$('vm').addEventListener('input',e=>{save.music=+e.target.value;$('vmv').textContent=save.music+'%';applyVolumes();});
+$('vm').addEventListener('change',persist);
+addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  for(const id of ['conf','code','store','tut','chal'])if(!$(id).hidden){$(id).hidden=true;return;}
+  if(!$('sett').hidden){closeSett();return;}
+  if(!$('pause').hidden)closePause();else if(running())openPause();
+});
+
+/* ---------- Menu główne ---------- */
+[['mi1','p4'],['lg','p4'],['mc','b5']].forEach(([i,k])=>{$(i).src=IMG[k];});
+$('mi2').src=IMG.cup;$('mi3').src=IMG.podium;$('o2').src=IMG.code;$('o3').src=IMG.shop;$('o4').src=IMG.help;   // ikony pod menu: kod, sklep premium, samouczek
+$('gi').src=IMG.gear;
+function menuStats(){$('mn').textContent=save.nick;$('mb').textContent=save.best+' m';$('mm').textContent=Math.floor(save.coins);$('chn').textContent=chDone()+' / '+CH.length;}
+{const st=$('menu').style;if(st&&st.setProperty)st.setProperty('--tile','url('+BASE[2].toDataURL()+')');}
+function showMenu(){bombBuys=0;activeCh=null;chState=0;$('chal').hidden=true;menuStats();$('over').hidden=true;$('pick').hidden=true;$('pause').hidden=true;$('menu').hidden=false;}
+$('play').addEventListener('click',()=>{getAudioContext();activeCh=null;chState=0;$('menu').hidden=true;openPick();});
+$('back1').addEventListener('click',showMenu);
+$('back2').addEventListener('click',showMenu);
+function showOver(){
+  bombBuys=0;
+  const bonus=Math.round(depth*BAL.coinScale);
+  save.coins+=bonus;persist();
+  let ct='';
+  if(activeCh){
+    const u=activeCh.u||'';
+    ct=chState===1?' 🏆 Wyzwanie „'+activeCh.n+'” zaliczone (+'+activeCh.rw+' 🪙).':' 🎯 Wyzwanie „'+activeCh.n+'” niezaliczone ('+chVal(activeCh)+u+' / '+activeCh.goal+u+'). Spróbuj ponownie.';
+  }
+  $('ovt').textContent='Głębokość: '+depth+'m · rekord: '+save.best+'m. Premia za głębokość: +'+bonus+' 🪙.'+ct+(activeCh&&chState!==1?'':' Kolejny kilof kupisz przed następnym runem.');
+  $('again').textContent=activeCh&&chState!==1?'🎯 Spróbuj ponownie':'Kop ponownie';
+  $('over').hidden=false;
+}
+
+/* ---------- Nick (pierwsze uruchomienie) i Ustawienia w menu ---------- */
+function nickBind(inp,btn,msg,onSave){                       // wspólna walidacja pola nicku; zwraca funkcję odświeżającą
+  const upd=()=>{
+    const v=inp.value,er=nickErr(v),same=cleanNick(v)===save.nick;
+    btn.disabled=!!er||same;
+    msg.className='nmsg'+(v&&er?' bad':'');
+    msg.textContent=v&&er?er:(same&&save.nick?'To Twój obecny nick.':NICK_HINT);
+  };
+  const go=()=>{if(!btn.disabled)onSave(cleanNick(inp.value));};
+  inp.addEventListener('input',upd);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){if(e.preventDefault)e.preventDefault();go();}});
+  btn.addEventListener('click',go);
+  return upd;
+}
+function setNick(v){save.nick=v;persist();menuStats();}
+const nickUpd=nickBind($('nki'),$('nko'),$('nkm'),v=>{setNick(v);$('nick').hidden=true;playSound('upgrade');});
+function showNick(){
+  $('nki').value='';nickUpd();$('nick').hidden=false;
+  setTimeout(()=>{try{$('nki').focus();}catch(e){}},60);
+}
+const sUpd=nickBind($('si'),$('sno'),$('sm'),v=>{setNick(v);playSound('upgrade');sUpd();$('sm').textContent='Zapisano ✓';});
+function openSett(){
+  getAudioContext();
+  $('si').value=save.nick;sUpd();ctrlUi();$('lng').value=save.lang;
+  $('vs2').value=save.sfx;$('vsv2').textContent=save.sfx+'%';
+  $('vm2').value=save.music;$('vmv2').textContent=save.music+'%';
+  $('sett').hidden=false;
+}
+function closeSett(){persist();$('sett').hidden=true;}
+$('setb').addEventListener('click',openSett);
+$('sx').addEventListener('click',closeSett);
+$('sdone').addEventListener('click',closeSett);
+$('vs2').addEventListener('input',e=>{save.sfx=+e.target.value;$('vsv2').textContent=save.sfx+'%';applyVolumes();});
+$('vs2').addEventListener('change',()=>{persist();playSound('break_common');});
+$('vm2').addEventListener('input',e=>{save.music=+e.target.value;$('vmv2').textContent=save.music+'%';applyVolumes();});
+$('vm2').addEventListener('change',persist);
+
+/* ---------- Menu: Kod (kody), Sklep premium (na razie niedostępny), Samouczek ---------- */
+const CODES={      // kod (wielkie litery, bez spacji) -> akcja; może zwrócić komunikat. Kolejne kody dopisuj tutaj.
+  TESER:()=>{resetCtx='menu';$('code').hidden=true;$('conf').hidden=false;},   // reset gry (zeruje monety, ulepszenia i bomby), z potwierdzeniem
+  'HPXD+':()=>{save.infHp=1;persist();return 'Nieograniczone HP kilofa: włączone ✓';},
+  'HPXD-':()=>{save.infHp=0;persist();return 'Nieograniczone HP kilofa: wyłączone ✓';}
+};
+const codeNorm=v=>String(v||'').replace(/\s+/g,'').toUpperCase();
+function codeUpd(){$('cdo').disabled=!codeNorm($('cdi').value);$('cdm').className='nmsg';$('cdm').textContent='Wpisz kod i naciśnij „Użyj”.';}
+function codeGo(){
+  const k=codeNorm($('cdi').value);if(!k)return;
+  if(!Object.prototype.hasOwnProperty.call(CODES,k)){$('cdm').className='nmsg bad';$('cdm').textContent='Nieprawidłowy kod';return;}
+  playSound('upgrade');
+  const m=CODES[k]();
+  if(!$('code').hidden){$('cdi').value='';$('cdo').disabled=true;$('cdm').className='nmsg';$('cdm').textContent=m||'Kod przyjęty ✓';}
+}
+function openCode(){getAudioContext();$('cdi').value='';codeUpd();$('code').hidden=false;setTimeout(()=>{try{$('cdi').focus();}catch(e){}},60);}
+$('codeb').addEventListener('click',openCode);
+$('cdx').addEventListener('click',()=>{$('code').hidden=true;});
+$('cdi').addEventListener('input',codeUpd);
+$('cdi').addEventListener('keydown',e=>{if(e.key==='Enter'){if(e.preventDefault)e.preventDefault();codeGo();}});
+$('cdo').addEventListener('click',codeGo);
+$('storeb').addEventListener('click',()=>{getAudioContext();$('store').hidden=false;});
+$('stx').addEventListener('click',()=>{$('store').hidden=true;});
+$('tutb').addEventListener('click',()=>{getAudioContext();$('ts').scrollTop=0;$('tut').hidden=false;});
+$('tux').addEventListener('click',()=>{$('tut').hidden=true;});
+$('tud').addEventListener('click',()=>{$('tut').hidden=true;});
+
+/* ---------- Języki: polski, angielski, chiński, hiszpański, niemiecki (wybór w Ustawieniach) ---------- */
+const LANGS=[['pl','Polski'],['en','English'],['zh','中文'],['es','Español'],['de','Deutsch']];
+/* [polski, EN, 中文, ES, DE]. Klucz = polski tekst bez emoji i znaków na brzegach, liczby jako #. Brakujący wpis zostaje po polsku, więc kolejne teksty dopisuj tu jako nowe wiersze. */
+const TXT=[
+['Kopalnia szczęścia','Happiness Mine','幸福矿井','Mina de la Felicidad','Glücksmine'],['Rekord','Best','最高纪录','Récord','Rekord'],['Głębokość','Depth','深度','Profundidad','Tiefe'],['Monety','Coins','金币','Monedas','Münzen'],['Solo','Solo','单人','Solo','Solo'],['Wyzwania','Challenges','挑战','Desafíos','Challenges'],['Tabela wyników','Leaderboard','排行榜','Clasificación','Bestenliste'],['Wkrótce','Soon','即将推出','Pronto','Bald'],['Ustawienia','Settings','设置','Ajustes','Einstellungen'],['Kod','Code','代码','Código','Code'],['Sklep','Shop','商店','Tienda','Shop'],['Samouczek','Tutorial','教程','Tutorial','Anleitung'],['HP kilofa','Pickaxe HP','镐耐久','PV del pico','Hacken-HP'],
+['Przeciągnij palcem, żeby sterować kilofem','Drag your finger to steer the pickaxe','用手指拖动来控制镐','Arrastra el dedo para dirigir el pico','Mit dem Finger ziehen, um die Hacke zu steuern'],['Przechylaj telefon w lewo i w prawo, żeby sterować kilofem','Tilt your phone left and right to steer the pickaxe','左右倾斜手机来控制镐','Inclina el móvil a izquierda y derecha para dirigir el pico','Kippe das Handy nach links und rechts, um die Hacke zu steuern'],
+['Zniszczony','Destroyed','镐坏了','Destruido','Zerstört'],['Kop ponownie','Dig again','再挖一次','Cavar de nuevo','Nochmal graben'],['Pauza','Paused','暂停','Pausa','Pause'],['Dźwięki','Sounds','音效','Sonidos','Töne'],['Muzyka','Music','音乐','Música','Musik'],['Kontynuuj','Resume','继续','Continuar','Weiter'],['Wyjście do menu kończy bieżący run','Leaving to the menu ends the current run','返回菜单将结束本局','Salir al menú termina la partida actual','Beim Verlassen ins Menü endet der aktuelle Lauf'],['Jak się nazywasz, górniku','What is your name, miner','矿工，你叫什么名字','¿Cómo te llamas, minero','Wie heißt du, Bergmann'],['Zaczynamy','Start','开始','Empezar','Los geht es'],
+['Nick','Nickname','昵称','Apodo','Spitzname'],['Zapisz','Save','保存','Guardar','Speichern'],['Sterowanie','Controls','操控','Controles','Steuerung'],['Palec','Finger','手指','Dedo','Finger'],['Żyroskop','Gyroscope','陀螺仪','Giroscopio','Gyroskop'],['Gotowe','Done','完成','Listo','Fertig'],['Zresetować wszystko','Reset everything','全部重置','¿Restablecer todo','Alles zurücksetzen'],['Anuluj','Cancel','取消','Cancelar','Abbrechen'],['Resetuj','Reset','重置','Restablecer','Zurücksetzen'],['Język','Language','语言','Idioma','Sprache'],
+['Wpisz kod, żeby go aktywować','Enter a code to activate it','输入代码以激活','Escribe un código para activarlo','Gib einen Code ein, um ihn zu aktivieren'],['Użyj','Apply','使用','Usar','Einlösen'],['Wpisz kod','Enter code','输入代码','Escribe el código','Code eingeben'],['Twój nick','Your nickname','你的昵称','Tu apodo','Dein Spitzname'],['Wpisz kod i naciśnij','Enter a code and press','输入代码并点击','Escribe un código y pulsa','Gib einen Code ein und tippe auf'],['Nieprawidłowy kod','Invalid code','代码无效','Código no válido','Ungültiger Code'],['Kod przyjęty','Code accepted','代码已接受','Código aceptado','Code akzeptiert'],['Nieograniczone HP kilofa','Unlimited pickaxe HP','镐耐久无限','PV del pico ilimitados','Unbegrenzte Hacken-HP'],['włączone','on','已开启','activados','an'],['wyłączone','off','已关闭','desactivados','aus'],
+['Przechylaj telefon w lewo i w prawo','Tilt your phone left and right','左右倾斜手机','Inclina el móvil a izquierda y derecha','Kippe das Handy nach links und rechts'],['Przeciągaj palcem po ekranie','Drag your finger across the screen','用手指在屏幕上拖动','Arrastra el dedo por la pantalla','Zieh mit dem Finger über den Bildschirm'],
+['Sklep premium','Premium shop','高级商店','Tienda premium','Premium-Shop'],['Płatne dodatki są w przygotowaniu','Paid extras are on the way','付费内容正在筹备中','Los extras de pago están en preparación','Bezahlte Extras sind in Vorbereitung'],['Na razie nic tu nie kupisz','Nothing to buy here yet','目前还不能购买','Por ahora no puedes comprar nada aquí','Aktuell kannst du hier nichts kaufen'],['Brak reklam','No ads','无广告','Sin anuncios','Keine Werbung'],['Gra bez żadnych reklam, na stałe','The game without any ads, forever','永久无广告游戏','El juego sin anuncios, para siempre','Das Spiel dauerhaft ohne Werbung'],['Niedostępne','Unavailable','暂不可用','No disponible','Nicht verfügbar'],['Podwójne monety','Double coins','双倍金币','Monedas dobles','Doppelte Münzen'],['Dwa razy więcej monet z rud, na stałe','Twice the coins from ores, forever','矿石金币永久翻倍','El doble de monedas de los minerales, para siempre','Doppelt so viele Münzen aus Erzen, dauerhaft'],['Pakiet startowy','Starter pack','新手礼包','Pack inicial','Starterpaket'],['Duża porcja monet na dobry początek','A big pile of coins for a good start','丰厚金币助你开局','Un buen montón de monedas para empezar','Ein großer Haufen Münzen für einen guten Start'],['Rozumiem, kopiemy','Got it, let us dig','明白了，开挖吧','Entendido, ¡a cavar','Verstanden, los geht es'],
+['Wybierz kilof','Choose a pickaxe','选择镐','Elige un pico','Wähle eine Hacke'],['Twoje monety','Your coins','你的金币','Tus monedas','Deine Münzen'],['Warsztat','Workshop','工坊','Taller','Werkstatt'],['Kup','Buy','购买','Comprar','Kaufen'],['Graj','Play','开始','Jugar','Spielen'],
+['Drewniany','Wooden','木镐','De madera','Holz'],['Kamienny','Stone','石镐','De piedra','Stein'],['Żelazny','Iron','铁镐','De hierro','Eisen'],['Złoty','Golden','金镐','De oro','Gold'],['Diamentowy','Diamond','钻石镐','De diamante','Diamant'],['Obsydianowy','Obsidian','黑曜石镐','De obsidiana','Obsidian'],
+['Strefa','Zone','区域','Zona','Zone'],['Powierzchnia','Surface','地表','Superficie','Oberfläche'],['Glina','Clay','黏土','Arcilla','Lehm'],['Kamień','Stone','石层','Piedra','Stein'],['Rudy','Ores','矿脉','Minerales','Erze'],['Głębiny','Depths','深渊','Profundidades','Tiefen'],['Obsydian','Obsidian','黑曜石','Obsidiana','Obsidian'],['Piekło','Inferno','地狱','Infierno','Inferno'],
+['Brak bomb','No bombs','没有炸弹','Sin bombas','Keine Bomben'],['WYZWANIE! +#','CHALLENGE! +#','挑战完成！+#','¡DESAFÍO! +#','HERAUSFORDERUNG! +#'],['Wyzwanie ukończone','Challenge completed','挑战完成','Desafío completado','Herausforderung abgeschlossen'],['Wyzwanie','Challenge','挑战','Desafío','Herausforderung'],['zaliczone','completed','已完成','completado','geschafft'],['niezaliczone','failed','未完成','no completado','nicht geschafft'],['Spróbuj ponownie','Try again','再试一次','Inténtalo de nuevo','Nochmal versuchen'],['Premia za głębokość','Depth bonus','深度奖励','Bono por profundidad','Tiefenbonus'],['Kolejny kilof kupisz przed następnym runem','You can buy your next pickaxe before the next run','下一局开始前可以购买新的镐','Podrás comprar otro pico antes de la próxima partida','Die nächste Hacke kaufst du vor dem nächsten Lauf'],['Ukończone','Completed','已完成','Completado','Abgeschlossen'],['Najlepszy wynik','Best result','最佳成绩','Mejor resultado','Bestes Ergebnis'],
+['Łowca Lazurytu','Lapis Hunter','青金石猎人','Cazador de lapislázuli','Lapislazuli-Jäger'],['Złota gorączka','Gold Rush','淘金热','Fiebre del oro','Goldrausch'],['Diamentowa żyła','Diamond Vein','钻石矿脉','Veta de diamantes','Diamantader'],['Kolekcjoner rud','Ore Collector','矿石收集者','Coleccionista de minerales','Erzsammler'],['Drewniany twardziel','Wooden Tough Guy','木镐硬汉','Duro de madera','Holz-Held'],['Ewolucja','Evolution','进化','Evolución','Evolution'],['Głębinowiec','Deep Diver','深渊探索者','Explorador de profundidades','Tiefentaucher'],['Wielki wybuch','Big Bang','大爆炸','Gran explosión','Großer Knall'],['Piromaniak','Pyromaniac','纵火狂','Pirómano','Pyromane'],['Zimna krew','Cold Blood','冷静沉着','Sangre fría','Kaltblütig'],['Sprinter','Sprinter','冲刺者','Velocista','Sprinter'],['Łowca Netherytu','Netherite Hunter','下界合金猎人','Cazador de netherita','Netherit-Jäger'],
+['Wzmocniony Trzonek','Reinforced Handle','加固镐柄','Mango reforzado','Verstärkter Stiel'],['# Max HP kilofa','# max pickaxe HP','# 镐最大耐久','# PV máx. del pico','# max. Hacken-HP'],['Ostra Końcówka','Sharp Tip','锋利镐尖','Punta afilada','Scharfe Spitze'],['#% obrażeń zadawanych blokom','#% damage to blocks','对方块伤害 #%','#% de daño a los bloques','#% Schaden an Blöcken'],['Bomba','Bomb','炸弹','Bomba','Bombe'],['Obrażenia #','Damage #','伤害 #','Daño #','Schaden #'],['monety ×#','coins ×#','金币 ×#','monedas ×#','Münzen ×#'],
+['rudy i monety','Ores and coins','矿石与金币','Minerales y monedas','Erze und Münzen'],
+['lawa i tnt','Lava and TNT','岩浆与TNT','Lava y TNT','Lava und TNT'],
+['stół craftingu','Crafting table','工作台','Mesa de crafteo','Werkbank'],
+['sklep za monety','Coin shop','金币商店','Tienda de monedas','Münz-Shop'],
+['kilofy','Pickaxes','镐','Picos','Hacken'],
+['ikony w menu','Menu icons','菜单图标','Iconos del menú','Menü-Symbole'],
+['przeciągaj palcem w lewo i w prawo, żeby kierować kilofem (albo przechylaj telefon, gdy w ustawieniach wybierzesz żyroskop). kilof sam opada i uderza w bloki pod sobą, a ty wybierasz, którędy kopie','Drag your finger left and right to steer the pickaxe (or tilt your phone if you choose the gyroscope in Settings). The pickaxe falls and hits the blocks below by itself, and you choose where it digs.','左右拖动手指来控制镐（如果在设置中选择了陀螺仪，也可以倾斜手机）。镐会自动下落并击打下方的方块，由你决定往哪里挖。','Arrastra el dedo a izquierda y derecha para dirigir el pico (o inclina el móvil si eliges el giroscopio en Ajustes). El pico cae y golpea los bloques de abajo por sí solo, y tú eliges por dónde cava.','Ziehe den Finger nach links und rechts, um die Hacke zu steuern (oder neige das Handy, wenn du in den Einstellungen das Gyroskop wählst). Die Hacke fällt von selbst und schlägt auf die Blöcke darunter, du bestimmst, wo sie gräbt.'],
+['każde uderzenie zużywa hp kilofa. gdy spadnie do zera, run się kończy. na koniec dostajesz premię w monetach za głębokość','Every hit uses up pickaxe HP. When it drops to zero, the run ends. At the end you get a coin bonus for depth.','每次击打都会消耗镐的耐久。降到零时本局结束。结束时会根据深度获得金币奖励。','Cada golpe gasta PV del pico. Cuando llegan a cero, la partida termina. Al final recibes un bono de monedas por la profundidad.','Jeder Schlag verbraucht Hacken-HP. Fallen sie auf null, endet der Lauf. Am Ende gibt es einen Münzbonus für die Tiefe.'],
+['węgiel, żelazo, złoto, diament, lazuryt i netheryt dają monety. im rzadsza ruda, tym więcej jest warta, a głębiej jest ich więcej','Coal, iron, gold, diamond, lapis and netherite give coins. The rarer the ore, the more it is worth, and there is more of it deeper down.','煤炭、铁、金、钻石、青金石和下界合金都能换取金币。矿石越稀有价值越高，而且越深越多。','El carbón, el hierro, el oro, el diamante, el lapislázuli y la netherita dan monedas. Cuanto más rara es la mena, más vale, y hay más cuanto más profundo.','Kohle, Eisen, Gold, Diamant, Lapislazuli und Netherit bringen Münzen. Je seltener das Erz, desto mehr ist es wert, und tiefer gibt es mehr davon.'],
+['uderzenie w lawę zabiera dodatkowe hp, tym więcej, im głębiej. skrzynia tnt wybucha i niszczy bloki wokół siebie, a ruda z nich też daje monety','Hitting lava costs extra HP, and the deeper you are, the more it costs. A TNT crate explodes and destroys the blocks around it, and the ore from them also gives coins.','击打岩浆会额外扣除耐久，越深扣得越多。TNT箱会爆炸并摧毁周围的方块，其中的矿石同样能换取金币。','Golpear la lava quita PV extra, y cuanto más profundo, más quita. Una caja de TNT explota y destruye los bloques de alrededor, y los minerales que sueltan también dan monedas.','Ein Schlag in Lava kostet zusätzliche HP, und zwar mehr, je tiefer du bist. Eine TNT-Kiste explodiert und zerstört die Blöcke um sich herum, das Erz daraus bringt ebenfalls Münzen.'],
+['zniszczony stół ulepsza kilof na kolejny i odnawia połowę hp. obsydianowy kilof jest już najlepszy, więc stół go tylko naprawia','A destroyed table upgrades your pickaxe to the next one and restores half your HP. The obsidian pickaxe is already the best, so the table only repairs it.','摧毁工作台会把镐升级到下一级，并恢复一半耐久。黑曜石镐已是最强，所以工作台只会修复它。','Una mesa destruida mejora tu pico al siguiente y restaura la mitad de los PV. El pico de obsidiana ya es el mejor, así que la mesa solo lo repara.','Ein zerstörter Tisch verbessert deine Hacke auf die nächste Stufe und stellt die Hälfte der HP wieder her. Die Obsidian-Hacke ist schon die beste, deshalb repariert der Tisch sie nur.'],
+['kupisz w nim wzmocniony trzonek (więcej hp), ostrą końcówkę (mocniejsze uderzenia) i bombę boom, która wysadza bloki dookoła kilofa','Buy Reinforced Handle (more HP), Sharp Tip (stronger hits) and the BOOM bomb, which blows up the blocks around the pickaxe.','可以购买加固镐柄（更多耐久）、锋利镐尖（更强的击打）和BOOM炸弹，炸弹能炸开镐周围的方块。','Compra Mango reforzado (más PV), Punta afilada (golpes más fuertes) y la bomba BOOM, que vuela los bloques alrededor del pico.','Dort kaufst du Verstärkter Stiel (mehr HP), Scharfe Spitze (stärkere Schläge) und die BOOM-Bombe, die die Blöcke rund um die Hacke sprengt.'],
+['lepsze kilofy odblokowujesz rekordem głębokości. przed każdym runem wybierasz kilof, a nowy kupujesz za monety','You unlock better pickaxes with your depth record. Before each run you choose a pickaxe, and you buy a new one with coins.','用深度纪录解锁更好的镐。每局开始前选择镐，新镐用金币购买。','Desbloqueas mejores picos con tu récord de profundidad. Antes de cada partida eliges un pico, y uno nuevo se compra con monedas.','Bessere Hacken schaltest du mit deinem Tiefenrekord frei. Vor jedem Lauf wählst du eine Hacke, eine neue kaufst du mit Münzen.'],
+['wybierasz jedno zadanie na grę, a nagroda wpada raz, po ukończeniu. w wyzwaniach nie działa sklep, ulepszenia kilofa ani bomba boom. wyjątek to „wielki wybuch”, który daje bomby za darmo','You pick one task per game, and the reward is paid once, when you complete it. In challenges the shop, pickaxe upgrades and the BOOM bomb do not work. The exception is Big Bang, which gives free bombs.','每局选择一个任务，完成后奖励只发放一次。挑战中商店、镐升级和BOOM炸弹都无法使用。例外是“大爆炸”，它会免费赠送炸弹。','Eliges una tarea por partida y la recompensa se paga una vez, al completarla. En los desafíos no funcionan la tienda, las mejoras del pico ni la bomba BOOM. La excepción es Gran explosión, que da bombas gratis.','Du wählst eine Aufgabe pro Spiel, und die Belohnung gibt es einmalig nach dem Abschluss. In Challenges funktionieren Shop, Hacken-Upgrades und die BOOM-Bombe nicht. Die Ausnahme ist Großer Knall, der Bomben gratis gibt.'],
+['kod to miejsce na wpisywanie kodów. sklep premium to płatne dodatki, na razie niedostępne. samouczek to ta pomoc','Code is where you enter codes. The premium shop holds paid extras, not available yet. The tutorial is this help.','“代码”用于输入代码。高级商店提供付费内容，暂未开放。教程就是这份帮助。','Código sirve para introducir códigos. La tienda premium ofrece extras de pago, aún no disponibles. El tutorial es esta ayuda.','Unter Code gibst du Codes ein. Der Premium-Shop bietet bezahlte Extras, noch nicht verfügbar. Die Anleitung ist diese Hilfe.'],
+['wybierz nick. zobaczysz go w menu, a w przyszłości w rankingu najlepszych graczy. zmienisz go później w ustawieniach','Choose a nickname. You will see it in the menu and, in the future, in the ranking of the best players. You can change it later in Settings.','选择一个昵称。它会显示在菜单中，将来也会出现在最佳玩家排行榜上。你之后可以在设置中修改。','Elige un apodo. Lo verás en el menú y, en el futuro, en el ranking de los mejores jugadores. Podrás cambiarlo más tarde en Ajustes.','Wähle einen Spitznamen. Du siehst ihn im Menü und künftig in der Rangliste der besten Spieler. Du kannst ihn später in den Einstellungen ändern.'],
+['stracisz monety, ulepszenia i bomby ze sklepu. rekord głębokości (a z nim odblokowane kilofy), ukończone wyzwania i nick zostają','You will lose your coins and the upgrades and bombs from the shop. Your depth record (and the pickaxes it unlocked), completed challenges and nickname stay.','你将失去金币以及商店中的升级和炸弹。深度纪录（以及由此解锁的镐）、已完成的挑战和昵称会保留。','Perderás las monedas y las mejoras y bombas de la tienda. Se conservan el récord de profundidad (y los picos desbloqueados con él), los desafíos completados y el apodo.','Du verlierst deine Münzen sowie die Upgrades und Bomben aus dem Shop. Tiefenrekord (und damit freigeschaltete Hacken), abgeschlossene Challenges und Spitzname bleiben erhalten.'],
+['to twój obecny nick','This is your current nickname','这是你当前的昵称','Este es tu apodo actual','Das ist dein aktueller Spitzname'],
+['zbierz # lazurytu w jednej grze','Collect # lapis in a single game','在一局中收集#个青金石','Reúne # de lapislázuli en una partida','Sammle # Lapislazuli in einem Spiel'],
+['zbierz # sztuk złota w jednej grze','Collect # pieces of gold in a single game','在一局中收集#块金子','Reúne # piezas de oro en una partida','Sammle # Stück Gold in einem Spiel'],
+['zbierz # diamentów w jednej grze','Collect # diamonds in a single game','在一局中收集#颗钻石','Reúne # diamantes en una partida','Sammle # Diamanten in einem Spiel'],
+['zbierz w jednej grze po # sztuk każdej rudy','In a single game, collect # of each ore','在一局中每种矿石各收集#个','En una partida, reúne # de cada mineral','Sammle in einem Spiel je # Stück jedes Erzes'],
+['węgla, żelaza, złota, diamentu i lazurytu','coal, iron, gold, diamond and lapis','煤炭、铁、金、钻石和青金石','carbón, hierro, oro, diamante y lapislázuli','Kohle, Eisen, Gold, Diamant und Lapislazuli'],
+['dokop na # m drewnianym kilofem (dostajesz go za darmo','Dig down to # m with a wooden pickaxe (you get it for free)','用木镐挖到#米深（镐免费赠送）','Cava hasta # m con un pico de madera (te lo damos gratis)','Grabe mit einer Holzhacke bis auf # m (du bekommst sie gratis)'],
+['awans na lepszy kilof kończy wyzwanie','Upgrading to a better pickaxe ends the challenge','升级到更好的镐会结束挑战','Mejorar a un pico mejor termina el desafío','Der Wechsel auf eine bessere Hacke beendet die Challenge'],
+['zacznij drewnianym kilofem i awansuj na obsydianowy w jednej grze','Start with a wooden pickaxe and upgrade to obsidian in a single game','用木镐开始，并在一局中升级到黑曜石镐','Empieza con un pico de madera y mejóralo a obsidiana en una partida','Starte mit einer Holzhacke und steige in einem Spiel auf Obsidian auf'],
+['przez bloki crafting (w tym wyzwaniu jest ich kilka razy więcej','through crafting blocks (this challenge has several times more of them)','通过合成方块（本挑战中它们多出好几倍）','a través de bloques de crafteo (en este desafío hay varias veces más)','über Crafting-Blöcke (in dieser Challenge gibt es viel mehr davon)'],
+['dotrzyj na # m w jednej grze','Reach # m in a single game','在一局中到达#米','Llega a # m en una partida','Erreiche # m in einem Spiel'],
+['jedną bombą zniszcz co najmniej # bloków naraz','Destroy at least # blocks at once with a single bomb','用一颗炸弹一次摧毁至少#个方块','Destruye al menos # bloques a la vez con una sola bomba','Zerstöre mit einer Bombe mindestens # Blöcke auf einmal'],
+['najlepiej w świeżej, nietkniętej skale, w środku planszy','ideally in fresh, untouched rock in the middle of the board','最好在棋盘中央完整未动的岩石里','mejor en roca virgen, en el centro del tablero','am besten in frischem, unberührtem Fels in der Mitte des Spielfelds'],
+['w tym wyzwaniu dostajesz # bomb za darmo','In this challenge you get # bombs for free','本挑战中你可免费获得#颗炸弹','En este desafío recibes # bombas gratis','In dieser Challenge bekommst du # Bomben gratis'],
+['wysadź # skrzyń tnt w jednej grze (kopiąc je albo bombą','Blow up # TNT crates in a single game (by digging them or with a bomb)','在一局中炸掉#个TNT箱（挖掉或用炸弹均可）','Haz explotar # cajas de TNT en una partida (cavándolas o con una bomba)','Sprenge # TNT-Kisten in einem Spiel (durch Graben oder mit einer Bombe)'],
+['dokop na # m ani razu nie uderzając w lawę','Dig down to # m without hitting lava even once','挖到#米深，且一次也不能碰到岩浆','Cava hasta # m sin golpear la lava ni una vez','Grabe bis auf # m, ohne ein einziges Mal Lava zu treffen'],
+['jedno dotknięcie i po wyzwaniu','One touch and the challenge is over','碰到一次就挑战失败','Un toque y se acaba el desafío','Eine Berührung und die Challenge ist vorbei'],
+['dokop na # m w # sekund','Dig down to # m in # seconds','挖到#米深，限时#秒','Cava hasta # m en # segundos','Grabe in # Sekunden bis auf # m'],
+['pauza nie liczy się do czasu','Pausing does not count toward the time','暂停不计入时间','La pausa no cuenta para el tiempo','Pausen zählen nicht zur Zeit'],
+['wykop # sztuki netherytu w jednej grze (pojawia się od # m','Mine # pieces of netherite in a single game (appears from # m)','在一局中挖到#块下界合金（#米以下出现）','Extrae # piezas de netherita en una partida (aparece desde # m)','Baue # Stück Netherit in einem Spiel ab (erscheint ab # m)'],
+['wybucha # kratek w każdą stronę od kilofa (przycisk boom w grze','Explodes # tiles in every direction from the pickaxe (BOOM button in game)','向镐的各个方向爆炸#格（游戏中的BOOM按钮）','Explota # casillas en todas direcciones desde el pico (botón BOOM en el juego)','Explodiert # Felder in jede Richtung von der Hacke aus (BOOM-Taste im Spiel)'],
+['cena rośnie z każdą kupioną w tej grze','The price rises with every bomb bought in this game','本局每购买一颗，价格就会上涨','El precio sube con cada bomba comprada en esta partida','Der Preis steigt mit jeder in diesem Spiel gekauften Bombe'],
+['#–# znaków: litery, cyfry, spacja','#–# characters: letters, digits, space','#–#个字符：字母、数字、空格','#–# caracteres: letras, números, espacio','#–# Zeichen: Buchstaben, Ziffern, Leerzeichen'],
+['dozwolone: litery, cyfry, spacja','Allowed: letters, digits, space','允许：字母、数字、空格','Permitido: letras, números, espacio','Erlaubt: Buchstaben, Ziffern, Leerzeichen'],
+['wpisz nick','Enter a nickname','请输入昵称','Escribe un apodo','Gib einen Spitznamen ein'],
+['za krótki','Too short','太短','Demasiado corto','Zu kurz'],
+['minimum # znaki','minimum # characters','至少#个字符','mínimo # caracteres','mindestens # Zeichen'],
+['za długi','Too long','太长','Demasiado largo','Zu lang'],
+['maksimum # znaków','maximum # characters','最多#个字符','máximo # caracteres','höchstens # Zeichen'],
+['wybierasz jedno wyzwanie na grę i tylko ono się liczy','You pick one challenge per game and only that one counts','每局选择一个挑战，只有它会计入','Eliges un desafío por partida y solo cuenta ese','Du wählst eine Challenge pro Spiel, und nur sie zählt'],
+['nagroda wpada od razu po ukończeniu (raz','The reward is paid right after completion (once)','完成后立即发放奖励（仅一次）','La recompensa se paga al completarlo (una vez)','Die Belohnung gibt es sofort nach dem Abschluss (einmalig)'],
+['w wyzwaniach nie działają sklep, ulepszenia kilofa ani bomba boom','In challenges the shop, pickaxe upgrades and the BOOM bomb do not work','挑战中商店、镐升级和BOOM炸弹无法使用','En los desafíos no funcionan la tienda, las mejoras del pico ni la bomba BOOM','In Challenges funktionieren Shop, Hacken-Upgrades und die BOOM-Bombe nicht'],
+['wyjątek','Exception','例外','Excepción','Ausnahme'],
+['wyzwanie wielki wybuch daje bomby za darmo','the Big Bang challenge gives free bombs','“大爆炸”挑战会免费赠送炸弹','el desafío Gran explosión da bombas gratis','die Challenge Großer Knall gibt Bomben gratis'],
+['rudy # / #','ores # / #','矿石 # / #','minerales # / #','Erze # / #'],
+['po #','# each','每种#个','# de cada uno','je #'],
+['awanse # / #','upgrades # / #','升级 # / #','mejoras # / #','Aufstiege # / #'],
+['# / # bloków','# / # blocks','# / # 个方块','# / # bloques','# / # Blöcke'],
+['bomby','bombs','炸弹','bombas','Bomben'],
+['wyzwanie nieudane','Challenge failed','挑战失败','Desafío fallido','Challenge fehlgeschlagen'],
+['awansowałeś kilof','You upgraded your pickaxe','你升级了镐','Mejoraste tu pico','Du hast die Hacke aufgewertet'],
+['skończyły się bomby','Out of bombs','炸弹用完了','Se acabaron las bombas','Keine Bomben mehr'],
+['dotknąłeś lawy','You touched lava','你碰到了岩浆','Tocaste la lava','Du hast Lava berührt'],
+['czas minął','Time is up','时间到','Se acabó el tiempo','Die Zeit ist um'],
+['kilof kupujesz przed każdym runem, lepsze odblokowujesz głębokością','You buy a pickaxe before each run and unlock better ones with depth','每局开始前购买镐，并通过深度解锁更好的镐','Compras un pico antes de cada partida y desbloqueas mejores con la profundidad','Du kaufst vor jedem Lauf eine Hacke und schaltest bessere durch Tiefe frei'],
+['lvl # / #','Lvl # / #','Lv # / #','Nv. # / #','Stufe # / #'],
+['ulepsz','Upgrade','升级','Mejorar','Aufwerten'],
+['kop','Dig','挖掘','Cavar','Graben'],
+['masz','You have','拥有','Tienes','Du hast'],
+['brak zgody na żyroskop','No permission for the gyroscope','没有陀螺仪权限','Sin permiso para el giroscopio','Keine Erlaubnis für das Gyroskop'],
+['zostaje sterowanie palcem','Finger control stays on','保持手指操控','Se mantiene el control con el dedo','Die Fingersteuerung bleibt aktiv'],
+['przechyl telefon, żeby sprawdzić żyroskop','Tilt your phone to test the gyroscope…','倾斜手机以检测陀螺仪…','Inclina el móvil para probar el giroscopio…','Neige das Handy, um das Gyroskop zu testen…'],
+['ten telefon lub przeglądarka nie udostępnia żyroskopu','This phone or browser does not provide a gyroscope','此手机或浏览器不支持陀螺仪','Este móvil o navegador no ofrece giroscopio','Dieses Handy oder dieser Browser stellt kein Gyroskop bereit'],
+['blok naprawczy','Repair block','修复方块','Bloque de reparación','Reparaturblock'],
+['zielony blok z krzyżem odnawia od #% do #% hp kilofa. jest trochę częstszy niż stół craftingu, ale nie ulepsza kilofa','A green block with a cross restores #% to #% of your pickaxe HP. It is a bit more common than the crafting table, but does not upgrade the pickaxe.','带十字的绿色方块可恢复镐#%到#%的耐久。它比工作台稍常见，但不会升级镐。','Un bloque verde con una cruz restaura del #% al #% de los PV del pico. Es algo más común que la mesa de crafteo, pero no mejora el pico.','Ein grüner Block mit Kreuz stellt #% bis #% der Hacken-HP wieder her. Er ist etwas häufiger als die Werkbank, verbessert die Hacke aber nicht.'],
+['naprawa','Repair','修复','Reparación','Reparatur'],
+['naprawa +#','Repair +#','修复 +#','Reparación +#','Reparatur +#'],
+['nieudane','failed','失败','fallido','fehlgeschlagen'],
+['zamknij','Close','关闭','Cerrar','Schließen']
+];
+const TR={};for(const r of TXT)TR[r[0].toLowerCase()]=r;
+let LI=Math.max(0,LANGS.findIndex(l=>l[0]===save.lang));   // indeks aktualnego języka (0 = polski)
+const NUM=/\d+(?:[.,]\d+)?/g,PUNCT=/^([^\p{L}\d]*)([\s\S]*?)([^\p{L}\d]*)$/u,DELIM=/(„|”|\s·\s|:\s|\.\s|\s[–—]\s|\n)/,DELIM2=/(\s\(|\))/;
+function trSeg(s){                       // tłumaczy jeden kawałek tekstu; null gdy brak wpisu
+  const m=s.match(PUNCT);if(!m||!m[2])return null;
+  const nums=m[2].match(NUM)||[],r=TR[m[2].replace(NUM,'#').toLowerCase()];
+  if(!r||!r[LI])return null;
+  let i=0,o=r[LI].replace(/#/g,()=>nums[i++]??'#');
+  if(m[2]===m[2].toUpperCase()&&m[2]!==m[2].toLowerCase())o=o.toUpperCase();
+  let suf=m[3];const e=o.slice(-1),n=c=>({'。':'.','！':'!','？':'?','）':')'}[c]||c);
+  if(suf&&n(e)===suf[0]&&'.!?)'.includes(suf[0]))suf=suf.slice(1);else if(LI===2&&suf[0]==='.')suf='。'+suf.slice(1);   // bez podwójnych kropek i nawiasów
+  if(LI===3&&!/[¡¿]/.test(o)){const q=suf.match(/[!?]/);if(q)return m[1]+(q[0]==='!'?'¡':'¿')+o+suf;}   // hiszpański: ¡…! i ¿…?
+  return m[1]+o+suf;
+}
+const ZP={'. ':'。',': ':'：'};   // po chińsku zdania i dwukropki w chińskim stylu
+const QM=[0,{'„':'“','”':'”'},{'„':'“','”':'”'},{'„':'«','”':'»'},{'„':'„','”':'“'}];   // cudzysłowy zależne od języka (pl, en, zh, es, de)
+function trPart(p){                      // kawałek zdania: cały, a jeśli go nie ma, po nawiasach
+  const w=trSeg(p);if(w!==null)return w;
+  return p.split(DELIM2).map((q,i)=>i%2||!q.trim()?q:(trSeg(q)??q)).join('');
+}
+function tr(s){                          // cały tekst, a jeśli go nie ma w słowniku, zdanie po zdaniu
+  if(!LI||!s)return s;
+  const w=trSeg(s);if(w!==null)return w;
+  return s.split(DELIM).map((p,i)=>i%2?(LI===2&&ZP[p])||(QM[LI]&&QM[LI][p])||p:!p.trim()?p:trPart(p)).join('');
+}
+function trNode(n){
+  const v=n.nodeValue;if(!v||!v.trim())return;
+  const src=(n._tr!==undefined&&v===n._tr)?n._pl:v,out=tr(src);   // _pl = oryginał po polsku
+  if(out!==v){n._pl=src;n._tr=out;n.nodeValue=out;}
+}
+function trTree(r){
+  if(r.nodeType===3){trNode(r);return;}
+  if(r.nodeType!==1||/^(SCRIPT|STYLE)$/.test(r.nodeName))return;
+  const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  let n;while(n=w.nextNode())trNode(n);
+}
+function applyLang(){
+  document.documentElement.lang=LANGS[LI][0];
+  trTree(document.body);
+  document.querySelectorAll('[placeholder]').forEach(e=>{e._pp=e._pp??e.getAttribute('placeholder');e.placeholder=tr(e._pp);});
+  document.querySelectorAll('[aria-label]').forEach(e=>{e._al=e._al??e.getAttribute('aria-label');e.setAttribute('aria-label',tr(e._al));});   // etykiety dla czytników ekranu
+}
+function setLang(c){LI=Math.max(0,LANGS.findIndex(l=>l[0]===c));save.lang=LANGS[LI][0];persist();applyLang();}
+new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')trNode(m.target);else m.addedNodes.forEach(trTree);}}).observe(document.body,{childList:true,characterData:true,subtree:true});   // tłumaczy też teksty, które gra ustawia w trakcie działania
+$('lng').addEventListener('change',()=>setLang($('lng').value));
+applyLang();
+
+/* ---------- Sterowanie: palec albo żyroskop (wybór w Ustawieniach) ---------- */
+const TILT_MAX=22;                 // przechył telefonu (w stopniach), przy którym kilof dochodzi do bocznej ściany; mniej = czulej
+let tiltOk=false,tiltX=COLS/2;     // tiltOk: telefon faktycznie przysyła dane z żyroskopu (do tego czasu działa palec)
+const tiltOn=()=>save.ctrl==='tilt'&&tiltOk;
+addEventListener('deviceorientation',e=>{
+  if(e.gamma==null)return;
+  tiltOk=true;
+  if(save.ctrl!=='tilt')return;
+  const t=Math.max(0,Math.min(COLS,COLS/2+e.gamma/TILT_MAX*COLS/2));
+  tiltX+=(t-tiltX)*.4;steer=tiltX;
+});
+function ctrlUi(msg,bad){
+  $('ctt').classList.toggle('on',save.ctrl!=='tilt');$('ctg').classList.toggle('on',save.ctrl==='tilt');
+  $('ctm').className='nmsg'+(bad?' bad':'');
+  $('ctm').textContent=msg||(save.ctrl==='tilt'?'Przechylaj telefon w lewo i w prawo.':'Przeciągaj palcem po ekranie.');
+}
+function setCtrl(m){save.ctrl=m;steer=null;tiltX=COLS/2;persist();}
+$('ctt').addEventListener('click',()=>{setCtrl('touch');ctrlUi();});
+$('ctg').addEventListener('click',async()=>{
+  try{const D=window.DeviceOrientationEvent;       // iOS pyta o zgodę na żyroskop
+    if(D&&typeof D.requestPermission==='function'&&(await D.requestPermission())!=='granted'){setCtrl('touch');ctrlUi('Brak zgody na żyroskop. Zostaje sterowanie palcem.',true);return;}
+  }catch(e){}
+  tiltOk=false;setCtrl('tilt');ctrlUi('Przechyl telefon, żeby sprawdzić żyroskop…');
+  setTimeout(()=>{if(save.ctrl==='tilt'&&!tiltOk){setCtrl('touch');ctrlUi('Ten telefon lub przeglądarka nie udostępnia żyroskopu. Zostaje sterowanie palcem.',true);}},2500);
+});
+
+/* ---------- Sterowanie dotykiem / myszą ---------- */
+function pt(e){if(tiltOn())return;steer=Math.max(0,Math.min(COLS,e.clientX/W*COLS));}
+cv.addEventListener('pointerdown',e=>{pt(e);$('hint').style.opacity=0;getAudioContext();});
+cv.addEventListener('pointermove',e=>{if(steer!==null)pt(e);});
+addEventListener('pointerup',()=>{if(!tiltOn())steer=null;});
+addEventListener('pointercancel',()=>{if(!tiltOn())steer=null;});
+
+/* ---------- Przycisk BOOM ---------- */
+$('bi').src=IMG.bomb;
+$('boom').addEventListener('pointerdown',e=>{if(e.preventDefault)e.preventDefault();getAudioContext();useBomb();});
+addEventListener('keydown',e=>{if((e.key==='b'||e.key==='B'||e.key===' ')&&running()){if(e.preventDefault)e.preventDefault();useBomb();}});
+
+/* ---------- Główna pętla gry ---------- */
+let last=performance.now(),acc=0;
+function frame(now){
+  requestAnimationFrame(frame);
+  if(innerWidth!==W||innerHeight!==H)resize();
+  const fdt=Math.min((now-last)/1000,.1);last=now;
+  if(running()){
+    acc+=fdt;
+    while(acc>=1/120){step(1/120);acc-=1/120;}
+    depth=Math.max(depth,Math.floor(p.y));
+    if(depth>save.best)save.best=depth;
+    while(genTo<p.y+25)genRows(5);
+    const tc=Math.max(-12,p.y-H/ts*(.35+.27*Math.max(0,Math.min(1,1-p.y/5))));
+    cam+=(tc-cam)*Math.min(1,fdt*9);
+    if(save.infHp)dur=maxDur;   // kod HPXD+: nieograniczone HP kilofa
+    if(dur<=0){dur=0;over=true;persist();showOver();}
+    bombCd=Math.max(0,bombCd-fdt);
+    if(tier===0)RS.wood=Math.max(RS.wood,depth);
+    RS.t+=fdt;
+    chCheck();
+    for(let i=fuses.length-1;i>=0;i--){
+      const f=fuses[i];f.t-=fdt;
+      parts.push({x:f.x+.2,y:f.y-.42,vx:(Math.random()-.5)*5,vy:-2-Math.random()*3,l:1,d:5,s:2+Math.random()*2,col:Math.random()<.5?'#fde047':'#fb923c'});
+      if(f.t<=0){fuses.splice(i,1);detonate(f.x,f.y);}
+    }
+  }
+  for(let i=blasts.length-1;i>=0;i--){blasts[i].l-=fdt/.5;if(blasts[i].l<=0)blasts.splice(i,1);}
+  shake=Math.max(0,shake-fdt);flash=Math.max(0,flash-fdt*2.6);
+  if(toastT>0){toastT-=fdt;if(toastT<=0)$('toast').hidden=true;}
+  if(toastT<=0&&toastQ.length){$('toast').innerHTML=toastQ.shift();$('toast').hidden=false;toastT=3.4;}
+  for(let i=parts.length-1;i>=0;i--){
+    const q=parts[i];q.vy+=12*fdt;q.x+=q.vx*fdt;q.y+=q.vy*fdt;q.l-=q.d*fdt;
+    if(q.l<=0)parts.splice(i,1);
+  }
+  for(let i=texts.length-1;i>=0;i--){
+    const t=texts[i];t.y-=2.4*fdt;t.l-=1.8*fdt;
+    if(t.l<=0)texts.splice(i,1);
+  }
+  draw();ui();
+}
+newRun();
+showMenu();
+if(!save.nick)showNick();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
+</body></html>
+</body></html>
