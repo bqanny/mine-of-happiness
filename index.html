@@ -10,7 +10,7 @@
    Aplikacja ma w środku małą powłokę (index.html): jeśli w pamięci leży nowsza wersja gry pobrana z GitHuba, uruchamia ją
    zamiast wbudowanej (game.html). Wbudowana wersja zawsze zostaje jako zapas: gdy nowa wersja wysypie się w pierwszych sekundach
    (poniższy kod), aplikacja sama się wycofuje i wraca do wbudowanej. */
-window.GV=10;
+window.GV=12;
 (function(){
   if(!window.__ota)return;                              // tylko dla wersji uruchomionej z pamięci aplikacji (z GitHuba)
   window.addEventListener('error',function(){
@@ -1823,7 +1823,7 @@ addEventListener('keydown',e=>{if((e.key==='b'||e.key==='B'||e.key===' ')&&runni
 
 /* ---------- Aktualizacje OTA z GitHuba (tylko w aplikacji Android; w przeglądarce nic nie robią) ---------- */
 const GAME_VERSION=window.GV||0;            // numer wersji ustawiasz na samej górze pliku: window.GV=...
-const OTA_URL='';                           // adres strony na GitHub Pages z ukośnikiem na końcu, np. 'https://TWOJ-LOGIN.github.io/mine-of-happiness/'; puste = aktualizacje wyłączone
+const OTA_URL='https://bqanny.github.io/mine-of-happiness/';   // adres strony na GitHub Pages z ukośnikiem na końcu; puste = aktualizacje wyłączone
 let otaReady=0,otaLast=0;                   // otaReady = numer pobranej wersji czekającej na uruchomienie
 const inApp=()=>!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
 async function otaFetch(u){const c=new AbortController(),t=setTimeout(()=>c.abort(),10000);try{return await fetch(u,{cache:'no-store',signal:c.signal});}finally{clearTimeout(t);}}
