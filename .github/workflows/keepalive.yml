@@ -1,0 +1,16 @@
+# Budzik dla Supabase: raz dziennie pobiera ranking, żeby darmowy projekt nie został uśpiony po 7 dniach bez ruchu.
+name: Supabase keep-alive
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping rankingu
+        run: |
+          curl -fsS -X POST 'https://dufbpciwnmxonkryzlpx.supabase.co/rest/v1/rpc/get_top100' \
+            -H 'apikey: sb_publishable_LCpW9rFOCLRv0Ao56rdbWA_E2wJe-KZ' \
+            -H 'Content-Type: application/json' \
+            -d '{}' | head -c 300
