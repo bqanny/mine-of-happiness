@@ -10,7 +10,7 @@
    Aplikacja ma w środku małą powłokę (index.html): jeśli w pamięci leży nowsza wersja gry pobrana z GitHuba, uruchamia ją
    zamiast wbudowanej (game.html). Wbudowana wersja zawsze zostaje jako zapas: gdy nowa wersja wysypie się w pierwszych sekundach
    (poniższy kod), aplikacja sama się wycofuje i wraca do wbudowanej. */
-window.GV=13;
+window.GV=15;
 (function(){
   if(!window.__ota)return;                              // tylko dla wersji uruchomionej z pamięci aplikacji (z GitHuba)
   window.addEventListener('error',function(){
@@ -356,10 +356,11 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
       <div class="tp"><span class="emo">❤️</span><div><b>HP kilofa</b><small>Każde uderzenie zużywa HP kilofa. Gdy spadnie do zera, run się kończy. Na koniec dostajesz premię w monetach za głębokość.</small></div></div>
       <div class="tp"><span class="emo">🪙</span><div><b>Rudy i monety</b><small>Węgiel, żelazo, złoto, diament, lazuryt i netheryt dają monety. Im rzadsza ruda, tym więcej jest warta, a głębiej jest ich więcej.</small></div></div>
       <div class="tp"><span class="emo">🔥</span><div><b>Lawa i TNT</b><small>Uderzenie w lawę zabiera dodatkowe HP, tym więcej, im głębiej. Skrzynia TNT wybucha i niszczy bloki wokół siebie, a ruda z nich też daje monety.</small></div></div>
-      <div class="tp"><span class="emo">🛠️</span><div><b>Stół craftingu</b><small>Zniszczony stół ulepsza kilof na kolejny i odnawia połowę HP. Obsydianowy kilof jest już najlepszy, więc stół go tylko naprawia.</small></div></div>
+      <div class="tp"><span class="emo">🛠️</span><div><b>Stół craftingu</b><small>Zniszczony stół ulepsza kilof na kolejny i odnawia połowę HP. Obsydianowy kilof to koniec drogi craftingu, więc stół go (i kilofy ze sklepu) tylko naprawia.</small></div></div>
       <div class="tp"><span class="emo">💚</span><div><b>Blok naprawczy</b><small>Zielony blok z krzyżem odnawia od 10% do 60% HP kilofa. Jest trochę częstszy niż stół craftingu, ale nie ulepsza kilofa.</small></div></div>
       <div class="tp"><span class="emo">🛒</span><div><b>Sklep za monety</b><small>Kupisz w nim Wzmocniony Trzonek (więcej HP), Ostrą Końcówkę (mocniejsze uderzenia) i bombę BOOM, która wysadza bloki dookoła kilofa.</small></div></div>
       <div class="tp"><span class="emo">⛏️</span><div><b>Kilofy</b><small>Lepsze kilofy odblokowujesz rekordem głębokości. Przed każdym runem wybierasz kilof, a nowy kupujesz za monety.</small></div></div>
+      <div class="tp"><span class="emo">💎</span><div><b>Kilofy głębinowe</b><small>Od około 1000 m pojawiają się szmaragd i astralit: warte fortunę, ale bardzo twarde. W sklepie kupisz kilofy Magmowy i Astralny. Do 700 m kopią słabo, a od 1000 m coraz mocniej. Nie da się ich zdobyć w craftingu.</small></div></div>
       <div class="tp"><span class="emo">🏆</span><div><b>Wyzwania</b><small>Wybierasz jedno zadanie na grę, a nagroda wpada raz, po ukończeniu. W wyzwaniach nie działa sklep, ulepszenia kilofa ani bomba BOOM. Wyjątek to „Wielki wybuch”, który daje bomby za darmo.</small></div></div>
       <div class="tp"><span class="emo">🔑</span><div><b>Ikony w menu</b><small>Kod to miejsce na wpisywanie kodów. Sklep premium to płatne dodatki, na razie niedostępne. Samouczek to ta pomoc.</small></div></div>
     </div>
@@ -526,7 +527,7 @@ try{
   save.coins=num(save.coins,0,0,1e12);save.maxHpLvl=num(save.maxHpLvl,1,1,99);save.dmgLvl=num(save.dmgLvl,1,1,99);
   save.bombs=num(save.bombs,0,0,BOMB.max);save.best=num(save.best,0,0,1e6);
   save.sfx=num(save.sfx,100,0,100);save.music=num(save.music,60,0,100);
-  save.tiers=num(save.tiers,0,0,63);save.infHp=save.infHp?1:0;save.ctrl=save.ctrl==='tilt'?'tilt':'touch';save.lang=/^(pl|en|zh|es|de)$/.test(save.lang)?save.lang:'pl';
+  save.tiers=num(save.tiers,0,0,255);save.infHp=save.infHp?1:0;save.ctrl=save.ctrl==='tilt'?'tilt':'touch';save.lang=/^(pl|en|zh|es|de)$/.test(save.lang)?save.lang:'pl';
   save.nick=cleanNick(save.nick);if(nickErr(save.nick))save.nick='';   // brak / zły nick = trzeba utworzyć nowy
   // Ranking: tajny kod urządzenia (losowy, nigdzie go nie pokazujemy), rekord liczony do rankingu (bez kodu HPXD+), co już wysłano
   if(!(typeof save.rid==='string'&&/^[0-9a-f]{32}$/.test(save.rid))){
@@ -666,6 +667,14 @@ const BAL={
   netherMin:200,    // Netheryt pojawia się dopiero od tej głębokości (najrzadszy surowiec)
   netherBase:.0015, // szansa na Netheryt (na pole) na głębokości netherMin
   netherMax:.008,   // ... i przy oreRamp (zawsze rzadszy niż diament)
+  emeraldMin:1000,  // Szmaragd pojawia się dopiero od tej głębokości
+  emeraldBase:.004, // szansa na Szmaragd (na pole) na głębokości emeraldMin
+  emeraldMax:.012,  // ... i 500 m głębiej
+  astralMin:1400,   // Astralit (najrzadszy i najcenniejszy) pojawia się od tej głębokości
+  astralBase:.0012, // szansa na Astralit (na pole) na głębokości astralMin
+  astralMax:.004,   // ... i 500 m głębiej
+  deepFrom:700,     // kilofy głębinowe (Magmowy, Astralny): do tej głębokości kopią słabo (mnożnik deep[0] ich obrażeń)
+  deepFull:1000,    // ... od tej głębokości mają pełną moc (deep[1]), a głębiej moc rośnie dalej (deep[2] = wzrost na metr)
   upChance:.0011,   // szansa na zielony blok (ulepszenie / naprawa) przy powierzchni
   upFade:.004,      // zielone bloki są coraz rzadsze z głębokością
   upHeal:.5,        // jaką część maks. HP odnawia stół craftingu
@@ -685,8 +694,12 @@ const TIERS=[
   {name:'Żelazny',color:'#f8fafc',dmg:70,hp:300},
   {name:'Złoty',color:'#facc15',dmg:120,hp:400},
   {name:'Diamentowy',color:'#38bdf8',dmg:200,hp:520},
-  {name:'Obsydianowy',color:'#c084fc',dmg:400,hp:680}
+  {name:'Obsydianowy',color:'#c084fc',dmg:400,hp:680},
+  // Kilofy głębinowe: tylko do kupienia (nie do wykrafcenia). deep:[moc do deepFrom, moc przy deepFull, wzrost mocy na metr głębiej]; moc = mnożnik obrażeń
+  {name:'Magmowy',color:'#ef4444',dmg:400,hp:1000,deep:[.7,4,.005]},
+  {name:'Astralny',color:'#f472b6',dmg:400,hp:1400,deep:[.5,10,.0055]}
 ];
+const CRAFT_MAX=5;   // stół craftingu ulepsza kilof tylko do tego numeru (obsydianowy); wyższe kilofy są tylko ze sklepu
 const T=[null,
   {c:'#64748b',hp:10,v:0},
   {c:'#1e293b',hp:30,v:2},
@@ -698,7 +711,9 @@ const T=[null,
   {c:'#ea580c',hp:40,v:0,k:'lava'},
   {c:'#2f55d6',hp:260,v:25},    // 9  Lazuryt
   {c:'#7a5560',hp:800,v:200},  // 10 Netheryt
-  {c:'#22c55e',hp:2,v:0,k:'fix'}  // 11 Blok naprawczy (odnawia losowo 10–60% HP)
+  {c:'#22c55e',hp:2,v:0,k:'fix'},  // 11 Blok naprawczy (odnawia losowo 10–60% HP)
+  {c:'#10b981',hp:1100,v:400},     // 12 Szmaragd (od 1000 m)
+  {c:'#d946ef',hp:2500,v:1500}     // 13 Astralit (od 1400 m)
 ];
 for(const t of T)if(t&&t.hp>1)t.hp=Math.round(t.hp*2.5);
 const ZONES=[[0,'Powierzchnia'],[30,'Glina'],[100,'Kamień'],[220,'Rudy'],[420,'Głębiny'],[700,'Obsydian'],[1000,'Piekło']];
@@ -706,6 +721,12 @@ const zoneOf=d=>{let z=ZONES[0][1];for(const [m,n] of ZONES)if(d>=m)z=n;return z
 const hpFor=t=>TIERS[t].hp+((activeCh?1:save.maxHpLvl)-1)*BAL.hpStep;   // w wyzwaniach ulepszenia kilofa ze sklepu nie działają
 const maxHp=()=>hpFor(tier);
 const dmgMul=()=>Math.pow(BAL.dmgStep,activeCh?1:save.dmgLvl);
+const deepMul=(t,r)=>{                   // mnożnik obrażeń kilofa głębinowego na głębokości r (kilofy zwykłe: 1)
+  const d=TIERS[t].deep;if(!d)return 1;
+  if(r<=BAL.deepFrom)return d[0];
+  if(r<BAL.deepFull){const x=(r-BAL.deepFrom)/(BAL.deepFull-BAL.deepFrom);return d[0]+(d[1]-d[0])*x*x*(3-2*x);}
+  return d[1]*Math.exp(d[2]*(r-BAL.deepFull));
+};
 
 /* ---------- Generator tekstur proceduralnych (32x32) ---------- */
 function rnd(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
@@ -845,7 +866,9 @@ const ORES={
   3:{c:['#8a5f3f','#d6a981','#f5dcc2'],n:5},      // żelazo
   4:{c:['#a8760a','#f2b705','#fff3a0'],n:4},      // złoto
   5:{c:['#0c7f8f','#27d9e0','#d6ffff'],n:4},      // diament
-  9:{c:['#10277a','#2850d0','#86a6ff'],n:5}       // lazuryt
+  9:{c:['#10277a','#2850d0','#86a6ff'],n:5},      // lazuryt
+  12:{c:['#064e3b','#10b981','#d1fae5'],n:5},     // szmaragd
+  13:{c:['#6b21a8','#d946ef','#fdf4ff'],n:4}      // astralit
 };
 const OSH=[[[1,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2]],[[0,0],[1,0],[0,1],[1,1],[2,1],[1,2],[2,2]],[[0,0],[1,0],[2,0],[3,0],[1,1],[2,1],[3,1]],[[0,0],[0,1],[1,1],[0,2],[1,2],[1,3]],[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[1,2]]];
 function oreTex(t,z){
@@ -867,7 +890,7 @@ function oreTex(t,z){
   return cv;
 }
 const TEXZ={1:BASE};
-[2,3,4,5,9].forEach(t=>TEXZ[t]=ZB.map((_,z)=>oreTex(t,z)));
+[2,3,4,5,9,12,13].forEach(t=>TEXZ[t]=ZB.map((_,z)=>oreTex(t,z)));
 
 /* Trawa na górnej warstwie */
 const GRASS=tex(P=>{
@@ -1042,11 +1065,13 @@ function genRow(r){
     let t=1;
     if(r>2){
       const x=Math.random();
-      const nth=r>=BAL.netherMin?BAL.netherBase+(BAL.netherMax-BAL.netherBase)*Math.min(1,(r-BAL.netherMin)/Math.max(1,BAL.oreRamp-BAL.netherMin)):0,
+      const ast=r>=BAL.astralMin?BAL.astralBase+(BAL.astralMax-BAL.astralBase)*Math.min(1,(r-BAL.astralMin)/500):0,
+            emr=ast+(r>=BAL.emeraldMin?BAL.emeraldBase+(BAL.emeraldMax-BAL.emeraldBase)*Math.min(1,(r-BAL.emeraldMin)/500):0),
+            nth=emr+(r>=BAL.netherMin?BAL.netherBase+(BAL.netherMax-BAL.netherBase)*Math.min(1,(r-BAL.netherMin)/Math.max(1,BAL.oreRamp-BAL.netherMin)):0),
             lapP=r>=BAL.lapisMin?BAL.lapisBase+(BAL.lapisMax-BAL.lapisBase)*d:0,
             dia=nth+d*.06,lap=dia+lapP,gold=lap+.02+d*.08,iron=gold+.08+d*.05,coal=iron+.15,
             tnt=coal+(safe?0:.02),lava=tnt+(safe?0:hz*BAL.lavaMax),up=lava+upc,fx=up+fxc;
-      t=x<nth?10:x<dia?5:x<lap?9:x<gold?4:x<iron?3:x<coal?2:x<tnt?6:x<lava?8:x<up?7:x<fx?11:1;
+      t=x<ast?13:x<emr?12:x<nth?10:x<dia?5:x<lap?9:x<gold?4:x<iron?3:x<coal?2:x<tnt?6:x<lava?8:x<up?7:x<fx?11:1;
     }
     const k=T[t].k,mx=(!k||k==='lava')?Math.max(1,Math.round(T[t].hp*hm)):T[t].hp;
     row.push({t,hp:mx,mx});
@@ -1085,7 +1110,7 @@ function explode(r0,c0){
 function hit(r,c){
   const b=rows[r][c],ty=T[b.t];
   dur-=1;
-  b.hp-=TIERS[tier].dmg*dmgMul();
+  b.hp-=TIERS[tier].dmg*dmgMul()*deepMul(tier,r);
   if(ty.k==='lava'){RS.lava++;const ld=BAL.lavaBase+Math.floor(r/BAL.lavaPer);dur-=ld;text(c+.5,r,'-'+ld+' HP','#ef4444');burst(c,r,'#ea580c',3);}
   if(b.hp>0){playSound('hit');return false;}
   rows[r][c]=null;
@@ -1094,7 +1119,7 @@ function hit(r,c){
   if(ty.k!=='tnt'&&ty.k!=='up'&&ty.k!=='fix')playSound((b.t>=3&&b.t<=5)||b.t>=9?'break_rare':'break_common');
   if(ty.k==='tnt'){text(c+.5,r,'BOOM!','#ef4444');explode(r,c);}
   else if(ty.k==='up'){
-    if(tier<TIERS.length-1){tier++;RS.ups++;save.tiers|=1<<tier;maxDur=maxHp();text(c+.5,r,'LEVEL UP!','#38bdf8');playSound('upgrade');}
+    if(tier<CRAFT_MAX){tier++;RS.ups++;save.tiers|=1<<tier;maxDur=maxHp();text(c+.5,r,'LEVEL UP!','#38bdf8');playSound('upgrade');}
     else{text(c+.5,r,'NAPRAWA!','#4ade80');playSound('repair');}
     dur=Math.min(maxDur,dur+maxDur*BAL.upHeal);
   }else if(ty.k==='fix'){
@@ -1478,12 +1503,13 @@ function ui(){
   set('hint',tiltOn()?'Przechylaj telefon w lewo i w prawo, żeby sterować kilofem':'Przeciągnij palcem, żeby sterować kilofem');
   if(tiltOn()&&depth>=3)$('hint').style.opacity=0;
   set('hp',save.infHp?'∞':Math.max(0,Math.ceil(dur)));
-  set('ti',TIERS[tier].name);
+  {const TT=TIERS[tier],dm=TT.deep?deepMul(tier,Math.max(0,p.y)):0;   // kilof głębinowy: pokazujemy aktualny mnożnik mocy
+   set('ti',TT.name+(TT.deep?' · ×'+(dm>=1000?(dm/1000).toFixed(1)+'k':dm>=100?Math.round(dm):dm.toFixed(1)):''));}
   if($('tic')._t!==tier){$('tic')._t=tier;$('tic').src=IMG['p'+tier];}
   $('ti').style.color=TIERS[tier].color;
   $('hpf').style.width=Math.max(0,dur/maxDur*100)+'%';
   {const sb=!$('menu').hidden||!$('pause').hidden;if($('by')._v!==sb){$('by')._v=sb;$('by').hidden=!sb;}}
-  {const su=!!otaReady&&!$('menu').hidden;if($('upd')._v!==su){$('upd')._v=su;$('upd').hidden=!su;}}   // „Nowa wersja” tylko w menu
+  {const su=!OTA_AUTO&&!!otaReady&&!$('menu').hidden;if($('upd')._v!==su){$('upd')._v=su;$('upd').hidden=!su;}}   // „Nowa wersja” tylko w menu
   {const t=chLabel(),e=$('cb'),cl=!activeCh?'':chState===1?'ok':chState===2?'bad':'';
    if(e._t!==t){e._t=t;e.textContent=t;}
    if(e._h!==!activeCh){e._h=!activeCh;e.hidden=!activeCh;}
@@ -1524,7 +1550,7 @@ $('sh').addEventListener('click',openShop);
 $('shp1').addEventListener('click',openShop);
 $('shp2').addEventListener('click',openShop);
 $('cls').addEventListener('click',()=>{$('shop').hidden=true;if(!$('pick').hidden)renderPick();});
-const PICK=[0,1,2,3,4,5],PRICE={0:0,1:80,2:300,3:1500,4:7000,5:30000},NEED={0:0,1:40,2:100,3:220,4:420,5:700};
+const PICK=[0,1,2,3,4,5,6,7],PRICE={0:0,1:80,2:300,3:1500,4:7000,5:30000,6:60000,7:150000},NEED={0:0,1:40,2:100,3:220,4:420,5:700,6:850,7:1150};
 function renderPick(){
   pickSig=pickState();
   $('pc').textContent=Math.floor(save.coins);
@@ -1532,7 +1558,7 @@ function renderPick(){
   $('pl').innerHTML=PICK.map(i=>{
     const t=TIERS[i],pr=PRICE[i],lock=save.best<NEED[i];
     const lab=lock?'🔒 '+NEED[i]+' m':(pr?'Kup<span>'+pr+' 🪙</span>':'Kop');
-    return '<div class="item"><div class="in"><img class="ic" src="'+IMG['p'+i]+'"><div><b style="color:'+t.color+'">'+t.name+'</b><small>Obrażenia '+t.dmg+' · monety ×'+(1+i*BAL.tierMul)+'</small><em>HP '+hpFor(i)+'</em></div></div><button data-i="'+i+'"'+(lock||save.coins<pr?' disabled':'')+'>'+lab+'</button></div>';
+    return '<div class="item"><div class="in"><img class="ic" src="'+IMG['p'+i]+'"><div><b style="color:'+t.color+'">'+t.name+'</b><small>Obrażenia '+t.dmg+' · monety ×'+(1+i*BAL.tierMul)+'</small>'+(t.deep?'<small>Moc kilofa: '+Math.round(t.deep[0]*100)+'% do '+BAL.deepFrom+' m, '+Math.round(t.deep[1]*100)+'% od '+BAL.deepFull+' m, a głębiej jeszcze więcej</small>':'')+'<em>HP '+hpFor(i)+'</em></div></div><button data-i="'+i+'"'+(lock||save.coins<pr?' disabled':'')+'>'+lab+'</button></div>';
   }).join('');
 }
 function openPick(){renderPick();$('over').hidden=true;$('pick').hidden=false;}
@@ -1712,7 +1738,7 @@ const TXT=[
 ['każde uderzenie zużywa hp kilofa. gdy spadnie do zera, run się kończy. na koniec dostajesz premię w monetach za głębokość','Every hit uses up pickaxe HP. When it drops to zero, the run ends. At the end you get a coin bonus for depth.','每次击打都会消耗镐的耐久。降到零时本局结束。结束时会根据深度获得金币奖励。','Cada golpe gasta PV del pico. Cuando llegan a cero, la partida termina. Al final recibes un bono de monedas por la profundidad.','Jeder Schlag verbraucht Hacken-HP. Fallen sie auf null, endet der Lauf. Am Ende gibt es einen Münzbonus für die Tiefe.'],
 ['węgiel, żelazo, złoto, diament, lazuryt i netheryt dają monety. im rzadsza ruda, tym więcej jest warta, a głębiej jest ich więcej','Coal, iron, gold, diamond, lapis and netherite give coins. The rarer the ore, the more it is worth, and there is more of it deeper down.','煤炭、铁、金、钻石、青金石和下界合金都能换取金币。矿石越稀有价值越高，而且越深越多。','El carbón, el hierro, el oro, el diamante, el lapislázuli y la netherita dan monedas. Cuanto más rara es la mena, más vale, y hay más cuanto más profundo.','Kohle, Eisen, Gold, Diamant, Lapislazuli und Netherit bringen Münzen. Je seltener das Erz, desto mehr ist es wert, und tiefer gibt es mehr davon.'],
 ['uderzenie w lawę zabiera dodatkowe hp, tym więcej, im głębiej. skrzynia tnt wybucha i niszczy bloki wokół siebie, a ruda z nich też daje monety','Hitting lava costs extra HP, and the deeper you are, the more it costs. A TNT crate explodes and destroys the blocks around it, and the ore from them also gives coins.','击打岩浆会额外扣除耐久，越深扣得越多。TNT箱会爆炸并摧毁周围的方块，其中的矿石同样能换取金币。','Golpear la lava quita PV extra, y cuanto más profundo, más quita. Una caja de TNT explota y destruye los bloques de alrededor, y los minerales que sueltan también dan monedas.','Ein Schlag in Lava kostet zusätzliche HP, und zwar mehr, je tiefer du bist. Eine TNT-Kiste explodiert und zerstört die Blöcke um sich herum, das Erz daraus bringt ebenfalls Münzen.'],
-['zniszczony stół ulepsza kilof na kolejny i odnawia połowę hp. obsydianowy kilof jest już najlepszy, więc stół go tylko naprawia','A destroyed table upgrades your pickaxe to the next one and restores half your HP. The obsidian pickaxe is already the best, so the table only repairs it.','摧毁工作台会把镐升级到下一级，并恢复一半耐久。黑曜石镐已是最强，所以工作台只会修复它。','Una mesa destruida mejora tu pico al siguiente y restaura la mitad de los PV. El pico de obsidiana ya es el mejor, así que la mesa solo lo repara.','Ein zerstörter Tisch verbessert deine Hacke auf die nächste Stufe und stellt die Hälfte der HP wieder her. Die Obsidian-Hacke ist schon die beste, deshalb repariert der Tisch sie nur.'],
+['zniszczony stół ulepsza kilof na kolejny i odnawia połowę hp. obsydianowy kilof to koniec drogi craftingu, więc stół go (i kilofy ze sklepu) tylko naprawia','A destroyed table upgrades your pickaxe to the next one and restores half your HP. The obsidian pickaxe is the end of the crafting path, so the table only repairs it (and the shop pickaxes).','摧毁工作台会把镐升级到下一级，并恢复一半耐久。黑曜石镐是合成路线的终点，所以工作台只会修复它（以及商店里的镐）。','Una mesa destruida mejora tu pico al siguiente y restaura la mitad de los PV. El pico de obsidiana es el final del camino de crafteo, así que la mesa solo lo repara (y también los picos de la tienda).','Ein zerstörter Tisch verbessert deine Hacke auf die nächste Stufe und stellt die Hälfte der HP wieder her. Die Obsidian-Hacke ist das Ende des Crafting-Wegs, deshalb repariert der Tisch sie (und die Shop-Hacken) nur.'],
 ['kupisz w nim wzmocniony trzonek (więcej hp), ostrą końcówkę (mocniejsze uderzenia) i bombę boom, która wysadza bloki dookoła kilofa','Buy Reinforced Handle (more HP), Sharp Tip (stronger hits) and the BOOM bomb, which blows up the blocks around the pickaxe.','可以购买加固镐柄（更多耐久）、锋利镐尖（更强的击打）和BOOM炸弹，炸弹能炸开镐周围的方块。','Compra Mango reforzado (más PV), Punta afilada (golpes más fuertes) y la bomba BOOM, que vuela los bloques alrededor del pico.','Dort kaufst du Verstärkter Stiel (mehr HP), Scharfe Spitze (stärkere Schläge) und die BOOM-Bombe, die die Blöcke rund um die Hacke sprengt.'],
 ['lepsze kilofy odblokowujesz rekordem głębokości. przed każdym runem wybierasz kilof, a nowy kupujesz za monety','You unlock better pickaxes with your depth record. Before each run you choose a pickaxe, and you buy a new one with coins.','用深度纪录解锁更好的镐。每局开始前选择镐，新镐用金币购买。','Desbloqueas mejores picos con tu récord de profundidad. Antes de cada partida eliges un pico, y uno nuevo se compra con monedas.','Bessere Hacken schaltest du mit deinem Tiefenrekord frei. Vor jedem Lauf wählst du eine Hacke, eine neue kaufst du mit Münzen.'],
 ['wybierasz jedno zadanie na grę, a nagroda wpada raz, po ukończeniu. w wyzwaniach nie działa sklep, ulepszenia kilofa ani bomba boom. wyjątek to „wielki wybuch”, który daje bomby za darmo','You pick one task per game, and the reward is paid once, when you complete it. In challenges the shop, pickaxe upgrades and the BOOM bomb do not work. The exception is Big Bang, which gives free bombs.','每局选择一个任务，完成后奖励只发放一次。挑战中商店、镐升级和BOOM炸弹都无法使用。例外是“大爆炸”，它会免费赠送炸弹。','Eliges una tarea por partida y la recompensa se paga una vez, al completarla. En los desafíos no funcionan la tienda, las mejoras del pico ni la bomba BOOM. La excepción es Gran explosión, que da bombas gratis.','Du wählst eine Aufgabe pro Spiel, und die Belohnung gibt es einmalig nach dem Abschluss. In Challenges funktionieren Shop, Hacken-Upgrades und die BOOM-Bombe nicht. Die Ausnahme ist Großer Knall, der Bomben gratis gibt.'],
@@ -1804,6 +1830,12 @@ const TXT=[
 ['Nikt jeszcze nie ma wyniku','Nobody has a score yet','还没有人有成绩','Nadie tiene puntuación todavía','Noch hat niemand ein Ergebnis'],
 ['Bądź pierwszy','Be the first','来当第一名吧','¡Sé el primero','Sei der Erste'],
 ['Rekord wysyłasz automatycznie, gdy masz internet','Your record is sent automatically when you are online','联网时会自动提交你的纪录','Tu récord se envía automáticamente cuando tienes internet','Dein Rekord wird automatisch gesendet, sobald du online bist'],
+['Magmowy','Magma','熔岩镐','De magma','Magma'],
+['Astralny','Astral','星辰镐','Astral','Astral'],
+['Kilofy głębinowe','Deep pickaxes','深层镐','Picos de las profundidades','Tiefenhacken'],
+['Od około # m pojawiają się szmaragd i astralit: warte fortunę, ale bardzo twarde. W sklepie kupisz kilofy Magmowy i Astralny. Do # m kopią słabo, a od # m coraz mocniej. Nie da się ich zdobyć w craftingu','From about # m you will find emerald and astralite: worth a fortune, but very hard. In the shop you can buy the Magma and Astral pickaxes. They dig poorly down to # m and get stronger from # m on. They cannot be obtained from crafting.','从约#米深处开始会出现绿宝石和星辰矿：价值连城，但非常坚硬。你可以在商店购买熔岩镐和星辰镐。它们在#米以内挖得很慢，#米以下则越来越强。它们无法通过合成获得。','Desde unos # m aparecen la esmeralda y la astralita: valen una fortuna, pero son muy duras. En la tienda puedes comprar los picos Magma y Astral. Cavan mal hasta los # m y mejoran a partir de los # m. No se pueden conseguir con crafteo.','Ab etwa # m findest du Smaragd und Astralit: ein Vermögen wert, aber sehr hart. Im Shop kannst du die Hacken Magma und Astral kaufen. Bis # m graben sie schlecht, ab # m immer besser. Man kann sie nicht craften.'],
+['Moc kilofa','Pickaxe power','镐的威力','Potencia del pico','Hackenkraft'],
+['#% do # m, #% od # m, a głębiej jeszcze więcej','#% up to # m, #% from # m, and even more deeper down','#%（到#米为止），#%（从#米起），越深越强','#% hasta # m, #% desde # m y aún más al profundizar','#% bis # m, #% ab # m und noch mehr in der Tiefe'],
 ['zamknij','Close','关闭','Cerrar','Schließen']
 ];
 const TR={};for(const r of TXT)TR[r[0].toLowerCase()]=r;
@@ -1895,7 +1927,8 @@ addEventListener('keydown',e=>{if((e.key==='b'||e.key==='B'||e.key===' ')&&runni
 /* ---------- Aktualizacje OTA z GitHuba (tylko w aplikacji Android; w przeglądarce nic nie robią) ---------- */
 const GAME_VERSION=window.GV||0;            // numer wersji ustawiasz na samej górze pliku: window.GV=...
 const OTA_URL='https://bqanny.github.io/mine-of-happiness/';   // adres strony na GitHub Pages z ukośnikiem na końcu; puste = aktualizacje wyłączone
-let otaReady=0,otaLast=0;                   // otaReady = numer pobranej wersji czekającej na uruchomienie
+const OTA_AUTO=true;                        // true = pobrana wersja uruchamia się sama, gdy gracz jest w menu i nic nie ma otwartego (zielony przycisk wtedy się nie pokazuje); false = tylko przycisk „Nowa wersja”
+let otaReady=0,otaLast=0,otaTap=0;                   // otaReady = numer pobranej wersji czekającej na uruchomienie
 const inApp=()=>!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
 async function otaFetch(u){const c=new AbortController(),t=setTimeout(()=>c.abort(),10000);try{return await fetch(u,{cache:'no-store',signal:c.signal});}finally{clearTimeout(t);}}
 async function otaCheck(){
@@ -1914,7 +1947,11 @@ async function otaCheck(){
     L.setItem('ota_html',h);L.setItem('ota_ver',String(v));otaReady=v;
   }catch(e){}                               // brak internetu itp. – po prostu gramy dalej
 }
-$('upd').addEventListener('click',()=>{persist();location.replace('/');});   // wracamy do powłoki aplikacji, która uruchomi pobraną wersję
+const otaApply=()=>{persist();location.replace('/');};
+$('upd').addEventListener('click',otaApply);
+addEventListener('pointerdown',()=>{otaTap=Date.now();},true);
+// automatyczne przełączenie: tylko w menu, bez otwartych okien (nick, ustawienia, kod, ranking, wybór kilofa, wynik runu, pauza), po 1,5 s bez dotyku
+setInterval(()=>{if(OTA_AUTO&&otaReady&&!document.hidden&&!$('menu').hidden&&!document.querySelector('.modal:not([hidden])')&&Date.now()-otaTap>1500)otaApply();},1000);   // wracamy do powłoki aplikacji, która uruchomi pobraną wersję
 setTimeout(()=>{window.__otaOk=1;try{localStorage.removeItem('ota_try');}catch(e){}},3000);   // gra wystartowała poprawnie: kasujemy licznik nieudanych startów
 setTimeout(otaCheck,2500);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)otaCheck();});
