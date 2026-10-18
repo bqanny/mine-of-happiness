@@ -10,7 +10,7 @@
    Aplikacja ma w środku małą powłokę (index.html): jeśli w pamięci leży nowsza wersja gry pobrana z GitHuba, uruchamia ją
    zamiast wbudowanej (game.html). Wbudowana wersja zawsze zostaje jako zapas: gdy nowa wersja wysypie się w pierwszych sekundach
    (poniższy kod), aplikacja sama się wycofuje i wraca do wbudowanej. */
-window.GV=15;
+window.GV=18;
 (function(){
   if(!window.__ota)return;                              // tylko dla wersji uruchomionej z pamięci aplikacji (z GitHuba)
   window.addEventListener('error',function(){
@@ -106,10 +106,22 @@ button:disabled{background:#475569;opacity:.6;pointer-events:none}
 .oi small{font-size:10.5px;font-weight:800;color:#fcd34d;opacity:.92;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.6)}
 .ob{width:56px;height:56px;padding:0;border-radius:12px;background:rgba(251,191,36,.20);border:2px solid #fbbf24;display:grid;place-items:center;box-shadow:0 4px 0 rgba(120,53,15,.85)}
 .ob:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(120,53,15,.85)}
+@media (max-height:860px){
+  .screen{gap:10px;padding-top:calc(env(safe-area-inset-top,0px) + 18px)}
+  .crown{width:44px;height:44px}.l1{font-size:64px}.l2{font-size:34px}.l3{margin-top:7px}
+  .mbtn{padding:10px 18px}.cb{padding:8px 12px}
+  .ores{margin-bottom:calc(env(safe-area-inset-bottom,0px) + 30px);padding:10px 6px 8px}
+}
 @media (max-height:700px){
   .screen{gap:10px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
   .logo{margin-bottom:0}.crown{width:44px;height:44px}.l1{font-size:62px}.l2{font-size:32px}.l3{margin-top:6px}
   .mbtn{padding:10px 16px}.cb{padding:8px 12px}.ores{margin-bottom:calc(env(safe-area-inset-bottom,0px) + 30px);padding:10px 6px 8px}
+}
+@media (max-height:680px){
+  .screen{gap:7px;padding-top:calc(env(safe-area-inset-top,0px) + 8px)}
+  .crown{width:38px;height:38px}.l1{font-size:54px}.l2{font-size:28px}.l3{display:none}
+  .mbtn{padding:8px 14px}.cb{padding:6px 10px}
+  .ores{margin-bottom:calc(env(safe-area-inset-bottom,0px) + 22px);padding:8px 6px 6px}
 }
 @media (max-height:600px){
   .screen{gap:8px}.crown{width:36px;height:36px}.l1{font-size:50px}.l2{font-size:26px}.l3{display:none}
@@ -146,7 +158,7 @@ button:disabled{background:#475569;opacity:.6;pointer-events:none}
 .item.done{border:1px solid rgba(74,222,128,.45)}.item.done .rw{color:#4ade80;font-size:20px}
 .pg{height:6px;border-radius:3px;background:rgba(255,255,255,.12);margin:6px 0 4px;overflow:hidden}
 .pg i{display:block;height:100%;background:linear-gradient(90deg,#34d399,#fbbf24)}
-#toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 176px);transform:translateX(-50%);z-index:4;width:max-content;max-width:90%;padding:10px 16px;border-radius:14px;background:rgba(15,23,42,.95);border:2px solid #fbbf24;color:#fde68a;font-weight:800;font-size:14px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:none}
+#toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 176px);transform:translateX(-50%);z-index:40;width:max-content;max-width:90%;padding:10px 16px;border-radius:14px;background:rgba(15,23,42,.95);border:2px solid #fbbf24;color:#fde68a;font-weight:800;font-size:14px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:none}
 #toast[hidden]{display:none}#toast b{display:block;color:#fff;font-size:15px;margin-bottom:2px}
 #cb{align-self:flex-start;max-width:100%;padding:5px 12px;font-size:12.5px;font-weight:800;color:#fde68a;border:1px solid rgba(251,191,36,.55);overflow:hidden;text-overflow:ellipsis}
 #cb[hidden]{display:none}#cb.ok{color:#4ade80;border-color:rgba(74,222,128,.65)}#cb.bad{color:#f87171;border-color:rgba(248,113,113,.65)}
@@ -181,6 +193,44 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
 #cp{font-size:13px;line-height:1.45;color:var(--mut)}
 #over h2{color:#f87171}
 #over button{font-size:17px;padding:14px}
+.bdg{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#ef4444;border:2px solid #fff;color:#fff;font-size:11px;font-weight:900;font-style:normal;display:grid;place-items:center;pointer-events:none;box-shadow:0 2px 4px rgba(0,0,0,.4)}
+.bdg[hidden]{display:none}
+#daily,#coll{z-index:13}
+#dsr{text-align:center;font-weight:800;color:var(--gold)}
+.dg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dd{padding:8px 4px;border-radius:12px;background:rgba(30,41,59,.85);text-align:center;border:2px solid transparent;min-width:0}
+.dd small{display:block;color:var(--mut);font-size:11px;font-weight:800}
+.dd b{display:block;font-size:13px;color:var(--gold);margin-top:3px;white-space:nowrap}
+.dd i{display:block;font-style:normal;font-size:12px;font-weight:800;color:#fca5a5;min-height:15px}
+.dd.done{opacity:.55;border-color:rgba(74,222,128,.5)}
+.dd.done small::after{content:' ✓';color:#4ade80}
+.dd.cur{border-color:#fbbf24;background:rgba(120,83,9,.45)}
+.dd.big{grid-column:span 2}
+#dgo{font-size:17px;padding:14px;background:linear-gradient(#34d399,#059669)}
+#dgo:disabled{background:#475569}
+.tabs button{background:#475569;padding:11px}.tabs button.on{background:#10b981}
+#col{display:flex;flex-direction:column;gap:10px;max-height:52vh;overflow-y:auto}
+.skg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sk{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border-radius:12px;background:rgba(30,41,59,.85);border:2px solid transparent;text-align:center;min-width:0}
+.sk img{width:56px;height:56px;image-rendering:pixelated}
+.sk b{font-size:14px}.sk small{color:var(--mut);font-size:11px;min-height:28px;display:block}
+.sk button{width:100%;padding:8px}
+.sk.sel{border-color:#4ade80}
+.sk.lock img{filter:grayscale(1) brightness(.5)}
+#gfx button{background:#475569;padding:12px}#gfx button.on{background:#10b981}
+.item .skn{color:#f0abfc}
+.mbtn.y{--bg:linear-gradient(#fcd34d,#d97706);--bd:#78350f}
+.mbtn.p{--bg:linear-gradient(#a78bfa,#6d28d9);--bd:#3b0764}
+.mrow{display:flex;gap:10px;width:min(86%,340px)}
+.mrow .mbtn{flex:1 1 0;width:auto;min-width:0;position:relative;justify-content:center;gap:8px;padding:12px 10px;font-size:clamp(12px,3.9vw,15px);letter-spacing:0}
+.mrow .mbtn .ic{width:30px;height:30px}
+.mrow .mbtn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:340px){.mrow .mbtn .ic{display:none}}
+@media (max-height:860px){.mrow .mbtn{padding:9px 10px}}
+@media (max-height:700px){.mrow .mbtn{padding:8px 10px}}
+@media (max-height:600px){.screen{gap:6px}.l1{font-size:46px}.l2{font-size:24px}.mrow .mbtn{padding:6px 8px}.mrow .mbtn .ic{width:24px;height:24px}}
+#dmsg{text-align:center;font-size:13px;font-weight:700}
+body:has(.screen:not([hidden])) #toast,body:has(.modal:not([hidden])) #toast{top:calc(env(safe-area-inset-top,0px) + 10px)}
 </style>
 </head>
 <body>
@@ -199,6 +249,10 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
   <button id="play" class="mbtn g"><img id="mi1" class="ic" alt=""><span>Solo</span></button>
   <button id="chb" class="mbtn r"><img id="mi2" class="ic" alt=""><span>Wyzwania</span><em id="chn">0 / 0</em></button>
   <button id="rankb" class="mbtn s soon"><img id="mi3" class="ic" alt=""><span>Tabela wyników</span><em id="rkb">Wkrótce</em></button>
+  <div class="mrow">
+    <button id="dayb" class="mbtn y" aria-label="Nagroda dzienna"><img id="o5" class="ic" alt=""><span>Nagroda</span><i id="dayn" class="bdg" hidden>!</i></button>
+    <button id="colb" class="mbtn p" aria-label="Kolekcja"><img id="o6" class="ic" alt=""><span>Kolekcja</span><i id="coln" class="bdg" hidden></i></button>
+  </div>
   <div class="ores">
     <div class="oi"><button id="setb" aria-label="Ustawienia"><img id="gi" class="ic" alt=""></button><small>Ustawienia</small></div>
     <div class="oi"><button id="codeb" class="ob" aria-label="Kod"><img id="o2" class="ic" alt=""></button><small>Kod</small></div>
@@ -311,6 +365,11 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
       <div class="nmsg" id="ctm"></div>
     </div>
     <div class="vol">
+      <label><b>🖼 Grafika</b></label>
+      <div class="two" id="gfx"><button id="gfx0">✨ Pełna</button><button id="gfx1">⚡ Oszczędna</button></div>
+      <div class="nmsg" id="gfxm"></div>
+    </div>
+    <div class="vol">
       <label for="lng"><b>🌐 Język</b></label>
       <select id="lng"><option value="pl">Polski</option><option value="en">English</option><option value="zh">中文</option><option value="es">Español</option><option value="de">Deutsch</option></select>
     </div>
@@ -333,6 +392,25 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
     <p>Wpisz kod, żeby go aktywować.</p>
     <div class="nrow"><input id="cdi" type="text" maxlength="24" placeholder="Wpisz kod" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Kod"><button id="cdo" disabled>Użyj</button></div>
     <div class="nmsg" id="cdm"></div>
+  </div>
+</div>
+
+<div id="daily" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>🎁 Nagroda dzienna</h2><button class="x" id="dyx" aria-label="Zamknij">×</button></div>
+    <p id="dsr"></p>
+    <div id="dg" class="dg"></div>
+    <div class="nmsg" id="dmsg"></div>
+    <button id="dgo">Odbierz</button>
+  </div>
+</div>
+
+<div id="coll" class="modal" hidden>
+  <div class="panel box">
+    <div class="head"><h2>🎖 Kolekcja</h2><button class="x" id="colx" aria-label="Zamknij">×</button></div>
+    <div class="two tabs"><button id="tabA" class="on">Osiągnięcia</button><button id="tabS">Skórki kilofa</button></div>
+    <p id="colp"></p>
+    <div id="col"></div>
   </div>
 </div>
 
@@ -362,6 +440,8 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
       <div class="tp"><span class="emo">⛏️</span><div><b>Kilofy</b><small>Lepsze kilofy odblokowujesz rekordem głębokości. Przed każdym runem wybierasz kilof, a nowy kupujesz za monety.</small></div></div>
       <div class="tp"><span class="emo">💎</span><div><b>Kilofy głębinowe</b><small>Od około 1000 m pojawiają się szmaragd i astralit: warte fortunę, ale bardzo twarde. W sklepie kupisz kilofy Magmowy i Astralny. Do 700 m kopią słabo, a od 1000 m coraz mocniej. Nie da się ich zdobyć w craftingu.</small></div></div>
       <div class="tp"><span class="emo">🏆</span><div><b>Wyzwania</b><small>Wybierasz jedno zadanie na grę, a nagroda wpada raz, po ukończeniu. W wyzwaniach nie działa sklep, ulepszenia kilofa ani bomba BOOM. Wyjątek to „Wielki wybuch”, który daje bomby za darmo.</small></div></div>
+      <div class="tp"><span class="emo">🎁</span><div><b>Nagroda dzienna</b><small>Raz dziennie odbierasz nagrodę: monety, a w niektóre dni bomby. Kolejne dni z rzędu dają coraz więcej, a po 7 dniach zaczyna się nowy tydzień. Opuszczony dzień zeruje serię.</small></div></div>
+      <div class="tp"><span class="emo">🎖</span><div><b>Kolekcja</b><small>Osiągnięcia dają monety, a niektóre odblokowują skórki kilofa. Skórkę wybierasz w Kolekcji. Zmienia wygląd kilofa i ślad za nim, ale nie jego siłę. Przy kodzie HPXD+ postęp osiągnięć się nie liczy.</small></div></div>
       <div class="tp"><span class="emo">🔑</span><div><b>Ikony w menu</b><small>Kod to miejsce na wpisywanie kodów. Sklep premium to płatne dodatki, na razie niedostępne. Samouczek to ta pomoc.</small></div></div>
     </div>
     <button id="tud">Rozumiem, kopiemy!</button>
@@ -399,10 +479,16 @@ function getAudioContext(){
   return actx;
 }
 const lastPlay={},MIN_GAP={hit:.18,break_common:.12,break_rare:.12};
-function noiseSrc(ac,dur){
-  const n=Math.max(1,Math.floor(ac.sampleRate*dur)),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
-  for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
-  const s=ac.createBufferSource();s.buffer=b;return s;
+let noiseBuf=null;
+function noiseSrc(ac,dur){                                                  // jeden bufor szumu na całą grę (wcześniej każda bomba losowała ponad 60 tys. próbek)
+  if(!noiseBuf||noiseBuf.sampleRate!==ac.sampleRate){
+    const n=Math.floor(ac.sampleRate*1.5),d=(noiseBuf=ac.createBuffer(1,n,ac.sampleRate)).getChannelData(0);
+    for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
+  }
+  const s=ac.createBufferSource();s.buffer=noiseBuf;return s;
+}
+function envPunch(g,now,peak,end){                                          // krótki (2,5 ms) narost zamiast skoku głośności: bez „kliknięcia” na początku i końcu
+  g.setValueAtTime(.0001,now);g.linearRampToValueAtTime(peak,now+.0025);g.linearRampToValueAtTime(.0001,end);
 }
 function bombSound(ac,type){
   const now=ac.currentTime,out=sfxOut||ac.destination;
@@ -420,7 +506,7 @@ function bombSound(ac,type){
     o.connect(og);og.connect(out);o.start(now);o.stop(now+.12);
     return;
   }
-  const comp=ac.createDynamicsCompressor();comp.connect(out);   // kompresor: mocny wybuch bez przesterowania
+  const comp=ac._comp||(ac._comp=ac.createDynamicsCompressor());comp.connect(out);   // kompresor: mocny wybuch bez przesterowania (jeden na cały kontekst)
   const click=noiseSrc(ac,.06),cf=ac.createBiquadFilter(),cg=ac.createGain();   // ostry trzask na początku
   cf.type='highpass';cf.frequency.value=1100;click.connect(cf);cf.connect(cg);cg.connect(comp);
   cg.gain.setValueAtTime(.3,now);cg.gain.exponentialRampToValueAtTime(.0001,now+.06);click.start(now);click.stop(now+.07);
@@ -454,28 +540,28 @@ function playSound(type){
     }else if(type==='break_common'){
       osc.type='square';
       osc.frequency.setValueAtTime(220,now);osc.frequency.exponentialRampToValueAtTime(80,now+.12);
-      gain.gain.setValueAtTime(.2,now);gain.gain.linearRampToValueAtTime(.01,now+.12);
-      osc.start(now);osc.stop(now+.12);
+      envPunch(gain.gain,now,.2,now+.125);
+      osc.start(now);osc.stop(now+.13);
     }else if(type==='break_rare'){
       osc.type='sine';
       osc.frequency.setValueAtTime(440,now);osc.frequency.setValueAtTime(660,now+.06);osc.frequency.setValueAtTime(880,now+.12);
-      gain.gain.setValueAtTime(.25,now);gain.gain.linearRampToValueAtTime(.01,now+.25);
-      osc.start(now);osc.stop(now+.25);
+      envPunch(gain.gain,now,.25,now+.255);
+      osc.start(now);osc.stop(now+.26);
     }else if(type==='repair'){
       osc.type='sine';
       osc.frequency.setValueAtTime(300,now);osc.frequency.exponentialRampToValueAtTime(800,now+.2);
-      gain.gain.setValueAtTime(.3,now);gain.gain.linearRampToValueAtTime(.01,now+.2);
-      osc.start(now);osc.stop(now+.2);
+      envPunch(gain.gain,now,.3,now+.205);
+      osc.start(now);osc.stop(now+.21);
     }else if(type==='upgrade'){
       osc.type='triangle';
       osc.frequency.setValueAtTime(523.25,now);osc.frequency.setValueAtTime(659.25,now+.1);osc.frequency.setValueAtTime(783.99,now+.2);
-      gain.gain.setValueAtTime(.3,now);gain.gain.linearRampToValueAtTime(.01,now+.35);
-      osc.start(now);osc.stop(now+.35);
+      envPunch(gain.gain,now,.3,now+.355);
+      osc.start(now);osc.stop(now+.36);
     }else if(type==='tnt'){
       osc.type='sawtooth';
       osc.frequency.setValueAtTime(100,now);osc.frequency.exponentialRampToValueAtTime(30,now+.3);
-      gain.gain.setValueAtTime(.4,now);gain.gain.linearRampToValueAtTime(.01,now+.3);
-      osc.start(now);osc.stop(now+.3);
+      envPunch(gain.gain,now,.4,now+.305);
+      osc.start(now);osc.stop(now+.31);
     }
   }catch(e){}
 }
@@ -484,13 +570,17 @@ const COLS=8;
 let W=0,H=0,ts=0;
 
 const dk=document.createElement('canvas'),dkx=dk.getContext('2d'),LS=6;   // niska rozdzielczość: warstwa ciemności jaskini
+const gl=document.createElement('canvas'),glx=gl.getContext('2d'),GS=4;     // niska rozdzielczość: warstwa poświaty (wszystkie światła naraz, jedno rysowanie na ekran)
+let DPR=1,CKON=false,GFX=false;                                                       // CKON: cache terenu jest już zadeklarowany
 function resize(){
-  const dpr=Math.min(window.devicePixelRatio||1,2);
-  W=innerWidth;H=innerHeight;
+  const dpr=GFX?1:Math.min(window.devicePixelRatio||1,2);
+  W=innerWidth;H=innerHeight;DPR=dpr;
   cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false;
   ts=W/COLS;
   dk.width=Math.ceil(W/LS)+1;dk.height=Math.ceil(H/LS)+1;
+  gl.width=Math.ceil(W/GS)+1;gl.height=Math.ceil(H/GS)+1;
+  if(CKON)ckClear();                                                         // kawałki terenu mają rozdzielczość płótna
 }
 addEventListener('resize',resize);resize();
 
@@ -517,7 +607,7 @@ let bombBuys=0;   // ile bomb kupiono w tej grze (cena rośnie, nie spada po uż
 const CHB=5;   // ile darmowych bomb dostajesz w wyzwaniu „Wielki wybuch”
 const BOMB={r:5,fuse:.07,cd:.35,max:10,base:500,step:100};   // r = promień w kratkach, fuse = lont w sekundach, cd = przerwa między bombami
 const KEY='minerSaveV7';
-const save={coins:0,maxHpLvl:1,dmgLvl:1,bombs:0,best:0,sfx:100,music:60,tiers:0,infHp:0,ctrl:'touch',lang:'pl',nick:'',rid:'',rbest:-1,rsecs:0,rsent:0,rnick:'',ch:{},chb:{}};
+const save={coins:0,maxHpLvl:1,dmgLvl:1,bombs:0,best:0,sfx:100,music:60,tiers:0,infHp:0,ctrl:'touch',lang:'pl',nick:'',rid:'',rbest:-1,rsecs:0,rsent:0,rnick:'',ch:{},chb:{},gfx:0,gfxHint:0,dLast:0,dStreak:0,dBest:0,skin:'',ach:{},achNew:0,st:{}};
 try{
   const s=localStorage.getItem(KEY)||localStorage.getItem('minerSaveV6');
   if(s)Object.assign(save,JSON.parse(s));
@@ -538,6 +628,7 @@ try{
   if(!(Number(save.rbest)>=0)){save.rbest=save.infHp?0:Math.min(save.best,20000);save.rsecs=Math.ceil(save.rbest/8)+10;}   // pierwszy start z rankingiem: dotychczasowy rekord (czas nieznany, więc liczymy bezpiecznie)
   save.rbest=num(save.rbest,0,0,20000);save.rsecs=num(save.rsecs,0,0,1e7);save.rsent=num(save.rsent,0,0,20000);
   save.rnick=typeof save.rnick==='string'?cleanNick(save.rnick):'';
+  save.gfx=save.gfx===1?1:0;save.gfxHint=save.gfxHint?1:0;
   for(const k of ['ch','chb']){                                     // ukończone wyzwania i najlepszy postęp
     const o=save[k]&&typeof save[k]==='object'&&!Array.isArray(save[k])?save[k]:{},n={};
     for(const id of Object.keys(o))n[id]=k==='ch'?(o[id]?1:0):num(o[id],0,0,1e6);
@@ -550,14 +641,20 @@ try{
     try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}
   }
 }
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
-setInterval(persist,5000);
+GFX=save.gfx===1;if(GFX)resize();   // oszczędna grafika: rozdzielczość 1:1
+let lastSaved='';
+function persist(){try{const j=JSON.stringify(save);if(j!==lastSaved){localStorage.setItem(KEY,j);lastSaved=j;}}catch(e){}}   // zapis tylko przy zmianie
+setInterval(persist,8000);
 addEventListener('pagehide',persist);
 
 /* ---------- Muzyka: domyślnie generowana w przeglądarce; własny plik wpisz w MUSIC_SRC ---------- */
 const MUSIC_SRC='';   // np. 'muzyka.mp3' albo pełny URL; puste = spokojna muzyka syntezowana w grze (poniżej)
 let music=null,musicOn=false;
-/* ---------- Muzyka generatywna: spokojny ambient w stylu Minecrafta (syntezowana w przeglądarce, bez plików) ---------- */
+/* ---------- Muzyka generatywna: spokojny ambient w stylu Minecrafta (syntezowana w przeglądarce, bez plików) ----------
+   Brzmienie liczymy z wyprzedzeniem, po jednym akordzie (16 ósemek), w osobnym wątku (Web Worker): nuty, poduszki i pogłos.
+   Wątek audio telefonu odtwarza już tylko gotowe bufory, a wątek gry prawie nic nie robi, więc nie ma czego przycinać (wcześniej
+   liczyliśmy na żywo ok. 20 głosów i długi pogłos, co na słabszych telefonach dawało trzaski i zacięcia). Gdy przeglądarka nie
+   obsługuje workerów albo liczy za wolno, gra wraca do starego trybu „na żywo”. */
 const mHz=n=>440*Math.pow(2,(n-69)/12);                       // numer MIDI -> Hz
 const MMODES=[                                                // nastrój zależy od głębokości; ch = [dźwięk basowy (MIDI), interwały akordu]
   {bpm:62,rest:.40,pad:.040,mel:[72,74,76,79,81,84,86],drip:0,                       // powierzchnia: C-dur, pogodnie
@@ -567,18 +664,194 @@ const MMODES=[                                                // nastrój zależ
   {bpm:44,rest:.64,pad:.060,mel:[52,55,57,59,62,64,67],drip:.03,                     // głębiny: e-moll, rzadkie dźwięki
    ch:[[40,[0,3,7,10,14]],[36,[0,4,7,11]],[45,[0,3,7,10]],[35,[0,5,7,12]]]}
 ];
-let MS={started:false};
+const MUS_SR=22050;        // częstotliwość próbkowania gotowych akordów (muzyka jest miękka i ma mało wysokich tonów)
+const MUS_WET=1;           // głośność pogłosu (1 = jak w trybie „na żywo”)
+let MG={step:0,ci:0,mode:0,last:3,arp:0};                                           // stan generatora nut (nie zależy od dźwięku)
+let MS={started:false};                                                             // odtwarzanie w AudioContext
+const MQ={w:null,busy:false,cur:null,rdy:[],bs:0,bt:1.5,qa:0,n:0,slow:0,fails:0,id:0,legacy:false};   // kolejka akordów liczonych w tle
 const musWantMode=()=>$('menu').hidden?(depth>=600?2:depth>=60?1:0):0;
 const musVol=()=>Math.pow(save.music/100,2)*1.15;
-function musInit(ac,dest,vol){
-  const bus=ac.createGain();bus.gain.value=vol;bus.connect(dest);
-  const send=ac.createGain();send.gain.value=.55;                                   // wysyłka na pogłos
-  const cv=ac.createConvolver(),n=Math.floor(ac.sampleRate*3.4),ir=ac.createBuffer(2,n,ac.sampleRate);
-  for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}
-  cv.buffer=ir;const wet=ac.createGain();wet.gain.value=.9;send.connect(cv);cv.connect(wet);wet.connect(bus);
-  const pw=ac.createPeriodicWave(new Float32Array(8),new Float32Array([0,1,.30,.13,.06,.03,.015,.01]));   // miękki „filcowy” fortepian
-  MS={started:true,ac,bus,send,pw,t:ac.currentTime+.3,step:0,ci:0,mode:0,last:3,arp:0};
-  return MS;
+function mStep(ev,t){                                                               // jedna ósemka od chwili t: dopisuje zdarzenia do ev, zwraca jej długość (s)
+  if(MG.step%16===0){const w=musWantMode();if(w!==MG.mode){MG.mode=w;MG.ci=0;}}    // zmiana nastroju tylko na granicy akordu
+  const M=MMODES[MG.mode],sd=30/M.bpm,s=MG.step%16,ch=M.ch[MG.ci%M.ch.length],root=ch[0],iv=ch[1],R=Math.random;
+  const at=t+(R()-.5)*.03,live=1-M.rest;
+  const nt=(t,hz,vel,dur)=>ev.push([0,t,hz,vel,dur]),pd=(t,hz,vel,dur)=>ev.push([1,t,hz,vel,dur]);   // 0 = nuta pianina, 1 = poduszka
+  if(s===0){
+    nt(at,mHz(root),.20,5.5);
+    for(let k=0;k<3;k++)pd(t,mHz(root+12+iv[k]),M.pad,sd*16);
+  }
+  if(s%2===0?R()<.55*live:R()<.16*live){                                            // rozłożony akord
+    const i=MG.arp++%iv.length;nt(at,mHz(root+24+iv[i]),.06+R()*.05,2.8);
+  }
+  const pm=(s%4===0?.34:s%2===0?.20:.05)*(1.1-M.rest);
+  if(s<14&&R()<pm){                                                                 // melodia: powolny spacer po pentatonice
+    const w=[-2,-1,-1,0,1,1,2][R()*7|0];MG.last=Math.max(0,Math.min(M.mel.length-1,MG.last+w));
+    nt(at,mHz(M.mel[MG.last]),.09+R()*.06,3.6);
+    if(R()<.12){const j=Math.max(0,Math.min(M.mel.length-1,MG.last+(R()<.5?-1:1)));nt(at+sd*2,mHz(M.mel[j]),.07+R()*.04,3.2);}
+  }
+  if(R()<.025)nt(at,mHz(M.mel[R()*M.mel.length|0]+12),.05,5);                        // rzadki wysoki dzwonek
+  if(M.drip&&R()<M.drip)nt(at,mHz(84+(R()*12|0)),.035,1.4);                         // „kropla” w jaskini
+  MG.step++;if(MG.step%16===0)MG.ci++;
+  return sd;
+}
+
+/* Kod workera: ten sam dźwięk co w trybie „na żywo” (pianino z filtrem, poduszka z dwóch trójkątów, pogłos z szumu), ale liczony wprost w JS.
+   Składowe nut są sinusami z wzmocnieniem i fazą takimi, jakie dałby filtr dolnoprzepustowy; pogłos to splot przez FFT. */
+function musWorkerBody(){
+  const TAU=Math.PI*2,PW=[1,.30,.13,.06,.03,.015,.01];                              // harmoniczne „filcowego” pianina
+  let PWN=1;{let mx=0;for(let i=0;i<4096;i++){let v=0;for(let k=0;k<PW.length;k++)v+=PW[k]*Math.sin((k+1)*TAU*i/4096);mx=Math.max(mx,Math.abs(v));}PWN=1/mx;}   // fala jest normalizowana do szczytu 1
+  function lp(f,fc,Qdb,sr){                                                         // odpowiedź filtru dolnoprzepustowego (biquad) na częstotliwości f: [wzmocnienie, faza]
+    const w0=TAU*fc/sr,al=Math.sin(w0)/(2*Math.pow(10,Qdb/20)),cw=Math.cos(w0);
+    const b0=(1-cw)/2,b1=1-cw,b2=b0,a0=1+al,a1=-2*cw,a2=1-al;
+    const w=TAU*f/sr,c1=Math.cos(w),s1=Math.sin(w),c2=Math.cos(2*w),s2=Math.sin(2*w);
+    const nr=b0+b1*c1+b2*c2,ni=-(b1*s1+b2*s2),dr=a0+a1*c1+a2*c2,di=-(a1*s1+a2*s2),dd=dr*dr+di*di;
+    const hr=(nr*dr+ni*di)/dd,hi=(ni*dr-nr*di)/dd;
+    return [Math.hypot(hr,hi),Math.atan2(hi,hr)];
+  }
+  function addPartials(buf,sr,t,dur,fr,am,ph,env){                                  // buf += env(τ)·Σ am·sin(2π·fr·τ+ph), od chwili t przez dur sekund
+    const m=fr.length,i0=Math.ceil(t*sr),n=Math.min(Math.ceil(dur*sr),buf.length-i0);if(n<=0||!m)return;
+    const cr=new Float64Array(m),ci=new Float64Array(m),dr=new Float64Array(m),di=new Float64Array(m);
+    for(let k=0;k<m;k++){const dw=TAU*fr[k]/sr;dr[k]=Math.cos(dw);di[k]=Math.sin(dw);cr[k]=am[k]*Math.cos(ph[k]);ci[k]=am[k]*Math.sin(ph[k]);}   // obracający się wskaźnik zamiast sin() w każdej próbce
+    const off=i0/sr-t;
+    for(let i=0;i<n;i++){
+      let s=0;
+      for(let k=0;k<m;k++){const a=cr[k],b=ci[k];s+=b;cr[k]=a*dr[k]-b*di[k];ci[k]=a*di[k]+b*dr[k];}
+      buf[i0+i]+=s*env(i/sr+off);
+    }
+  }
+  function addNote(buf,sr,t,hz,vel,dur){                                            // pianino: narost 12 ms, spadek wykładniczy
+    const fc=Math.min(7000,500+hz*3.2),fr=[],am=[],ph=[];
+    for(let k=0;k<PW.length;k++){const f=hz*(k+1);if(f>=sr*.46)break;const h=lp(f,fc,.4,sr);fr.push(f);am.push(PW[k]*PWN*h[0]);ph.push(h[1]);}
+    const a=vel*.4;
+    addPartials(buf,sr,t,dur+.05,fr,am,ph,tau=>tau<.012?.0001+(vel-.0001)*tau/.012:tau<.4?vel*Math.pow(.4,(tau-.012)/.388):tau<dur?a*Math.pow(.0001/a,(tau-.4)/(dur-.4)):.0001);
+  }
+  function addPad(buf,sr,t,hz,vel,dur){                                             // poduszka: dwa lekko rozstrojone trójkąty przez filtr 700 Hz
+    const fr=[],am=[],ph=[];
+    for(const dt of [-5,5]){
+      const f0=hz*Math.pow(2,dt/1200);
+      for(let n=1;n<=41;n+=2){const f=f0*n;if(f>=Math.min(sr*.46,7000))break;
+        const h=lp(f,700,1,sr),b=8*Math.sin(n*Math.PI/2)/Math.pow(n*Math.PI,2),a=b*h[0];
+        if(Math.abs(a)<3e-4)continue;fr.push(f);am.push(a);ph.push(h[1]);}
+    }
+    addPartials(buf,sr,t,dur+2.6,fr,am,ph,tau=>tau<2.2?.0001+(vel-.0001)*tau/2.2:tau<dur-1?vel:tau<dur+2.5?vel+(.0001-vel)*(tau-(dur-1))/3.5:.0001);
+  }
+  const FP={};
+  function fftPlan(N){
+    if(FP[N])return FP[N];
+    const rev=new Uint32Array(N),cs=new Float64Array(N/2),sn=new Float64Array(N/2);let lg=0;while((1<<lg)<N)lg++;
+    for(let i=0;i<N;i++){let r=0;for(let b=0;b<lg;b++)if(i&(1<<b))r|=1<<(lg-1-b);rev[i]=r;}
+    for(let i=0;i<N/2;i++){cs[i]=Math.cos(TAU*i/N);sn[i]=Math.sin(TAU*i/N);}
+    return FP[N]={rev,cs,sn};
+  }
+  function fft(re,im,inv){
+    const N=re.length,P=fftPlan(N),rev=P.rev,cs=P.cs,sn=P.sn;
+    for(let i=0;i<N;i++){const j=rev[i];if(j>i){let t=re[i];re[i]=re[j];re[j]=t;t=im[i];im[i]=im[j];im[j]=t;}}
+    for(let len=2;len<=N;len<<=1){
+      const half=len>>1,step=N/len;
+      for(let i=0;i<N;i+=len)for(let j=0,k=0;j<half;j++,k+=step){
+        const wr=cs[k],wi=inv?sn[k]:-sn[k],a=i+j,b=a+half,xr=re[b]*wr-im[b]*wi,xi=re[b]*wi+im[b]*wr;
+        re[b]=re[a]-xr;im[b]=im[a]-xi;re[a]+=xr;im[a]+=xi;
+      }
+    }
+    if(inv)for(let i=0;i<N;i++){re[i]/=N;im[i]/=N;}
+  }
+  const IRC={};
+  function getIR(sr,sec,ch,given,chromeNorm){                                       // impuls pogłosu: szum o malejącej głośności (jak w trybie „na żywo”), z widmem do splotu
+    const key=sr+'/'+sec+'/'+ch+'/'+(chromeNorm?1:0);if(!given&&IRC[key])return IRC[key];
+    const n=given?given[0].length:Math.floor(sr*sec),h=[];
+    for(let c=0;c<ch;c++){const a=new Float64Array(n);if(given)a.set(given[c]);else for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);h.push(a);}
+    let pw=0;for(let c=0;c<ch;c++)for(let i=0;i<n;i++)pw+=h[c][i]*h[c][i];
+    pw=Math.sqrt(pw/(ch*n));if(!(pw>=.000125))pw=.000125;
+    const scale=.00125*(chromeNorm?44100/sr:Math.sqrt(44100/sr))/pw;               // normalizacja jak w ConvolverNode; przy innej częstotliwości próbkowania pogłos ma brzmieć równie głośno
+    let N=1;while(N<n*1.5)N<<=1;
+    const re=new Float64Array(N),im=new Float64Array(N);
+    for(let i=0;i<n;i++){re[i]=h[0][i]*scale;im[i]=(ch>1?h[1][i]:h[0][i])*scale;}
+    fft(re,im,false);                                                               // z = hL + i·hR w jednym FFT
+    const o={N,n,lr:new Float64Array(N),li:new Float64Array(N),rr:new Float64Array(N),ri:new Float64Array(N)};
+    for(let k=0;k<N;k++){const k2=(N-k)&(N-1),zr=re[k],zi=im[k],yr=re[k2],yi=im[k2];
+      o.lr[k]=(zr+yr)/2;o.li[k]=(zi-yi)/2;o.rr[k]=(zi+yi)/2;o.ri[k]=(yr-zr)/2;}
+    if(!given)IRC[key]=o;
+    return o;
+  }
+  function convolve(x,len,ir){                                                      // splot przez FFT (nakładanie bloków): jedno wejście, dwa wyjścia (L, R)
+    const N=ir.N,B=N-ir.n+1,yl=new Float32Array(len),yr=new Float32Array(len),re=new Float64Array(N),im=new Float64Array(N);
+    for(let pos=0;pos<len;pos+=B){
+      re.fill(0);im.fill(0);const m=Math.min(B,len-pos);for(let i=0;i<m;i++)re[i]=x[pos+i];
+      fft(re,im,false);
+      for(let k=0;k<N;k++){
+        const xr=re[k],xi=im[k],a=xr*ir.lr[k]-xi*ir.li[k],b=xr*ir.li[k]+xi*ir.lr[k],c=xr*ir.rr[k]-xi*ir.ri[k],d=xr*ir.ri[k]+xi*ir.rr[k];
+        re[k]=a-d;im[k]=b+c;                                                        // (L + i·R)
+      }
+      fft(re,im,true);
+      const e=Math.min(N,len-pos);for(let i=0;i<e;i++){yl[pos+i]+=re[i];yr[pos+i]+=im[i];}
+    }
+    return [yl,yr];
+  }
+  function render(d){
+    const sr=d.sr,q=d.q,ev=d.ev;
+    let end=0;for(const e of ev)end=Math.max(end,e[1]+e[4]+(e[0]?.1:2.6));
+    const secs=end+(q===0?3.2:q===1?1.6:.4),len=Math.ceil(secs*sr),dry=new Float32Array(len);
+    for(const e of ev)(e[0]?addPad:addNote)(dry,sr,e[1],e[2],e[3],e[4]);
+    let L=dry,R;
+    if(q<2){                                                                        // q 0: pełny pogłos 3,4 s stereo; q 1: krótszy i mono (gdy telefon liczy za wolno); q 2: bez pogłosu
+      const ir=getIR(sr,q===0?3.4:1.6,q===0?2:1,d.ir,d.chromeNorm),send=new Float32Array(len);
+      for(let i=0;i<len;i++)send[i]=dry[i]*.55;
+      const w=convolve(send,len,ir),g=.9*d.wet;
+      L=new Float32Array(len);R=new Float32Array(len);
+      for(let i=0;i<len;i++){L[i]=dry[i]+g*w[0][i];R[i]=dry[i]+g*w[1][i];}
+    }else R=dry.slice();
+    const f0=Math.max(0,Math.floor((secs-.4)*sr));                                  // krótkie wyciszenie na końcu: bez trzasku
+    for(let i=f0;i<len;i++){const g=1-(i-f0)/(len-f0);L[i]*=g;R[i]*=g;}
+    return {l:L,r:R};
+  }
+  self.onmessage=function(e){
+    const d=e.data;
+    try{const r=render(d);self.postMessage({id:d.id,l:r.l,r:r.r},[r.l.buffer,r.r.buffer]);}
+    catch(err){self.postMessage({id:d.id,err:String(err&&err.message||err)});}
+  };
+}
+function mWorker(){
+  if(MQ.w)return MQ.w;
+  const url=URL.createObjectURL(new Blob(['('+musWorkerBody.toString()+')()'],{type:'text/javascript'}));
+  const w=new Worker(url);
+  w.onmessage=e=>mDone(e.data);
+  w.onerror=e=>{try{e.preventDefault();}catch(x){}mFail();};
+  return MQ.w=w;
+}
+function mFail(){MQ.busy=false;MQ.cur=null;if(++MQ.fails>=2)MQ.legacy=true;}         // dwie porażki z rzędu = wracamy do trybu „na żywo”
+function mDone(d){
+  if(!MQ.cur||d.id!==MQ.cur.id)return;
+  const cur=MQ.cur;MQ.cur=null;MQ.busy=false;
+  if(d.err||!d.l){mFail();return;}
+  MQ.fails=0;MQ.bt=(performance.now()-MQ.bs)/1000;MQ.n++;
+  const r=MQ.bt/cur.chord;MQ.slow=r>.6?MQ.slow+1:0;
+  if(MQ.n>=2&&MQ.slow>=2&&MQ.qa<2){MQ.qa++;MQ.slow=0;}                              // liczy się za wolno (ponad 60% czasu akordu): lżejszy pogłos
+  MQ.rdy.push({l:d.l,r:d.r,chord:cur.chord,t0:cur.t0});
+  musTick();
+}
+function mKick(){                                                                   // zleć policzenie następnego akordu
+  if(MQ.busy||MQ.legacy)return;
+  if(typeof Worker==='undefined'||typeof Blob==='undefined'||!window.URL||!URL.createObjectURL){MQ.legacy=true;return;}
+  const ev=[],t0=.05;let t=t0;for(let i=0;i<16;i++)t+=mStep(ev,t);
+  try{
+    MQ.cur={id:++MQ.id,chord:t-t0,t0};MQ.busy=true;MQ.bs=performance.now();
+    mWorker().postMessage({id:MQ.id,sr:MUS_SR,ev,q:MQ.qa,wet:MUS_WET});
+  }catch(e){MQ.busy=false;MQ.cur=null;MQ.legacy=true;}
+}
+/* zapasowy tryb „na żywo” (stary): głosy i pogłos liczy wątek audio */
+const mIRC={};
+function mIR(sr,sec,ch){                                                            // impuls pogłosu (szum o malejącej głośności), liczony raz
+  const k=sr+'/'+sec+'/'+ch;if(mIRC[k])return mIRC[k];
+  const n=Math.floor(sr*sec),ir=actx.createBuffer(ch,n,sr);
+  for(let c=0;c<ch;c++){const d=ir.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}
+  return mIRC[k]=ir;
+}
+function mLegacyOn(){
+  const ac=MS.ac;if(MS.send)return;
+  const send=ac.createGain();send.gain.value=.55;
+  const cv=ac.createConvolver();cv.buffer=mIR(ac.sampleRate,3.4,2);
+  const wet=ac.createGain();wet.gain.value=.9;send.connect(cv);cv.connect(wet);wet.connect(MS.bus);
+  MS.send=send;MS.pw=ac.createPeriodicWave(new Float32Array(8),new Float32Array([0,1,.30,.13,.06,.03,.015,.01]));   // miękki „filcowy” fortepian
 }
 function mNote(t,hz,vel,dur){                                                       // jedna nuta pianina
   const ac=MS.ac,o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain();
@@ -597,37 +870,39 @@ function mPad(t,hz,vel,dur){                                                    
   for(const dt of [-5,5]){const o=ac.createOscillator();o.type='triangle';o.frequency.value=hz;o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+dur+2.6);}
   f.connect(g);g.connect(MS.bus);g.connect(MS.send);
 }
-function mStep(){                                                                   // jedna ósemka; akord trwa 16 ósemek (8 uderzeń)
-  if(MS.step%16===0){const w=musWantMode();if(w!==MS.mode){MS.mode=w;MS.ci=0;}}    // zmiana nastroju tylko na granicy akordu
-  const M=MMODES[MS.mode],sd=30/M.bpm,t=MS.t,s=MS.step%16,ch=M.ch[MS.ci%M.ch.length],root=ch[0],iv=ch[1],R=Math.random;
-  const at=t+(R()-.5)*.03,live=1-M.rest;
-  if(s===0){
-    mNote(at,mHz(root),.20,5.5);
-    for(let k=0;k<3;k++)mPad(t,mHz(root+12+iv[k]),M.pad,sd*16);
-  }
-  if(s%2===0?R()<.55*live:R()<.16*live){                                            // rozłożony akord
-    const i=MS.arp++%iv.length;mNote(at,mHz(root+24+iv[i]),.06+R()*.05,2.8);
-  }
-  const pm=(s%4===0?.34:s%2===0?.20:.05)*(1.1-M.rest);
-  if(s<14&&R()<pm){                                                                 // melodia: powolny spacer po pentatonice
-    const w=[-2,-1,-1,0,1,1,2][R()*7|0];MS.last=Math.max(0,Math.min(M.mel.length-1,MS.last+w));
-    mNote(at,mHz(M.mel[MS.last]),.09+R()*.06,3.6);
-    if(R()<.12){const j=Math.max(0,Math.min(M.mel.length-1,MS.last+(R()<.5?-1:1)));mNote(at+sd*2,mHz(M.mel[j]),.07+R()*.04,3.2);}
-  }
-  if(R()<.025)mNote(at,mHz(M.mel[R()*M.mel.length|0]+12),.05,5);                     // rzadki wysoki dzwonek
-  if(M.drip&&R()<M.drip)mNote(at,mHz(84+(R()*12|0)),.035,1.4);                      // „kropla” w jaskini
-  MS.t+=sd;MS.step++;if(MS.step%16===0)MS.ci++;
+function musInit(ac,dest,vol){
+  const bus=ac.createGain();bus.gain.value=vol;bus.connect(dest);
+  MS={started:true,ac,bus,send:null,pw:null,t:ac.currentTime+.3};
+  return MS;
 }
 function musTick(){
   if(!actx||!MS.started||document.hidden||save.music<=0)return;                     // głośność 0 = nie planujemy nut
-  const now=actx.currentTime;if(MS.t<now)MS.t=now+.1;
-  while(MS.t<now+1.4)mStep();
+  const now=actx.currentTime;
+  if(MQ.busy&&performance.now()-MQ.bs>60000){mFail();mFail();}                      // liczenie zawisło: wracamy do trybu „na żywo”
+  if(MQ.legacy){
+    mLegacyOn();if(MS.t<now)MS.t=now+.1;
+    while(MS.t<now+1.4){
+      const ev=[],sd=mStep(ev,MS.t);
+      for(const e of ev)(e[0]?mPad:mNote)(e[1],e[2],e[3],e[4]);
+      MS.t+=sd;
+    }
+    return;
+  }
+  while(MQ.rdy.length&&MS.t<now+1.5){                                               // gotowe akordy: zaplanuj odtwarzanie
+    const sg=MQ.rdy.shift(),ab=actx.createBuffer(2,sg.l.length,MUS_SR);
+    ab.copyToChannel(sg.l,0);ab.copyToChannel(sg.r,1);
+    const when=Math.max(MS.t-sg.t0,now+.04),src=actx.createBufferSource();
+    src.buffer=ab;src.connect(MS.bus);src.start(when);
+    MS.t=when+sg.t0+sg.chord;
+  }
+  if(!MQ.busy&&!MQ.rdy.length&&MS.t-now<Math.max(4,MQ.bt*1.6+1.5))mKick();         // następny akord zaczynamy liczyć z odpowiednim wyprzedzeniem
 }
 function musStart(){
   const ac=getAudioContext();if(!ac||(MS.started&&MS.ac===ac))return;
   musInit(ac,ac.destination,musVol());
   setInterval(musTick,220);musTick();
 }
+setTimeout(()=>{if(save.music>0&&!document.hidden&&!MQ.rdy.length)mKick();},1800);  // pierwszy akord liczymy już w menu, żeby muzyka ruszyła od razu po pierwszym dotknięciu
 function applyVolumes(){
   if(sfxOut)sfxOut.gain.value=Math.pow(save.sfx/100,2);
   if(MS.started&&MS.bus){try{MS.bus.gain.setTargetAtTime(musVol(),MS.ac.currentTime,.05);}catch(e){try{MS.bus.gain.value=musVol();}catch(e2){}}}
@@ -1011,7 +1286,7 @@ function pickSprite(col){
 const LAVA=[0,1,2,3,4,5,6,7].map(lavaFrame);let LF=0;
 const LAVA_MS=1e12; // animacja lawy wyłączona (np. 1800 = jedna klatka na 1,8 s)
 const BS=[null,BASE[2]];[2,3,4,5,9].forEach(t=>BS[t]=TEXZ[t][2]);   // ikony do sklepu/menu (na tle kamienia)
-BS[6]=tntSprite();BS[7]=craftSprite();BS[8]=LAVA[0];BS[10]=netherSprite();BS[11]=fixSprite();
+BS[6]=tntSprite();BS[7]=craftSprite();BS[8]=LAVA[0];BS[10]=netherSprite();BS[11]=fixSprite();[12,13].forEach(t=>BS[t]=TEXZ[t][2]);
 const CR=[0,1,2,3,4].map(crackTex);
 const PS=TIERS.map(t=>pickSprite(t.color));
 const IMG={};
@@ -1081,7 +1356,7 @@ function genRow(r){
 function genRows(n){for(let i=0;i<n;i++)genRow(genTo++);}
 
 function newRun(t){
-  rows=[];genTo=0;tier=Math.min(t|0,TIERS.length-1);maxDur=maxHp();dur=maxDur;over=false;
+  ckClear();rows=[];genTo=0;tier=Math.min(t|0,TIERS.length-1);maxDur=maxHp();dur=maxDur;over=false;
   cam=Math.max(-12,-.5-H/ts*.62);depth=0;parts=[];texts=[];cd=0;lock=-1;lockT=0;fuses=[];blasts=[];shake=0;flash=0;bombCd=0;RS={ore:{},wood:0,bombs:0,ups:0,lava:0,tnt:0,blast:0,t:0};chState=0;chBombs=activeCh&&activeCh.bombs||0;
   genRows(30);
   p.x=COLS/2;p.y=-.5;p.vx=0;p.vy=2;p.a=Math.PI;p.w=(Math.random()-.5)*2;
@@ -1091,35 +1366,36 @@ function newRun(t){
 function text(x,y,s,col){texts.push({x,y,s:tr(s),col,l:1});}
 function burst(c,r,col,n){
   if(parts.length>900)return;
+  if(GFX)n=(n+1)>>1;
   for(let i=0;i<n;i++)parts.push({x:c+.5,y:r+.5,vx:(Math.random()-.5)*8,vy:(Math.random()-.5)*8-1,l:1,d:1.8+Math.random()*1.8,s:2+Math.random()*3,col});
 }
 function earn(t,r){
   const v=T[t].v;if(!(v>0))return 0;
   const e=Math.max(1,Math.round(v*(1+tier*BAL.tierMul)*(1+r*BAL.coinGrowth)*BAL.coinScale));
-  save.coins+=e;RS.ore[t]=(RS.ore[t]||0)+1;return e;
+  save.coins+=e;RS.ore[t]=(RS.ore[t]||0)+1;stAdd('ores');stAdd('o'+t);return e;
 }
 function payout(t,r,c){const e=earn(t,r);if(e)text(c+.5,r,'+'+e,'#facc15');}
 function explode(r0,c0){
-  RS.tnt++;playSound('tnt');
+  RS.tnt++;stAdd('tnt');playSound('tnt');
   for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){
     const r=r0+dr,c=c0+dc,b=rows[r]&&rows[r][c];
     if(!b)continue;
-    payout(b.t,r,c);burst(c,r,T[b.t].c,6);rows[r][c]=null;
+    payout(b.t,r,c);burst(c,r,T[b.t].c,6);rows[r][c]=null;ckInvalidate(r);
   }
 }
 function hit(r,c){
   const b=rows[r][c],ty=T[b.t];
   dur-=1;
   b.hp-=TIERS[tier].dmg*dmgMul()*deepMul(tier,r);
-  if(ty.k==='lava'){RS.lava++;const ld=BAL.lavaBase+Math.floor(r/BAL.lavaPer);dur-=ld;text(c+.5,r,'-'+ld+' HP','#ef4444');burst(c,r,'#ea580c',3);}
+  if(ty.k==='lava'){RS.lava++;stAdd('lava');const ld=BAL.lavaBase+Math.floor(r/BAL.lavaPer);dur-=ld;text(c+.5,r,'-'+ld+' HP','#ef4444');burst(c,r,'#ea580c',3);}
   if(b.hp>0){playSound('hit');return false;}
-  rows[r][c]=null;
+  rows[r][c]=null;ckInvalidate(r);
   {const zc=ZB[b.z===undefined?zoneAt(r,c):b.z].c[1];
    if(b.t===1)burst(c,r,zc,10);else if(TEXZ[b.t]){burst(c,r,ty.c,5);burst(c,r,zc,5);}else burst(c,r,ty.c,10);}
   if(ty.k!=='tnt'&&ty.k!=='up'&&ty.k!=='fix')playSound((b.t>=3&&b.t<=5)||b.t>=9?'break_rare':'break_common');
   if(ty.k==='tnt'){text(c+.5,r,'BOOM!','#ef4444');explode(r,c);}
   else if(ty.k==='up'){
-    if(tier<CRAFT_MAX){tier++;RS.ups++;save.tiers|=1<<tier;maxDur=maxHp();text(c+.5,r,'LEVEL UP!','#38bdf8');playSound('upgrade');}
+    if(tier<CRAFT_MAX){tier++;RS.ups++;stAdd('ups');save.tiers|=1<<tier;maxDur=maxHp();text(c+.5,r,'LEVEL UP!','#38bdf8');playSound('upgrade');}
     else{text(c+.5,r,'NAPRAWA!','#4ade80');playSound('repair');}
     dur=Math.min(maxDur,dur+maxDur*BAL.upHeal);
   }else if(ty.k==='fix'){
@@ -1137,13 +1413,13 @@ function useBomb(){
   if(activeCh&&!activeCh.bombs)return;                       // w wyzwaniach bomba BOOM nie działa (poza „Wielkim wybuchem”)
   if(bombsLeft()<=0){text(p.x,p.y-.9,'Brak bomb!','#f87171');bombCd=.4;return;}
   if(activeCh)chBombs--;else{save.bombs--;persist();}
-  RS.bombs++;bombCd=BOMB.cd;
+  RS.bombs++;stAdd('bombs');bombCd=BOMB.cd;
   fuses.push({x:p.x,y:p.y,t:BOMB.fuse});
   playSound('fuse');
 }
 function fireball(x,y){
   const cols=['#fff7bf','#fde047','#fb923c','#ef4444','#7c2d12'];
-  for(let i=0;i<46;i++){
+  for(let i=0,N=GFX?24:46;i<N;i++){
     const a=Math.random()*6.283,sp=3+Math.random()*13;
     parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1,l:1,d:1.3+Math.random()*1.4,s:3+Math.random()*6,col:cols[(Math.random()*cols.length)|0]});
   }
@@ -1160,7 +1436,7 @@ function detonate(x,y){
     gain+=earn(b.t,r);n++;
     burst(c,r,b.t===1?ZB[b.z===undefined?zoneAt(r,c):b.z].c[1]:ty.c,3);
     if(ty.k==='tnt')tnts.push([r,c]);
-    row[c]=null;
+    row[c]=null;ckInvalidate(r);
   }
   for(const [r,c] of tnts){text(c+.5,r,'BOOM!','#ef4444');explode(r,c);}   // TNT w zasięgu odpala swój wybuch
   RS.blast=Math.max(RS.blast,n);
@@ -1208,7 +1484,7 @@ function chCheck(){
     chState=1;
     if(!save.ch[c.id]){save.ch[c.id]=1;save.coins+=c.rw;persist();}
     toast('<b>🏆 Wyzwanie ukończone!</b>'+c.n+' · +'+c.rw+' 🪙');
-    text(p.x,p.y-1.1,'WYZWANIE! +'+c.rw,'#fde047');playSound('upgrade');
+    text(p.x,p.y-1.1,'WYZWANIE! +'+c.rw,'#fde047');playSound('upgrade');achCheck();
     return;
   }
   const f=c.fail&&c.fail();
@@ -1304,47 +1580,85 @@ function step(dt){
 }
 
 /* ---------- Renderowanie grafiki ---------- */
-function drawBlock(b,r,c){
+function drawBlockBase(g,b,r,c){                                              // sam blok (bez pęknięć i paska życia)
   const x=Math.floor(c*ts),y=Math.floor(r*ts),w=Math.floor((c+1)*ts)-x,h=Math.floor((r+1)*ts)-y;
   let img;
   if(b.t===8)img=LAVA[LF];
   else{const set=TEXZ[b.t];if(set){if(b.z===undefined)b.z=zoneAt(r,c);img=set[b.z];}else img=BS[b.t];}
-  ctx.drawImage(img,x,y,w,h);
-  if(r===0)ctx.drawImage(GRASS,x,y,w,h);
-  if(b.hp<b.mx){
-    const k=Math.max(0,b.hp/b.mx);
-    ctx.drawImage(CR[Math.min(4,(1-k)*5|0)],x,y,w,h);
-    ctx.fillStyle='rgba(0,0,0,.85)';ctx.fillRect(x+4,y+h-9,w-8,6);
-    ctx.fillStyle=k>.5?'#4ade80':k>.25?'#facc15':'#f87171';ctx.fillRect(x+5,y+h-8,(w-10)*k,4);
-  }
+  g.drawImage(img,x,y,w,h);
+  if(r===0)g.drawImage(GRASS,x,y,w,h);
+}
+function drawBlockDyn(b,r,c){                                                  // pęknięcia i pasek życia uszkodzonego bloku (rysowane co klatkę, tylko dla uszkodzonych)
+  const x=Math.floor(c*ts),y=Math.floor(r*ts),w=Math.floor((c+1)*ts)-x,h=Math.floor((r+1)*ts)-y;
+  const k=Math.max(0,b.hp/b.mx);
+  ctx.drawImage(CR[Math.min(4,(1-k)*5|0)],x,y,w,h);
+  ctx.fillStyle='rgba(0,0,0,.85)';ctx.fillRect(x+4,y+h-9,w-8,6);
+  ctx.fillStyle=k>.5?'#4ade80':k>.25?'#facc15':'#f87171';ctx.fillRect(x+5,y+h-8,(w-10)*k,4);
 }
 const EM=[];   // źródła światła w tej klatce: [x,y,promień(kafle),siła dziury w ciemności,'r,g,b',alfa poświaty,rodzaj,ziarno]
+function emPush(e,sy){const R=e[2]*ts,y=e[1]+sy;if(y+R<0||y-R>H)return;EM.push(e);}   // światła poza ekranem pomijamy
 function solid(r,c){return c<0||c>=COLS||!!(r>=0&&rows[r]&&rows[r][c]);}
-function drawCave(r,c){
+function drawCave(g,em,r,c){
   const x=Math.floor(c*ts),y=Math.floor(r*ts),w=Math.floor((c+1)*ts)-x,h=Math.floor((r+1)*ts)-y,z=zoneAt(r,c);
-  ctx.drawImage(WALLZ[z][(hash2(r,c,3)*4)|0],x,y,w,h);
+  g.drawImage(WALLZ[z][(hash2(r,c,3)*4)|0],x,y,w,h);
   const up=solid(r-1,c)&&r>0,dn=solid(r+1,c),pu=Math.max(2,Math.round(ts/11)),hd=hash2(r,c,9),cx=x+w/2;
   if(hd<.025){                                                           // pochodnia na ścianie
-    const ty=y+h*.38;ctx.drawImage(TORCH,Math.round(cx-pu),Math.round(ty),pu*2,pu*7);
-    EM.push([cx,ty,3.6,.95,'255,150,50',.30,'t',hd*40]);
+    const ty=y+h*.38;g.drawImage(TORCH,Math.round(cx-pu),Math.round(ty),pu*2,pu*7);
+    em.push([cx,ty,3.6,.95,'255,150,50',.30,'t',hd*40]);
   }else if(hd<.05&&z>=2){                                                // świecący kryształ
-    const P=CRYP[z],ch=CRY[z];ctx.drawImage(ch,Math.round(cx-pu*3.5),y+h-pu*8-2,pu*7,pu*8);
-    EM.push([cx,y+h*.7,2.4,.8,P[3],.22,'c',0]);
+    const P=CRYP[z],ch=CRY[z];g.drawImage(ch,Math.round(cx-pu*3.5),y+h-pu*8-2,pu*7,pu*8);
+    em.push([cx,y+h*.7,2.4,.8,P[3],.22,'c',0]);
   }else if(hd<.14&&z>=1){                                                // stalaktyt / stalagmit
-    if(up)ctx.drawImage(STAL[z],Math.round(cx-pu*3.5),y,pu*7,pu*6);
-    else if(dn)ctx.drawImage(STAG[z],Math.round(cx-pu*3.5),y+h-pu*6,pu*7,pu*6);
-  }else if(hd<.21&&z<=3&&up)ctx.drawImage(MOSS,x,y,w,Math.round(w/16*5));   // mech
-  if(up)ctx.drawImage(AO.t,x,y,w,h);
-  if(solid(r,c-1))ctx.drawImage(AO.l,x,y,w,h);
-  if(solid(r,c+1))ctx.drawImage(AO.r,x,y,w,h);
-  if(dn)ctx.drawImage(AO.b,x,y,w,h);
+    if(up)g.drawImage(STAL[z],Math.round(cx-pu*3.5),y,pu*7,pu*6);
+    else if(dn)g.drawImage(STAG[z],Math.round(cx-pu*3.5),y+h-pu*6,pu*7,pu*6);
+  }else if(hd<.21&&z<=3&&up)g.drawImage(MOSS,x,y,w,Math.round(w/16*5));   // mech
+  if(up)g.drawImage(AO.t,x,y,w,h);
+  if(solid(r,c-1))g.drawImage(AO.l,x,y,w,h);
+  if(solid(r,c+1))g.drawImage(AO.r,x,y,w,h);
+  if(dn)g.drawImage(AO.b,x,y,w,h);
+}
+/* ---------- Cache terenu: bloki i jaskinie, które się nie zmieniają, rysujemy raz na kawałek (8 wierszy) do osobnego płótna.
+   Co klatkę wystarczy wtedy kilka rysowań zamiast ok. 700 (każda komórka miała kilka warstw). Kawałek jest unieważniany, gdy zniknie blok
+   w nim albo tuż obok (zmieniają się cienie krawędzi). Uszkodzone bloki (pęknięcia, pasek życia) są dorysowywane na wierzchu co klatkę. ---------- */
+const CHR=8,CK=new Map(),CKFREE=[],DEM=[];CKON=true;
+function ckInvalidate(r){for(let i=Math.floor((r-1)/CHR),e=Math.floor((r+1)/CHR);i<=e;i++){const k=CK.get(i);if(k)k.ok=false;}}
+function ckClear(){for(const k of CK.values())CKFREE.push(k);CK.clear();while(CKFREE.length>6){const k=CKFREE.pop();k.cv.width=k.cv.height=0;}}
+function ckBuild(i){
+  const r0=i*CHR,r1=r0+CHR-1;
+  if(r1+1>=genTo)return null;                                                  // pod spodem nie ma jeszcze wierszy (cienie krawędzi): rysujemy bezpośrednio
+  const y0=Math.floor(r0*ts),h=Math.floor((r1+1)*ts)-y0;
+  let k=CK.get(i);
+  if(!k){k=CKFREE.pop();if(!k){k={cv:document.createElement('canvas'),em:[],rr:[]};k.g=k.cv.getContext('2d',{alpha:false});/* kafel jest w pełni nieprzezroczysty: bez mieszania kanału alfa przy rysowaniu na ekran */}CK.set(i,k);}
+  const cw=Math.round(W*DPR),ch=Math.ceil(h*DPR);
+  if(k.cv.width!==cw||k.cv.height!==ch){k.cv.width=cw;k.cv.height=ch;}        // zmiana rozmiaru czyści płótno
+  const g=k.g;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,cw,ch);
+  g.setTransform(DPR,0,0,DPR,0,-y0*DPR);g.imageSmoothingEnabled=false;
+  k.em.length=0;k.rr.length=0;k.lava=false;
+  for(let r=r0;r<=r1;r++){
+    const row=rows[r];k.rr.push(row);
+    for(let c=0;c<COLS;c++){
+      const b=row[c];
+      if(b){drawBlockBase(g,b,r,c);if(b.t===8){k.lava=true;k.em.push([(c+.5)*ts,(r+.5)*ts,2.6,.9,'255,110,20',.30,'l',0]);}}
+      else drawCave(g,k.em,r,c);
+    }
+  }
+  k.y0=y0;k.h=h;k.lf=LF;k.ok=true;
+  return k;
+}
+function ckGet(i){
+  const k=CK.get(i);
+  if(k&&k.ok&&(!k.lava||k.lf===LF)){
+    let same=true;for(let j=0;j<CHR;j++)if(rows[i*CHR+j]!==k.rr[j]){same=false;break;}   // świat podmieniony (nowy bieg): przebuduj
+    if(same)return k;
+  }
+  return ckBuild(i);
 }
 function drawPick(){
   ctx.save();
   ctx.translate(p.x*ts,p.y*ts);
   ctx.rotate(p.a);
   const s=ts*.75;
-  ctx.drawImage(PS[tier],-s/2,-s*.25,s,s);
+  ctx.drawImage(SKN?skinSprite(SKN,(performance.now()/90)|0):PS[tier],-s/2,-s*.25,s,s);
   ctx.restore();
 }
 
@@ -1407,11 +1721,9 @@ function dkCol(d){
   return A[1].map((v,k)=>Math.round(v+(B[1][k]-v)*t));
 }
 function darkAmount(){return Math.min(.66,Math.max(0,(p.y-4)/300*.66));}
-function holeAt(x,y,R,k){
-  const g=dkx,gr=g.createRadialGradient(x,y,R*.08,x,y,R);
-  gr.addColorStop(0,'rgba(0,0,0,'+k+')');gr.addColorStop(.5,'rgba(0,0,0,'+(k*.7)+')');gr.addColorStop(1,'rgba(0,0,0,0)');
-  g.fillStyle=gr;g.fillRect(x-R,y-R,R*2,R*2);
-}
+const HSP=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d'),gr=g.createRadialGradient(32,32,32*.08,32,32,32);
+  gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(.5,'rgba(0,0,0,.7)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,64,64);return c;})();
+function holeAt(x,y,R,k){dkx.globalAlpha=k;dkx.drawImage(HSP,x-R,y-R,R*2,R*2);}     // dziura w ciemności: ten sam gradient co wcześniej, ale z gotowego sprite'a
 function drawDark(sy){
   const a=darkAmount();if(a<.012)return;
   const col=dkCol(p.y),k=1/LS,g=dkx;
@@ -1420,7 +1732,7 @@ function drawDark(sy){
   g.globalCompositeOperation='destination-out';
   holeAt(p.x*ts*k,(p.y*ts+sy)*k,ts*5.6*k,1);
   for(const e of EM)holeAt(e[0]*k,(e[1]+sy)*k,e[2]*ts*k,e[3]);
-  g.globalCompositeOperation='source-over';
+  g.globalAlpha=1;g.globalCompositeOperation='source-over';
   ctx.drawImage(dk,0,0,dk.width*LS,dk.height*LS);
 }
 const GLC={};
@@ -1431,16 +1743,37 @@ function glowSpr(col){
     gr.addColorStop(0,'rgba('+col+',1)');gr.addColorStop(1,'rgba('+col+',0)');g.fillStyle=gr;g.fillRect(0,0,64,64);}
   return s;
 }
-function drawEmissive(){
-  const tm=performance.now(),pu=Math.max(2,Math.round(ts/11));
-  ctx.globalCompositeOperation='lighter';ctx.imageSmoothingEnabled=true;
-  for(const e of EM){
-    const R=e[2]*ts*.42;
-    ctx.globalAlpha=e[5];ctx.drawImage(glowSpr(e[4]),e[0]-R,e[1]-R,R*2,R*2);
+const GLL=[];                                                                   // światła tej klatki: [kolor, x, y (świat), promień, alfa]
+function glowAdd(col,x,y,R,a){if(GFX)return;GLL.push([col,x,y,R,a]);}   // oszczędna grafika: bez poświat
+function glowFlush(sy){                                                        // rysuje zebrane światła (dodawane): bezpośrednio, a przy wielu naraz przez małą warstwę
+  const n=GLL.length;if(!n)return;
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,sum=0;
+  for(const g of GLL){const R=g[3],y=g[2]+sy;if(g[1]-R<x0)x0=g[1]-R;if(g[1]+R>x1)x1=g[1]+R;if(y-R<y0)y0=y-R;if(y+R>y1)y1=y+R;sum+=4*R*R;}
+  x0=Math.max(0,x0);y0=Math.max(0,y0);x1=Math.min(W,x1);y1=Math.min(H,y1);
+  const area=(x1-x0)*(y1-y0);
+  if(area>0){
+    ctx.globalCompositeOperation='lighter';ctx.imageSmoothingEnabled=true;
+    if(n<=3||sum<=area){                                                       // mało świateł: każde osobno (tanie, małe sprite'y)
+      for(const g of GLL){ctx.globalAlpha=g[4];ctx.drawImage(glowSpr(g[0]),g[1]-g[3],g[2]-g[3],g[3]*2,g[3]*2);}
+      ctx.globalAlpha=1;
+    }else{                                                                     // dużo świateł (np. lawa): do małej warstwy, na ekran tylko prostokąt, który je obejmuje
+      const k=1/GS;
+      glx.globalCompositeOperation='source-over';glx.clearRect(0,0,gl.width,gl.height);glx.globalCompositeOperation='lighter';
+      for(const g of GLL){glx.globalAlpha=g[4];glx.drawImage(glowSpr(g[0]),(g[1]-g[3])*k,(g[2]+sy-g[3])*k,g[3]*2*k,g[3]*2*k);}
+      glx.globalAlpha=1;glx.globalCompositeOperation='source-over';
+      const gx=Math.max(0,Math.floor(x0*k)-1),gy=Math.max(0,Math.floor(y0*k)-1),gw=Math.min(gl.width-gx,Math.ceil((x1-x0)*k)+3),gh=Math.min(gl.height-gy,Math.ceil((y1-y0)*k)+3);
+      ctx.drawImage(gl,gx,gy,gw,gh,gx*GS,gy*GS-sy,gw*GS,gh*GS);
+    }
+    ctx.imageSmoothingEnabled=false;ctx.globalCompositeOperation='source-over';
   }
+  GLL.length=0;
+}
+function drawEmissive(sy){
+  const tm=performance.now(),pu=Math.max(2,Math.round(ts/11));
+  for(const e of EM)glowAdd(e[4],e[0],e[1],e[2]*ts*.42,e[5]);
   const a=darkAmount();
-  if(a>.05&&!over){const R=ts*2.4;ctx.globalAlpha=a*.2;ctx.drawImage(glowSpr('255,190,120'),p.x*ts-R,p.y*ts-R,R*2,R*2);}
-  ctx.globalAlpha=1;ctx.imageSmoothingEnabled=false;ctx.globalCompositeOperation='source-over';
+  if(a>.05&&!over)glowAdd('255,190,120',p.x*ts,p.y*ts,ts*2.4,a*.2);
+  glowFlush(sy);
   for(const e of EM)if(e[6]==='t')ctx.drawImage(FLAME[((tm/120+e[7])|0)%3],Math.round(e[0]-pu*2),Math.round(e[1]-pu*3.4),pu*4,pu*4);
 }
 function draw(){
@@ -1452,11 +1785,23 @@ function draw(){
   const r0=Math.max(0,Math.floor(cam)),r1=Math.min(genTo-1,Math.ceil(cam+H/ts));
   LF=(performance.now()/LAVA_MS|0)%8;
   EM.length=0;
-  for(let r=r0;r<=r1;r++)for(let c=0;c<COLS;c++){
-    const b=rows[r][c];
-    if(b){drawBlock(b,r,c);if(b.t===8)EM.push([(c+.5)*ts,(r+.5)*ts,2.6,.9,'255,110,20',.30,'l',0]);}
-    else drawCave(r,c);
+  const ca=Math.floor(r0/CHR),cb=Math.floor(r1/CHR);
+  for(let i=ca;i<=cb;i++){
+    const k=ckGet(i);
+    if(k){ctx.drawImage(k.cv,0,k.y0,W,k.h);for(const e of k.em)emPush(e,sy);}
+    else{                                                                    // kawałek niepełny (brzeg wygenerowanego świata): rysujemy po staremu
+      DEM.length=0;
+      for(let r=Math.max(r0,i*CHR),re=Math.min(r1,i*CHR+CHR-1);r<=re;r++)for(let c=0;c<COLS;c++){
+        const b=rows[r][c];
+        if(b){drawBlockBase(ctx,b,r,c);if(b.t===8)DEM.push([(c+.5)*ts,(r+.5)*ts,2.6,.9,'255,110,20',.30,'l',0]);}
+        else drawCave(ctx,DEM,r,c);
+      }
+      for(const e of DEM)emPush(e,sy);
+    }
   }
+  for(let r=r0;r<=r1;r++){const row=rows[r];for(let c=0;c<COLS;c++){const b=row[c];if(b&&b.hp<b.mx)drawBlockDyn(b,r,c);}}   // uszkodzone bloki
+  if(CK.size>cb-ca+3)for(const [i,k] of CK)if(i<ca-1||i>cb+1){CK.delete(i);CKFREE.push(k);}                          // daleko od kamery: oddaj płótno do puli
+  while(CKFREE.length>4){const k=CKFREE.pop();k.cv.width=k.cv.height=0;}
   for(const b of blasts)EM.push([b.x*ts,b.y*ts,BOMB.r+3.5-3*(1-b.l),1,'255,190,110',.6*b.l,'b',0]);   // wybuch rozświetla jaskinię
   for(const q of parts){
     ctx.globalAlpha=Math.max(0,q.l);ctx.fillStyle=q.col;
@@ -1466,16 +1811,12 @@ function draw(){
   ctx.restore();
   drawDark(sy);
   ctx.save();ctx.translate(0,sy);
-  drawEmissive();
+  drawEmissive(sy);
   for(const f of fuses){const s=ts*.9;ctx.drawImage(BOMBSPR,f.x*ts-s/2,f.y*ts-s/2,s,s);}   // bomba z palącym się lontem
   if(!over)drawPick();
   if(blasts.length){
-    ctx.imageSmoothingEnabled=true;ctx.globalCompositeOperation='lighter';
-    for(const b of blasts){
-      const k=1-b.l,R=ts*(2+5*Math.min(1,k*2.4));
-      ctx.globalAlpha=Math.min(1,b.l*1.3);ctx.drawImage(glowSpr('255,200,110'),b.x*ts-R,b.y*ts-R,R*2,R*2);
-    }
-    ctx.globalCompositeOperation='source-over';ctx.imageSmoothingEnabled=false;
+    for(const b of blasts){const k=1-b.l;glowAdd('255,200,110',b.x*ts,b.y*ts,ts*(2+5*Math.min(1,k*2.4)),Math.min(1,b.l*1.3));}
+    glowFlush(sy);
     for(const b of blasts){                                                                  // fala uderzeniowa
       const k=1-b.l,rr=(BOMB.r+.5)*ts*Math.min(1,k*2.2);
       ctx.globalAlpha=Math.max(0,b.l*.9);ctx.strokeStyle='#ffe9b0';ctx.lineWidth=Math.max(2,ts*.14*b.l);
@@ -1506,8 +1847,8 @@ function ui(){
   {const TT=TIERS[tier],dm=TT.deep?deepMul(tier,Math.max(0,p.y)):0;   // kilof głębinowy: pokazujemy aktualny mnożnik mocy
    set('ti',TT.name+(TT.deep?' · ×'+(dm>=1000?(dm/1000).toFixed(1)+'k':dm>=100?Math.round(dm):dm.toFixed(1)):''));}
   if($('tic')._t!==tier){$('tic')._t=tier;$('tic').src=IMG['p'+tier];}
-  $('ti').style.color=TIERS[tier].color;
-  $('hpf').style.width=Math.max(0,dur/maxDur*100)+'%';
+  {const e=$('ti'),c=TIERS[tier].color;if(e._c!==c){e._c=c;e.style.color=c;}}
+  {const e=$('hpf'),w=Math.max(0,dur/maxDur*100).toFixed(1)+'%';if(e._w!==w){e._w=w;e.style.width=w;}}
   {const sb=!$('menu').hidden||!$('pause').hidden;if($('by')._v!==sb){$('by')._v=sb;$('by').hidden=!sb;}}
   {const su=!OTA_AUTO&&!!otaReady&&!$('menu').hidden;if($('upd')._v!==su){$('upd')._v=su;$('upd').hidden=!su;}}   // „Nowa wersja” tylko w menu
   {const t=chLabel(),e=$('cb'),cl=!activeCh?'':chState===1?'ok':chState===2?'bad':'';
@@ -1603,14 +1944,14 @@ function closePause(){persist();$('pause').hidden=true;}
 function autoPause(){if(running())openPause();}
 $('ps').addEventListener('click',()=>{getAudioContext();openPause();});
 $('resume').addEventListener('click',closePause);
-$('tomenu').addEventListener('click',()=>{persist();showMenu();});
+$('tomenu').addEventListener('click',()=>{if(depth>=5)stAdd('runs');persist();showMenu();});
 $('vs').addEventListener('input',e=>{save.sfx=+e.target.value;$('vsv').textContent=save.sfx+'%';applyVolumes();});
 $('vs').addEventListener('change',()=>{persist();playSound('break_common');});
 $('vm').addEventListener('input',e=>{save.music=+e.target.value;$('vmv').textContent=save.music+'%';applyVolumes();});
 $('vm').addEventListener('change',persist);
 addEventListener('keydown',e=>{
   if(e.key!=='Escape')return;
-  for(const id of ['conf','code','store','tut','chal'])if(!$(id).hidden){$(id).hidden=true;return;}
+  for(const id of ['conf','daily','coll','code','store','tut','chal'])if(!$(id).hidden){$(id).hidden=true;return;}
   if(!$('sett').hidden){closeSett();return;}
   if(!$('pause').hidden)closePause();else if(running())openPause();
 });
@@ -1619,16 +1960,16 @@ addEventListener('keydown',e=>{
 [['mi1','p4'],['lg','p4'],['mc','b5']].forEach(([i,k])=>{$(i).src=IMG[k];});
 $('mi2').src=IMG.cup;$('mi3').src=IMG.podium;$('o2').src=IMG.code;$('o3').src=IMG.shop;$('o4').src=IMG.help;   // ikony pod menu: kod, sklep premium, samouczek
 $('gi').src=IMG.gear;
-function menuStats(){$('mn').textContent=save.nick;$('mb').textContent=save.best+' m';$('mm').textContent=Math.floor(save.coins);$('chn').textContent=chDone()+' / '+CH.length;}
+function menuStats(){$('mn').textContent=save.nick;$('mb').textContent=save.best+' m';$('mm').textContent=Math.floor(save.coins);$('chn').textContent=chDone()+' / '+CH.length;menuBadges();}
 {const st=$('menu').style;if(st&&st.setProperty)st.setProperty('--tile','url('+BASE[2].toDataURL()+')');}
 function showMenu(){bombBuys=0;activeCh=null;chState=0;$('chal').hidden=true;menuStats();$('over').hidden=true;$('pick').hidden=true;$('pause').hidden=true;$('menu').hidden=false;}
 $('play').addEventListener('click',()=>{getAudioContext();activeCh=null;chState=0;$('menu').hidden=true;openPick();});
 $('back1').addEventListener('click',showMenu);
 $('back2').addEventListener('click',showMenu);
 function showOver(){
-  bombBuys=0;
+  bombBuys=0;stAdd('runs');
   const bonus=Math.round(depth*BAL.coinScale);
-  save.coins+=bonus;persist();
+  save.coins+=bonus;persist();achCheck();
   let ct='';
   if(activeCh){
     const u=activeCh.u||'';
@@ -1670,7 +2011,7 @@ const sUpd=nickBind($('si'),$('sno'),$('sm'),v=>{
 });
 function openSett(){
   getAudioContext();
-  $('si').value=save.nick;sUpd();ctrlUi();$('lng').value=save.lang;
+  $('si').value=save.nick;sUpd();ctrlUi();gfxUi();$('lng').value=save.lang;
   $('vs2').value=save.sfx;$('vsv2').textContent=save.sfx+'%';
   $('vm2').value=save.music;$('vmv2').textContent=save.music+'%';
   $('sett').hidden=false;
@@ -1710,6 +2051,247 @@ $('stx').addEventListener('click',()=>{$('store').hidden=true;});
 $('tutb').addEventListener('click',()=>{getAudioContext();$('ts').scrollTop=0;$('tut').hidden=false;});
 $('tux').addEventListener('click',()=>{$('tut').hidden=true;});
 $('tud').addEventListener('click',()=>{$('tut').hidden=true;});
+
+/* ---------- v17: osiągnięcia i skórki kilofa (okno Kolekcja), nagroda dzienna, oszczędna grafika ---------- */
+function pxIcon(fn,pal){                                       // ikona 16x16 z funkcji (x,y) -> znak palety; kontur dorysowuje się sam
+  const M=[];for(let y=0;y<16;y++){const r=[];for(let x=0;x<16;x++)r.push(fn(x,y)||'.');M.push(r);}
+  const O=M.map(r=>r.slice());
+  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+    if(M[y][x]!=='.')continue;
+    for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++){const yy=y+j,xx=x+i;if(yy>=0&&yy<16&&xx>=0&&xx<16&&M[yy][xx]!=='.')O[y][x]='o';}
+  }
+  return mkIcon(O.map(r=>r.join('')),Object.assign({o:'#0b0f1a'},pal));
+}
+const inR=(x,y,a,b,c,d)=>x>=a&&x<=c&&y>=b&&y<=d;
+IMG.gift=pxIcon((x,y)=>{
+  if(inR(x,y,7,5,8,14))return 'Y';                              // wstążka
+  if(inR(x,y,7,3,8,4))return 'D';                               // supeł kokardy
+  if(inR(x,y,4,2,6,4)||inR(x,y,9,2,11,4))return 'Y';            // kokarda
+  if(inR(x,y,1,5,14,7))return y===5?'H':'L';                    // wieczko
+  if(inR(x,y,2,8,13,14))return y===14?'Q':'R';                  // pudełko
+  return null;
+},{R:'#ef4444',L:'#fb7185',H:'#fecdd3',Q:'#b91c1c',Y:'#fde047',D:'#ca8a04'});
+IMG.medal=pxIcon((x,y)=>{
+  const d=Math.hypot(x-7.5,y-9.6);
+  if(d<=5.3)return d<=3.1?((x+y)<16?'H':'M'):((x+y)<16?'M':'L');   // moneta medalu z jaśniejszym środkiem
+  if(inR(x,y,4,0,6,5))return 'B';if(inR(x,y,9,0,11,5))return 'R';   // wstęgi
+  return null;
+},{H:'#fff3a0',M:'#fbbf24',L:'#d97706',B:'#3b82f6',R:'#ef4444'});
+$('o5').src=IMG.gift;$('o6').src=IMG.medal;
+
+/* ----- statystyki łączne (do osiągnięć); przy kodzie HPXD+ nie rosną, tak jak ranking ----- */
+function stAdd(k,n){if(save.infHp)return;save.st[k]=Math.min(1e9,(save.st[k]||0)+(n||1));}
+const stv=k=>save.st[k]||0;
+/* ----- osiągnięcia: get = bieżąca wartość, goal = cel, rw = monety (raz), skin = skórka, którą odblokowują, ic = ikona ----- */
+const ACH=[
+  {id:'d100',n:'Pierwsze kroki',d:'Dokop na 100 m.',goal:100,u:' m',rw:500,ic:'p0',get:()=>save.rbest},
+  {id:'d300',n:'Podziemny wędrowiec',d:'Dokop na 300 m.',goal:300,u:' m',rw:1500,ic:'p2',get:()=>save.rbest},
+  {id:'d500',n:'Mróz głębin',d:'Dokop na 500 m.',goal:500,u:' m',rw:3000,ic:'p4',skin:'ice',get:()=>save.rbest},
+  {id:'d1000',n:'Brama piekieł',d:'Dokop na 1000 m.',goal:1000,u:' m',rw:8000,ic:'p6',get:()=>save.rbest},
+  {id:'d1500',n:'Dno świata',d:'Dokop na 1500 m.',goal:1500,u:' m',rw:15000,ic:'p7',get:()=>save.rbest},
+  {id:'ores',n:'Zbieracz',d:'Zbierz łącznie 500 rud.',goal:500,rw:1000,ic:'b3',get:()=>stv('ores')},
+  {id:'ores2',n:'Kopalnia rud',d:'Zbierz łącznie 5000 rud.',goal:5000,rw:6000,ic:'b2',get:()=>stv('ores')},
+  {id:'gold',n:'Gorączka złota',d:'Zbierz łącznie 200 sztuk złota.',goal:200,rw:2500,ic:'b4',skin:'gold',get:()=>stv('o4')},
+  {id:'dia',n:'Diamentowe serce',d:'Zbierz łącznie 50 diamentów.',goal:50,rw:3000,ic:'b5',get:()=>stv('o5')},
+  {id:'nether',n:'Łowca ciemności',d:'Zbierz łącznie 10 sztuk Netherytu.',goal:10,rw:5000,ic:'b10',skin:'dark',get:()=>stv('o10')},
+  {id:'em',n:'Zielone światło',d:'Zbierz łącznie 10 szmaragdów.',goal:10,rw:10000,ic:'b12',skin:'em',get:()=>stv('o12')},
+  {id:'astral',n:'Astralna żyła',d:'Zbierz łącznie 5 astralitów.',goal:5,rw:20000,ic:'b13',skin:'star',get:()=>stv('o13')},
+  {id:'tnt',n:'Pirotechnik',d:'Wysadź łącznie 50 skrzyń TNT.',goal:50,rw:2000,ic:'b6',skin:'fire',get:()=>stv('tnt')},
+  {id:'bomb',n:'Saper',d:'Użyj łącznie 30 bomb.',goal:30,rw:1500,ic:'bomb',get:()=>stv('bombs')},
+  {id:'up',n:'Kowal',d:'Awansuj kilof w craftingu 25 razy.',goal:25,rw:1500,ic:'b7',get:()=>stv('ups')},
+  {id:'lava',n:'Gorące uderzenie',d:'Uderz w lawę 50 razy. Ała.',goal:50,rw:500,ic:'b8',get:()=>stv('lava')},
+  {id:'runs',n:'Weteran',d:'Rozegraj 100 gier.',goal:100,rw:3000,ic:'p1',get:()=>stv('runs')},
+  {id:'ch5',n:'Łowca wyzwań',d:'Ukończ 5 wyzwań.',goal:5,rw:3000,ic:'cup',get:()=>chDone()},
+  {id:'chall',n:'Mistrz wyzwań',d:'Ukończ wszystkie wyzwania.',goal:CH.length,rw:10000,ic:'cup',skin:'rb',get:()=>chDone()},
+  {id:'s7',n:'Tydzień w kopalni',d:'Odbieraj nagrodę dzienną 7 dni z rzędu.',goal:7,rw:2000,ic:'gift',get:()=>save.dBest},
+  {id:'s30',n:'Miesiąc w kopalni',d:'Odbieraj nagrodę dzienną 30 dni z rzędu.',goal:30,rw:10000,ic:'gift',get:()=>save.dBest}
+];
+/* ----- skórki kilofa: zmieniają kolor głowicy i ślad za kilofem (nie siłę); col = kolor głowicy, tr = kolory śladu, g = „grawitacja” śladu (ujemna = unosi się) ----- */
+const SKINS=[
+  {id:'',n:'Klasyczny'},
+  {id:'fire',n:'Ognisty',col:'#f97316',tr:['#fde047','#fb923c','#ef4444'],g:-2,ach:'tnt'},
+  {id:'ice',n:'Lodowy',col:'#a5f3fc',tr:['#ffffff','#a5f3fc','#67e8f9'],g:1.5,ach:'d500'},
+  {id:'gold',n:'Złocisty',col:'#fde047',tr:['#fde047','#facc15','#fff7bf'],g:2,ach:'gold'},
+  {id:'dark',n:'Mroczny',col:'#6d28d9',tr:['#7c3aed','#a78bfa','#4c1d95'],g:-1,ach:'nether'},
+  {id:'em',n:'Szmaragdowy',col:'#34d399',tr:['#6ee7b7','#10b981','#ecfdf5'],g:2,ach:'em'},
+  {id:'star',n:'Gwiezdny',col:'#e879f9',tr:['#ffffff','#f0abfc','#fde047'],g:0,ach:'astral'},
+  {id:'rb',n:'Tęczowy',col:'#ef4444',rb:1,tr:[],g:0,ach:'chall'}
+];
+{
+  const n=(v,hi)=>{v=Math.round(Number(v));return Number.isFinite(v)&&v>0?Math.min(v,hi):0;};
+  const ids=new Set(ACH.map(a=>a.id)),ach={},st={};
+  if(save.ach&&typeof save.ach==='object'&&!Array.isArray(save.ach))for(const k of Object.keys(save.ach))if(ids.has(k)&&save.ach[k])ach[k]=1;
+  if(save.st&&typeof save.st==='object'&&!Array.isArray(save.st))for(const k of Object.keys(save.st)){const v=n(save.st[k],1e9);if(v&&/^[a-z0-9]{1,8}$/.test(k))st[k]=v;}
+  save.ach=ach;save.st=st;
+  save.dLast=n(save.dLast,1e6);save.dStreak=n(save.dStreak,1e5);save.dBest=Math.max(n(save.dBest,1e5),save.dStreak);save.achNew=Math.min(n(save.achNew,99),ACH.length);
+  save.skin=typeof save.skin==='string'?save.skin:'';
+}
+const SKS={},SKR=[];
+function hsl2hex(h,s,l){h=(((h%360)+360)%360)/360;const f=m=>{const k=(m+h*12)%12,a=s*Math.min(l,1-l),c=l-a*Math.max(-1,Math.min(k-3,9-k,1));return Math.round(255*c);};return '#'+[f(0),f(8),f(4)].map(v=>(v<16?'0':'')+v.toString(16)).join('');}
+function skinSprite(k,i){                                      // sprite skórki (tęczowa: 12 odcieni, i = numer)
+  if(k.rb){if(!SKR.length)for(let j=0;j<12;j++)SKR.push(pickSprite(hsl2hex(j*30,.85,.55)));return SKR[(i|0)%12];}
+  return SKS[k.id]||(SKS[k.id]=pickSprite(k.col));
+}
+const skinOk=s=>!s.id||!!save.ach[s.ach];
+let SKN=null;                                                   // aktualnie wybrana skórka (null = klasyczna)
+function skinSet(){const k=SKINS.find(s=>s.id&&s.id===save.skin&&skinOk(s));SKN=k||null;if(!k)save.skin='';if(k)skinSprite(k,0);}
+skinSet();
+let trAcc=0;
+function trailEmit(){                                           // iskry za kilofem w skórce
+  const k=SKN;if(!k)return;
+  const col=k.rb?hsl2hex(performance.now()/5,.9,.6):k.tr[(Math.random()*k.tr.length)|0];
+  parts.push({x:p.x+(Math.random()-.5)*.5,y:p.y+(Math.random()-.5)*.5,vx:(Math.random()-.5)*1.6,vy:(Math.random()-.5)*1.6,l:1,d:2+Math.random()*1.2,s:2+Math.random()*3,col,g:k.g});
+}
+let achT=.5;
+function achCheck(){                                            // sprawdza osiągnięcia; nagrody wpadają od razu, raz
+  if(save.infHp)return [];
+  const got=[];let coins=0;
+  for(const a of ACH){
+    if(save.ach[a.id])continue;
+    if(a.get()>=a.goal){save.ach[a.id]=1;save.coins=Math.min(1e12,save.coins+a.rw);coins+=a.rw;got.push(a);}
+  }
+  if(!got.length)return got;
+  save.achNew=Math.min(ACH.length,save.achNew+got.length);persist();playSound('upgrade');
+  if(got.length===1){const a=got[0],sk=a.skin&&SKINS.find(s=>s.id===a.skin);toast('<b>🎖 Osiągnięcie!</b>'+a.n+' · +'+a.rw+' 🪙'+(sk?' · Nowa skórka: '+sk.n:''));}
+  else toast('<b>🎖 Osiągnięcia: '+got.length+'</b>+'+coins+' 🪙 · Sprawdź Kolekcję');
+  menuBadges();
+  return got;
+}
+
+/* ----- nagroda dzienna: 7-dniowa seria, im dalej w progresji tym więcej; opuszczony dzień zeruje serię ----- */
+const DAYR=[[1,0],[1.5,0],[1.5,1],[2,0],[2,1],[3,0],[5,2]];    // dni serii 1–7: [mnożnik monet, bomby]
+const dayNum=()=>{const d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/864e5);};   // numer dnia w czasie lokalnym
+const dailyBase=()=>Math.max(200,Math.round((200+save.rbest*1.5)/50)*50);                                    // baza rośnie z rekordem głębokości
+function dailyReward(pos,streak){const wk=Math.min(5,Math.floor((streak-1)/7)),m=DAYR[pos-1];return{coins:Math.round(dailyBase()*m[0]*(1+.1*wk)/10)*10,bombs:m[1]};}   // +10% za każdy pełny tydzień serii (max +50%)
+function dailyState(){
+  const t=dayNum(),L=save.dLast;
+  if(L>0&&t<=L)return{can:false,streak:save.dStreak,broken:false};   // dziś już odebrane (albo zegar cofnięty)
+  const cont=L>0&&t===L+1;
+  return{can:true,streak:cont?save.dStreak+1:1,broken:!cont&&L>0&&save.dStreak>1};
+}
+function dailyLeft(){const d=new Date(),ms=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1)-d,m=Math.max(1,Math.ceil(ms/60000));return{h:Math.floor(m/60),m:m%60};}
+let dailyMsg='';
+function renderDaily(){
+  const d=dailyState(),st=d.can?d.streak:save.dStreak,pos=st>0?((st-1)%7)+1:1;
+  $('dsr').textContent='Seria dni z rzędu: '+st;
+  $('dg').innerHTML=[1,2,3,4,5,6,7].map(k=>{
+    const r=dailyReward(k,Math.max(1,st-pos+k)),done=d.can?k<pos:(st>0&&k<=pos),cur=d.can&&k===pos;
+    return '<div class="dd'+(done?' done':'')+(cur?' cur':'')+(k===7?' big':'')+'"><small>Dzień '+k+'</small><b>'+r.coins+' 🪙</b><i>'+(r.bombs?'💣 +'+r.bombs:'')+'</i></div>';
+  }).join('');
+  const m=$('dmsg');
+  if(dailyMsg){m.className='nmsg';m.textContent=dailyMsg;}
+  else if(!d.can){const l=dailyLeft();m.className='nmsg';m.textContent='Następna nagroda za '+l.h+' h '+l.m+' min';}
+  else if(d.broken){m.className='nmsg bad';m.textContent='Przerwałeś serię, zaczynasz od nowa';}
+  else{m.className='nmsg';m.textContent='';}
+  $('dgo').disabled=!d.can;$('dgo').textContent=d.can?'Odbierz':'Odebrano ✓';
+}
+function dailyClaim(){
+  const d=dailyState();if(!d.can)return;
+  const pos=((d.streak-1)%7)+1,r=dailyReward(pos,d.streak);
+  save.dLast=dayNum();save.dStreak=d.streak;save.dBest=Math.max(save.dBest,d.streak);
+  save.coins=Math.min(1e12,save.coins+r.coins);
+  const nb=Math.min(BOMB.max,save.bombs+r.bombs)-save.bombs;save.bombs+=nb;
+  dailyMsg='Odebrano: +'+r.coins+' 🪙'+(r.bombs?' · '+(nb?'+'+nb+' 💣'+(nb<r.bombs?' (max)':''):'💣 max'):'');
+  persist();playSound('upgrade');achCheck();renderDaily();menuStats();
+}
+function openDaily(){getAudioContext();dailyMsg='';renderDaily();$('daily').hidden=false;}
+$('dayb').addEventListener('click',openDaily);
+$('dyx').addEventListener('click',()=>{$('daily').hidden=true;});
+$('dgo').addEventListener('click',dailyClaim);
+function menuBadges(){
+  $('dayn').hidden=!dailyState().can;
+  const c=$('coln');c.hidden=!save.achNew;c.textContent=save.achNew>9?'9+':String(save.achNew);
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!$('menu').hidden)menuBadges();});
+setTimeout(()=>{                                                // pierwsze wejście danego dnia: okno nagrody otwiera się samo (raz na uruchomienie)
+  if(save.nick&&$('nick').hidden&&!$('menu').hidden&&dailyState().can&&!document.querySelector('.modal:not([hidden])'))openDaily();
+},900);
+
+/* ----- Kolekcja: osiągnięcia + skórki ----- */
+let colTab='a';
+function skinPrev(s){return s._u||(s._u=(s.id?skinSprite(s,0):PS[Math.min(tier,PS.length-1)]).toDataURL());}
+function renderColl(){
+  $('tabA').className=colTab==='a'?'on':'';$('tabS').className=colTab==='s'?'on':'';
+  if(colTab==='a'){
+    $('colp').textContent='Odblokowane: '+ACH.filter(a=>save.ach[a.id]).length+' / '+ACH.length;
+    $('col').innerHTML=ACH.map(a=>{
+      const done=!!save.ach[a.id],v=done?a.goal:Math.min(a.goal,Math.max(0,a.get())),pct=Math.round(v/a.goal*100),u=a.u||'',sk=a.skin&&SKINS.find(s=>s.id===a.skin);
+      return '<div class="item'+(done?' done':'')+'"><div class="in"><img class="ic" src="'+IMG[a.ic]+'"><div><b>'+a.n+'</b><small>'+a.d+'</small>'+(sk?'<small class="skn">🎨 Skórka: '+sk.n+'</small>':'')+
+        '<div class="pg"><i style="width:'+pct+'%"></i></div><em>'+(done?'Odblokowane':'Postęp: '+v+u+' / '+a.goal+u)+'</em></div></div>'+
+        '<div class="rw">'+(done?'✓':'+'+a.rw+' 🪙')+'</div></div>';
+    }).join('');
+  }else{
+    $('colp').textContent='Skórki: '+SKINS.filter(skinOk).length+' / '+SKINS.length;
+    $('col').innerHTML='<div class="skg">'+SKINS.map((s,i)=>{
+      const ok=skinOk(s),sel=(save.skin||'')===s.id&&ok,a=s.ach&&ACH.find(x=>x.id===s.ach);
+      return '<div class="sk'+(sel?' sel':'')+(ok?'':' lock')+'"><img src="'+skinPrev(s)+'"><b>'+s.n+'</b><small>'+(ok?'':'🔒 '+a.n)+'</small><button data-i="'+i+'"'+(ok&&!sel?'':' disabled')+'>'+(sel?'Wybrana':ok?'Wybierz':'Zablokowana')+'</button></div>';
+    }).join('')+'</div>';
+  }
+}
+function openColl(){getAudioContext();save.achNew=0;persist();menuBadges();renderColl();$('col').scrollTop=0;$('coll').hidden=false;}
+$('colb').addEventListener('click',openColl);
+$('colx').addEventListener('click',()=>{$('coll').hidden=true;});
+$('tabA').addEventListener('click',()=>{colTab='a';renderColl();});
+$('tabS').addEventListener('click',()=>{colTab='s';renderColl();});
+$('col').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||b.disabled)return;
+  const s=SKINS[+b.dataset.i];if(!s||!skinOk(s))return;
+  save.skin=s.id;skinSet();persist();playSound('break_common');renderColl();
+});
+
+/* ----- Oszczędna grafika (Ustawienia): bez poświat, mniej cząstek, rozdzielczość 1:1 ----- */
+function gfxUi(){
+  $('gfx0').className=save.gfx?'':'on';$('gfx1').className=save.gfx?'on':'';
+  $('gfxm').textContent=save.gfx?'Oszczędna: niższa rozdzielczość, bez poświat i mniej efektów. Pomaga, gdy gra się zacina.':'Pełna: najładniejszy obraz. Jeśli gra się zacina, wybierz Oszczędną.';
+}
+function setGfx(v){save.gfx=v?1:0;GFX=!!v;persist();resize();gfxUi();}
+$('gfx0').addEventListener('click',()=>setGfx(0));
+$('gfx1').addEventListener('click',()=>setGfx(1));
+/* automatyczna podpowiedź: gdy ponad 20% klatek w trakcie gry trwa >34 ms (poniżej ok. 30 fps), raz pokazujemy wskazówkę o oszczędnej grafice */
+const pf={n:0,s:0,w:0,off:false};
+function perfSample(ms){
+  if(ms>250||ms<=0)return;
+  pf.n++;if(ms>34)pf.s++;
+  if(pf.n>=420){
+    const bad=pf.s/pf.n>.2;pf.n=pf.s=0;pf.w++;
+    if(bad){save.gfxHint=1;persist();toast('<b>🐢 Gra się zacina?</b>Włącz oszczędną grafikę w Ustawieniach');}
+    else if(pf.w>=10)pf.off=true;
+  }
+}
+
+/* ----- Przycisk „wstecz” w aplikacji: starsza wersja APK nie zna nowych okien, więc gra podmienia obsługę przycisku na swoją ----- */
+function gameBack(A){
+  try{
+    if(!$('conf').hidden){$('conf').hidden=true;return;}
+    if(!$('nick').hidden)return;
+    if(!$('sett').hidden){closeSett();return;}
+    for(const id of ['daily','coll','code','store','tut','rank']){if(!$(id).hidden){$(id).hidden=true;return;}}
+    if(!$('chal').hidden){$('chal').hidden=true;return;}
+    if(!$('shop').hidden){$('cls').click();return;}
+    if(!$('pick').hidden||!$('over').hidden){showMenu();return;}
+    if(!$('pause').hidden){closePause();return;}
+    if(!$('menu').hidden){A.exitApp();return;}
+    openPause();
+  }catch(e){}
+}
+setTimeout(()=>{
+  try{
+    const A=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App;
+    if(!A||!A.addListener||!A.removeAllListeners||!A.exitApp)return;
+    const add=()=>{
+      try{A.addListener('backButton',()=>gameBack(A));}catch(e){}
+      try{A.addListener('appStateChange',s=>{
+        try{
+          if(!s.isActive){persist();autoPause();if(actx&&actx.state==='running')actx.suspend();}
+          else if(actx&&actx.state==='suspended')actx.resume();
+        }catch(e){}
+      });}catch(e){}
+    };
+    const r=A.removeAllListeners();
+    if(r&&r.then)r.then(add,()=>{});else add();
+  }catch(e){}
+},900);
+gfxUi();
 
 /* ---------- Języki: polski, angielski, chiński, hiszpański, niemiecki (wybór w Ustawieniach) ---------- */
 const LANGS=[['pl','Polski'],['en','English'],['zh','中文'],['es','Español'],['de','Deutsch']];
@@ -1836,6 +2418,81 @@ const TXT=[
 ['Od około # m pojawiają się szmaragd i astralit: warte fortunę, ale bardzo twarde. W sklepie kupisz kilofy Magmowy i Astralny. Do # m kopią słabo, a od # m coraz mocniej. Nie da się ich zdobyć w craftingu','From about # m you will find emerald and astralite: worth a fortune, but very hard. In the shop you can buy the Magma and Astral pickaxes. They dig poorly down to # m and get stronger from # m on. They cannot be obtained from crafting.','从约#米深处开始会出现绿宝石和星辰矿：价值连城，但非常坚硬。你可以在商店购买熔岩镐和星辰镐。它们在#米以内挖得很慢，#米以下则越来越强。它们无法通过合成获得。','Desde unos # m aparecen la esmeralda y la astralita: valen una fortuna, pero son muy duras. En la tienda puedes comprar los picos Magma y Astral. Cavan mal hasta los # m y mejoran a partir de los # m. No se pueden conseguir con crafteo.','Ab etwa # m findest du Smaragd und Astralit: ein Vermögen wert, aber sehr hart. Im Shop kannst du die Hacken Magma und Astral kaufen. Bis # m graben sie schlecht, ab # m immer besser. Man kann sie nicht craften.'],
 ['Moc kilofa','Pickaxe power','镐的威力','Potencia del pico','Hackenkraft'],
 ['#% do # m, #% od # m, a głębiej jeszcze więcej','#% up to # m, #% from # m, and even more deeper down','#%（到#米为止），#%（从#米起），越深越强','#% hasta # m, #% desde # m y aún más al profundizar','#% bis # m, #% ab # m und noch mehr in der Tiefe'],
+['Nagroda dzienna','Daily reward','每日奖励','Recompensa diaria','Tägliche Belohnung'],
+['Nagroda','Reward','奖励','Premio','Belohnung'],
+['Kolekcja','Collection','收藏','Colección','Sammlung'],
+['Seria dni z rzędu','Day streak','连续天数','Racha de días','Tage in Folge'],
+['Dzień #','Day #','第#天','Día #','Tag #'],
+['Odbierz','Claim','领取','Reclamar','Abholen'],
+['Odebrano','Claimed','已领取','Reclamado','Abgeholt'],
+['Następna nagroda za # h # min','Next reward in # h # min','下次奖励：#小时#分钟后','Próximo premio en # h # min','Nächste Belohnung in # Std. # Min.'],
+['Przerwałeś serię, zaczynasz od nowa','You broke your streak, starting over','连续记录中断，重新开始','Perdiste la racha, empiezas de nuevo','Serie unterbrochen, du fängst von vorn an'],
+['Osiągnięcia','Achievements','成就','Logros','Erfolge'],
+['Skórki kilofa','Pickaxe skins','镐皮肤','Aspectos del pico','Hacken-Skins'],
+['Odblokowane','Unlocked','已解锁','Desbloqueado','Freigeschaltet'],
+['Skórki','Skins','皮肤','Aspectos','Skins'],
+['Postęp','Progress','进度','Progreso','Fortschritt'],
+['Skórka','Skin','皮肤','Aspecto','Skin'],
+['Wybierz','Select','选择','Elegir','Wählen'],
+['Wybrana','Selected','已选择','Elegido','Gewählt'],
+['Zablokowana','Locked','未解锁','Bloqueado','Gesperrt'],
+['Osiągnięcie','Achievement','成就达成','Logro','Erfolg'],
+['Nowa skórka','New skin','新皮肤','Nuevo aspecto','Neuer Skin'],
+['Sprawdź Kolekcję','Check the Collection','去收藏看看','Mira la Colección','Schau in die Sammlung'],
+['Gra się zacina','Is the game lagging','游戏卡顿吗','El juego va lento','Ruckelt das Spiel'],
+['Włącz oszczędną grafikę w Ustawieniach','Turn on lite graphics in Settings','请在设置中开启节能画质','Activa los gráficos ligeros en Ajustes','Aktiviere die sparsame Grafik in den Einstellungen'],
+['Grafika','Graphics','画质','Gráficos','Grafik'],
+['Pełna','Full','完整','Completa','Voll'],
+['Oszczędna','Lite','节能','Ligera','Sparsam'],
+['Oszczędna: niższa rozdzielczość, bez poświat i mniej efektów. Pomaga, gdy gra się zacina','Lite: lower resolution, no glows and fewer effects. It helps when the game lags','节能：分辨率更低，无发光，特效更少。游戏卡顿时很有用','Ligera: menor resolución, sin brillos y menos efectos. Ayuda cuando el juego va lento','Sparsam: niedrigere Auflösung, kein Leuchten und weniger Effekte. Hilft, wenn das Spiel ruckelt'],
+['Pełna: najładniejszy obraz. Jeśli gra się zacina, wybierz Oszczędną','Full: the best-looking picture. If the game lags, choose Lite','完整：画面最好。如果游戏卡顿，请选择节能','Completa: la mejor imagen. Si el juego va lento, elige Ligera','Voll: das schönste Bild. Wenn das Spiel ruckelt, wähle Sparsam'],
+['Raz dziennie odbierasz nagrodę: monety, a w niektóre dni bomby. Kolejne dni z rzędu dają coraz więcej, a po # dniach zaczyna się nowy tydzień. Opuszczony dzień zeruje serię','Once a day you can claim a reward: coins, and bombs on some days. Consecutive days give more and more, and after # days a new week begins. A missed day resets the streak','每天可领取一次奖励：金币，部分日子还有炸弹。连续天数越多奖励越多，#天后开始新的一周。漏掉一天会清零连续记录','Una vez al día recoges un premio: monedas y, algunos días, bombas. Los días seguidos dan cada vez más, y tras # días empieza una semana nueva. Un día perdido reinicia la racha','Einmal am Tag holst du eine Belohnung ab: Münzen und an manchen Tagen Bomben. Aufeinanderfolgende Tage bringen immer mehr, und nach # Tagen beginnt eine neue Woche. Ein verpasster Tag setzt die Serie zurück'],
+['Osiągnięcia dają monety, a niektóre odblokowują skórki kilofa. Skórkę wybierasz w Kolekcji. Zmienia wygląd kilofa i ślad za nim, ale nie jego siłę. Przy kodzie HPXD+ postęp osiągnięć się nie liczy','Achievements give coins, and some unlock pickaxe skins. You pick a skin in the Collection. It changes the look of the pickaxe and its trail, but not its strength. While the HPXD+ code is on, achievement progress does not count','成就奖励金币，部分成就可解锁镐皮肤。在收藏中选择皮肤。皮肤只改变镐的外观和拖尾，不改变威力。开启HPXD+代码时成就进度不计入','Los logros dan monedas y algunos desbloquean aspectos del pico. Eliges el aspecto en la Colección. Cambia el aspecto del pico y su estela, pero no su fuerza. Con el código HPXD+ activo, el progreso de los logros no cuenta','Erfolge geben Münzen, und einige schalten Hacken-Skins frei. Den Skin wählst du in der Sammlung. Er ändert das Aussehen der Hacke und ihre Spur, aber nicht ihre Stärke. Solange der Code HPXD+ aktiv ist, zählt der Erfolgsfortschritt nicht'],
+['Klasyczny','Classic','经典','Clásico','Klassisch'],
+['Ognisty','Fiery','烈焰','Ardiente','Feurig'],
+['Lodowy','Icy','冰霜','Helado','Eisig'],
+['Złocisty','Golden','金色','Dorado','Golden'],
+['Mroczny','Dark','暗影','Oscuro','Dunkel'],
+['Szmaragdowy','Emerald','绿宝石','Esmeralda','Smaragd'],
+['Gwiezdny','Starry','星辰','Estelar','Sternen'],
+['Tęczowy','Rainbow','彩虹','Arcoíris','Regenbogen'],
+['Pierwsze kroki','First steps','初试身手','Primeros pasos','Erste Schritte'],
+['Podziemny wędrowiec','Underground wanderer','地下漫游者','Caminante subterráneo','Untergrund-Wanderer'],
+['Mróz głębin','Deep frost','深渊寒霜','Escarcha profunda','Tiefenfrost'],
+['Brama piekieł','Gates of hell','地狱之门','Puertas del infierno','Höllentor'],
+['Dno świata','Bottom of the world','世界尽头','El fondo del mundo','Am Ende der Welt'],
+['Zbieracz','Collector','采集者','Recolector','Sammler'],
+['Kopalnia rud','Ore mine','矿石矿场','Mina de minerales','Erzmine'],
+['Gorączka złota','Gold rush','淘金热','Fiebre del oro','Goldrausch'],
+['Diamentowe serce','Heart of diamond','钻石之心','Corazón de diamante','Diamantherz'],
+['Łowca ciemności','Hunter of darkness','暗黑猎手','Cazador de la oscuridad','Jäger der Finsternis'],
+['Zielone światło','Green light','绿灯','Luz verde','Grünes Licht'],
+['Astralna żyła','Astral vein','星辰矿脉','Veta astral','Astralader'],
+['Pirotechnik','Pyrotechnician','烟火师','Pirotécnico','Pyrotechniker'],
+['Saper','Sapper','工兵','Zapador','Pionier'],
+['Kowal','Blacksmith','铁匠','Herrero','Schmied'],
+['Gorące uderzenie','Hot strike','灼热一击','Golpe ardiente','Heißer Schlag'],
+['Weteran','Veteran','老兵','Veterano','Veteran'],
+['Łowca wyzwań','Challenge hunter','挑战猎人','Cazador de desafíos','Herausforderungsjäger'],
+['Mistrz wyzwań','Challenge master','挑战大师','Maestro de desafíos','Herausforderungsmeister'],
+['Tydzień w kopalni','A week in the mine','矿井一周','Una semana en la mina','Eine Woche in der Mine'],
+['Miesiąc w kopalni','A month in the mine','矿井一月','Un mes en la mina','Ein Monat in der Mine'],
+['Dokop na # m','Reach # m','挖到#米','Llega a # m','Erreiche # m'],
+['Zbierz łącznie # rud','Collect # ores in total','累计采集#块矿石','Recoge # minerales en total','Sammle insgesamt # Erze'],
+['Zbierz łącznie # sztuk złota','Collect # pieces of gold in total','累计采集#块金矿','Recoge # piezas de oro en total','Sammle insgesamt # Stück Gold'],
+['Zbierz łącznie # diamentów','Collect # diamonds in total','累计采集#颗钻石','Recoge # diamantes en total','Sammle insgesamt # Diamanten'],
+['Zbierz łącznie # sztuk Netherytu','Collect # pieces of netherite in total','累计采集#块下界合金','Recoge # piezas de netherita en total','Sammle insgesamt # Stück Netherit'],
+['Zbierz łącznie # szmaragdów','Collect # emeralds in total','累计采集#颗绿宝石','Recoge # esmeraldas en total','Sammle insgesamt # Smaragde'],
+['Zbierz łącznie # astralitów','Collect # astralites in total','累计采集#块星辰石','Recoge # astralitas en total','Sammle insgesamt # Astralite'],
+['Wysadź łącznie # skrzyń TNT','Blow up # TNT crates in total','累计引爆#个TNT箱','Detona # cajas de TNT en total','Sprenge insgesamt # TNT-Kisten'],
+['Użyj łącznie # bomb','Use # bombs in total','累计使用#颗炸弹','Usa # bombas en total','Benutze insgesamt # Bomben'],
+['Awansuj kilof w craftingu # razy','Upgrade your pickaxe at the crafting table # times','在工作台升级镐#次','Mejora tu pico en la mesa de crafteo # veces','Verbessere deine Hacke # Mal am Werktisch'],
+['Uderz w lawę # razy','Hit lava # times','撞击熔岩#次','Golpea la lava # veces','Triff die Lava # Mal'],
+['Ała','Ouch','哎哟','Ay','Autsch'],
+['Rozegraj # gier','Play # games','进行#局游戏','Juega # partidas','Spiele # Runden'],
+['Ukończ # wyzwań','Complete # challenges','完成#个挑战','Completa # desafíos','Schließe # Herausforderungen ab'],
+['Ukończ wszystkie wyzwania','Complete all challenges','完成所有挑战','Completa todos los desafíos','Schließe alle Herausforderungen ab'],
+['Odbieraj nagrodę dzienną # dni z rzędu','Claim the daily reward # days in a row','连续#天领取每日奖励','Recoge el premio diario # días seguidos','Hole die tägliche Belohnung # Tage in Folge ab'],
 ['zamknij','Close','关闭','Cerrar','Schließen']
 ];
 const TR={};for(const r of TXT)TR[r[0].toLowerCase()]=r;
@@ -1864,6 +2521,7 @@ function tr(s){                          // cały tekst, a jeśli go nie ma w s�
   return s.split(DELIM).map((p,i)=>i%2?(LI===2&&ZP[p])||(QM[LI]&&QM[LI][p])||p:!p.trim()?p:trPart(p)).join('');
 }
 function trNode(n){
+  if(!LI&&n._tr===undefined)return;                                          // po polsku i bez wcześniejszego tłumaczenia: nic do zrobienia
   const v=n.nodeValue;if(!v||!v.trim())return;
   const pe=n.parentNode;if(pe&&pe.closest&&pe.closest('[data-nt]'))return;   // nicki graczy zostają bez tłumaczenia
   const src=(n._tr!==undefined&&v===n._tr)?n._pl:v,out=tr(src);   // _pl = oryginał po polsku
@@ -2094,11 +2752,15 @@ addEventListener('online',rankBg);
 rankBadge();
 
 /* ---------- Główna pętla gry ---------- */
-let last=performance.now(),acc=0;
+let last=performance.now(),acc=0,rfS=[],rfK=1,rfC=0,uiC=0;
 function frame(now){
   requestAnimationFrame(frame);
   if(innerWidth!==W||innerHeight!==H)resize();
-  const fdt=Math.min((now-last)/1000,.1);last=now;
+  if(rfS&&now-last>0){                                                       // mierzymy odświeżanie ekranu: przy 120/144 Hz rysujemy co drugą klatkę (ok. 60 fps), fizyka liczy się dalej na każdej
+    rfS.push(now-last);
+    if(rfS.length>=100){const v=rfS.slice(30).sort((x,y)=>x-y),fi=v[v.length>>1];rfS=null;if(fi>=4&&fi<40)rfK=Math.max(1,Math.floor(16.67/fi+.25));}
+  }
+  const rdt=now-last,fdt=Math.min(rdt/1000,.05);last=now;
   if(running()){
     acc+=fdt;
     while(acc>=1/120){step(1/120);acc-=1/120;}
@@ -2114,6 +2776,9 @@ function frame(now){
     if(tier===0)RS.wood=Math.max(RS.wood,depth);
     RS.t+=fdt;
     chCheck();
+    if((achT-=fdt)<=0){achT=.5;achCheck();}
+    if(SKN&&SKN.tr&&!over){trAcc+=fdt;if(trAcc>=(GFX?.07:.035)){trAcc=0;if(parts.length<500)trailEmit();}}   // ślad skórki kilofa
+    if(!GFX&&!save.gfxHint&&!pf.off)perfSample(rdt);                                                                    // wykrywanie zacinania (podpowiedź o oszczędnej grafice)
     for(let i=fuses.length-1;i>=0;i--){
       const f=fuses[i];f.t-=fdt;
       parts.push({x:f.x+.2,y:f.y-.42,vx:(Math.random()-.5)*5,vy:-2-Math.random()*3,l:1,d:5,s:2+Math.random()*2,col:Math.random()<.5?'#fde047':'#fb923c'});
@@ -2125,14 +2790,14 @@ function frame(now){
   if(toastT>0){toastT-=fdt;if(toastT<=0)$('toast').hidden=true;}
   if(toastT<=0&&toastQ.length){$('toast').innerHTML=toastQ.shift();$('toast').hidden=false;toastT=3.4;}
   for(let i=parts.length-1;i>=0;i--){
-    const q=parts[i];q.vy+=12*fdt;q.x+=q.vx*fdt;q.y+=q.vy*fdt;q.l-=q.d*fdt;
+    const q=parts[i];q.vy+=(q.g===undefined?12:q.g)*fdt;q.x+=q.vx*fdt;q.y+=q.vy*fdt;q.l-=q.d*fdt;
     if(q.l<=0)parts.splice(i,1);
   }
   for(let i=texts.length-1;i>=0;i--){
     const t=texts[i];t.y-=2.4*fdt;t.l-=1.8*fdt;
     if(t.l<=0)texts.splice(i,1);
   }
-  draw();ui();
+  if(++rfC>=rfK){rfC=0;draw();if((uiC++&1)===0)ui();}
 }
 newRun();
 showMenu();
