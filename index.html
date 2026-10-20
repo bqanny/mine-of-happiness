@@ -10,7 +10,7 @@
    Aplikacja ma w środku małą powłokę (index.html): jeśli w pamięci leży nowsza wersja gry pobrana z GitHuba, uruchamia ją
    zamiast wbudowanej (game.html). Wbudowana wersja zawsze zostaje jako zapas: gdy nowa wersja wysypie się w pierwszych sekundach
    (poniższy kod), aplikacja sama się wycofuje i wraca do wbudowanej. */
-window.GV=19;
+window.GV=21;
 (function(){
   if(!window.__ota)return;                              // tylko dla wersji uruchomionej z pamięci aplikacji (z GitHuba)
   window.addEventListener('error',function(){
@@ -235,6 +235,24 @@ body:has(.modal:not([hidden]):not(#pause)) #by{opacity:0}
 .tg::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}
 .tg[aria-checked=true]{background:#10b981}.tg[aria-checked=true]::after{left:25px}
 #swm:empty{display:none}
+.pv{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(30,41,59,.85)}
+.pv img{width:48px;height:48px;image-rendering:pixelated;flex:none}
+.pv b{display:block;font-size:15px}.pv small{color:var(--mut);font-size:11px;font-weight:700}
+.hcg{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.hc{aspect-ratio:1;width:100%;min-width:0;padding:0;border-radius:50%;border:3px solid rgba(255,255,255,.25);font-size:15px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000;display:grid;place-items:center}
+.hc.sel{border-color:#fff;box-shadow:0 0 0 2px #10b981}
+.hc.lock{opacity:.6}
+.sk .skp{display:flex;align-items:center;justify-content:center;gap:4px;height:48px}
+.sk .skp img{width:44px;height:44px}
+.sk .skp em{font-style:normal;color:var(--mut);font-size:11px;font-weight:700}
+.trd{display:flex;align-items:center;gap:3px}
+.trd i{display:block;border-radius:50%}
+.skg{grid-template-columns:repeat(2,minmax(0,1fr))}
+.swr{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.swr i{display:block;width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.4)}
+.item .in{min-width:0}
+.item b,.item small{overflow-wrap:anywhere}
+.sk b,.sk small{overflow-wrap:anywhere;max-width:100%}
 .item .skn{color:#f0abfc}
 .mbtn.y{--bg:linear-gradient(#fcd34d,#d97706);--bd:#78350f}
 .mbtn.p{--bg:linear-gradient(#a78bfa,#6d28d9);--bd:#3b0764}
@@ -447,6 +465,7 @@ body:has(.screen:not([hidden])) #toast,body:has(.modal:not([hidden])) #toast{top
       <div class="item"><div class="in"><span class="emo">🚫</span><div><b>Brak reklam</b><small>Gra bez żadnych reklam, na stałe.</small><em>Niedostępne</em></div></div><button disabled>Wkrótce</button></div>
       <div class="item"><div class="in"><span class="emo">🪙</span><div><b>Podwójne monety</b><small>Dwa razy więcej monet z rud, na stałe.</small><em>Niedostępne</em></div></div><button disabled>Wkrótce</button></div>
       <div class="item"><div class="in"><span class="emo">🎁</span><div><b>Pakiet startowy</b><small>Duża porcja monet na dobry początek.</small><em>Niedostępne</em></div></div><button disabled>Wkrótce</button></div>
+      <div class="item"><div class="in"><span class="emo">🎨</span><div><b>Kolory rękojeści</b><small>10 kolorów rękojeści kilofa do wyboru w Kolekcji. Tęczowy kolor zdobywasz za ukończenie wszystkich wyzwań.</small><div class="swr" id="pmhd"></div><em id="pmhs">Niedostępne</em></div></div><button id="pmhb" disabled>Wkrótce</button></div>
     </div>
   </div>
 </div>
@@ -466,7 +485,7 @@ body:has(.screen:not([hidden])) #toast,body:has(.modal:not([hidden])) #toast{top
       <div class="tp"><span class="emo">💎</span><div><b>Kilofy głębinowe</b><small>Od około 1000 m pojawiają się szmaragd i astralit: warte fortunę, ale bardzo twarde. W sklepie kupisz kilofy Magmowy i Astralny. Do 700 m kopią słabo, a od 1000 m coraz mocniej. Nie da się ich zdobyć w craftingu.</small></div></div>
       <div class="tp"><span class="emo">🏆</span><div><b>Wyzwania</b><small>Wybierasz jedno zadanie na grę, a nagroda wpada raz, po ukończeniu. W wyzwaniach nie działa sklep, ulepszenia kilofa ani bomba BOOM. Wyjątek to „Wielki wybuch”, który daje bomby za darmo.</small></div></div>
       <div class="tp"><span class="emo">🎁</span><div><b>Nagroda dzienna</b><small>Raz dziennie odbierasz nagrodę: monety, a w niektóre dni bomby. Kolejne dni z rzędu dają coraz więcej, a po 7 dniach zaczyna się nowy tydzień. Opuszczony dzień zeruje serię.</small></div></div>
-      <div class="tp"><span class="emo">🎖</span><div><b>Kolekcja</b><small>Osiągnięcia dają monety, a niektóre odblokowują skórki kilofa. Skórkę wybierasz w Kolekcji. Zmienia wygląd kilofa i ślad za nim, ale nie jego siłę. Przy kodzie HPXD+ postęp osiągnięć się nie liczy.</small></div></div>
+      <div class="tp"><span class="emo">🎖</span><div><b>Kolekcja</b><small>Osiągnięcia dają monety, a niektóre odblokowują skórki kilofa. Skórka zmienia ślad za kilofem, a kolor rękojeści wybierasz osobno, w tej samej zakładce Skórki (większość kolorów będzie w Sklepie premium). Głowica zawsze ma kolor Twojego kilofa, więc widać, jaki kilof masz. Nic z tego nie zmienia siły kilofa. Przy kodzie HPXD+ postęp osiągnięć się nie liczy.</small></div></div>
       <div class="tp"><span class="emo">📊</span><div><b>Statystyki i efekty</b><small>Statystyki łączne i przycisk Udostępnij rekord znajdziesz w Kolekcji, w zakładce Statystyki. Po każdej grze możesz też udostępnić swój wynik. W Ustawieniach wyłączysz wibracje, drgania ekranu i błyski.</small></div></div>
       <div class="tp"><span class="emo">🔑</span><div><b>Ikony w menu</b><small>Kod to miejsce na wpisywanie kodów. Sklep premium to płatne dodatki, na razie niedostępne. Samouczek to ta pomoc.</small></div></div>
     </div>
@@ -1291,7 +1310,7 @@ function crackTex(stage){
   });
 }
 /* Kilof: ta sama sylwetka co hitbox fizyki (łuk głowicy + trzonek), tylko ładniej cieniowana */
-function pickSprite(col){
+function pickSprite(col,hcol){        // hcol = kolor rękojeści (bez niego: oryginalne drewno)
   const rg=[[5,6],[4,6],[4,6],[3,5],[2,4],[1,3],[1,3],[1,3]];
   const M=[];for(let y=0;y<16;y++)M.push(new Array(16).fill('.'));
   const body=[];for(let y=0;y<16;y++)body.push(new Array(16).fill(0));
@@ -1304,7 +1323,7 @@ function pickSprite(col){
     if(M[y][x]!=='.')continue;
     for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,xx=x+dx;if(yy>=0&&yy<16&&xx>=0&&xx<16&&M[yy][xx]!=='.'){out[y][x]='o';}}
   }
-  const cv=bmp(out,{o:'#0b0f1a',H:shade(col,1.38),M:col,L:shade(col,.62),s:'#b9833f',S:'#7a4f24',b:shade(col,.4),w:'#4a2f14'});
+  const cv=bmp(out,{o:'#0b0f1a',H:shade(col,1.38),M:col,L:shade(col,.62),s:hcol||'#b9833f',S:hcol?shade(hcol,.66):'#7a4f24',b:shade(col,.4),w:hcol?shade(hcol,.4):'#4a2f14'});
   const big=mkc(),g=big.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(cv,0,0,32,32);
   g.fillStyle='rgba(255,255,255,.75)';g.fillRect(10,4,2,2);      // błysk na głowicy
   return big;
@@ -1686,7 +1705,7 @@ function drawPick(){
   ctx.translate(p.x*ts,p.y*ts);
   ctx.rotate(p.a);
   const s=ts*.75;
-  ctx.drawImage(SKN?skinSprite(SKN,(performance.now()/90)|0):PS[tier],-s/2,-s*.25,s,s);
+  ctx.drawImage(curPick(),-s/2,-s*.25,s,s);
   ctx.restore();
 }
 
@@ -2057,7 +2076,9 @@ $('vm2').addEventListener('change',persist);
 const CODES={      // kod (wielkie litery, bez spacji) -> akcja; może zwrócić komunikat. Kolejne kody dopisuj tutaj.
   TESER:()=>{resetCtx='menu';$('code').hidden=true;$('conf').hidden=false;},   // reset gry (zeruje monety, ulepszenia i bomby), z potwierdzeniem
   'HPXD+':()=>{save.infHp=1;persist();return 'Nieograniczone HP kilofa: włączone ✓';},
-  'HPXD-':()=>{save.infHp=0;persist();return 'Nieograniczone HP kilofa: wyłączone ✓';}
+  'HPXD-':()=>{save.infHp=0;persist();return 'Nieograniczone HP kilofa: wyłączone ✓';},
+  'KOLORY+':()=>{save.prem.hc=1;persist();return 'Kolory rękojeści: odblokowane ✓';},   // do czasu prawdziwych płatności: odblokowuje kolory ze Sklepu premium
+  'KOLORY-':()=>{save.prem.hc=0;hcSet();persist();return 'Kolory rękojeści: zablokowane ✓';}
 };
 const codeNorm=v=>String(v||'').replace(/\s+/g,'').toUpperCase();
 function codeUpd(){$('cdo').disabled=!codeNorm($('cdi').value);$('cdm').className='nmsg';$('cdm').textContent='Wpisz kod i naciśnij „Użyj”.';}
@@ -2074,7 +2095,7 @@ $('cdx').addEventListener('click',()=>{$('code').hidden=true;});
 $('cdi').addEventListener('input',codeUpd);
 $('cdi').addEventListener('keydown',e=>{if(e.key==='Enter'){if(e.preventDefault)e.preventDefault();codeGo();}});
 $('cdo').addEventListener('click',codeGo);
-$('storeb').addEventListener('click',()=>{getAudioContext();$('store').hidden=false;});
+$('storeb').addEventListener('click',()=>{getAudioContext();storeUi();$('store').hidden=false;});
 $('stx').addEventListener('click',()=>{$('store').hidden=true;});
 $('tutb').addEventListener('click',()=>{getAudioContext();$('ts').scrollTop=0;$('tut').hidden=false;});
 $('tux').addEventListener('click',()=>{$('tut').hidden=true;});
@@ -2154,15 +2175,10 @@ const SKINS=[
   save.dLast=n(save.dLast,1e6);save.dStreak=n(save.dStreak,1e5);save.dBest=Math.max(n(save.dBest,1e5),save.dStreak);save.achNew=Math.min(n(save.achNew,99),ACH.length);
   save.skin=typeof save.skin==='string'?save.skin:'';
 }
-const SKS={},SKR=[];
 function hsl2hex(h,s,l){h=(((h%360)+360)%360)/360;const f=m=>{const k=(m+h*12)%12,a=s*Math.min(l,1-l),c=l-a*Math.max(-1,Math.min(k-3,9-k,1));return Math.round(255*c);};return '#'+[f(0),f(8),f(4)].map(v=>(v<16?'0':'')+v.toString(16)).join('');}
-function skinSprite(k,i){                                      // sprite skórki (tęczowa: 12 odcieni, i = numer)
-  if(k.rb){if(!SKR.length)for(let j=0;j<12;j++)SKR.push(pickSprite(hsl2hex(j*30,.85,.55)));return SKR[(i|0)%12];}
-  return SKS[k.id]||(SKS[k.id]=pickSprite(k.col));
-}
 const skinOk=s=>!s.id||!!save.ach[s.ach];
 let SKN=null;                                                   // aktualnie wybrana skórka (null = klasyczna)
-function skinSet(){const k=SKINS.find(s=>s.id&&s.id===save.skin&&skinOk(s));SKN=k||null;if(!k)save.skin='';if(k)skinSprite(k,0);}
+function skinSet(){const k=SKINS.find(s=>s.id&&s.id===save.skin&&skinOk(s));SKN=k||null;if(!k)save.skin='';}
 skinSet();
 let trAcc=0;
 function trailEmit(){                                           // iskry za kilofem w skórce
@@ -2237,7 +2253,6 @@ setTimeout(()=>{                                                // pierwsze wej�
 
 /* ----- Kolekcja: osiągnięcia + skórki ----- */
 let colTab='a';
-function skinPrev(s){return s._u||(s._u=(s.id?skinSprite(s,0):PS[Math.min(tier,PS.length-1)]).toDataURL());}
 function renderColl(){
   $('tabA').className=colTab==='a'?'on':'';$('tabS').className=colTab==='s'?'on':'';$('tabT').className=colTab==='t'?'on':'';
   if(colTab==='a'){
@@ -2249,11 +2264,7 @@ function renderColl(){
         '<div class="rw">'+(done?'✓':'+'+a.rw+' 🪙')+'</div></div>';
     }).join('');
   }else if(colTab==='s'){
-    $('colp').textContent='Skórki: '+SKINS.filter(skinOk).length+' / '+SKINS.length;
-    $('col').innerHTML='<div class="skg">'+SKINS.map((s,i)=>{
-      const ok=skinOk(s),sel=(save.skin||'')===s.id&&ok,a=s.ach&&ACH.find(x=>x.id===s.ach);
-      return '<div class="sk'+(sel?' sel':'')+(ok?'':' lock')+'"><img src="'+skinPrev(s)+'"><b>'+s.n+'</b><small>'+(ok?'':'🔒 '+a.n)+'</small><button data-i="'+i+'"'+(ok&&!sel?'':' disabled')+'>'+(sel?'Wybrana':ok?'Wybierz':'Zablokowana')+'</button></div>';
-    }).join('')+'</div>';
+    renderSkins();
   }else renderStats();
 }
 function openColl(){getAudioContext();save.achNew=0;persist();menuBadges();renderColl();$('col').scrollTop=0;$('coll').hidden=false;}
@@ -2263,6 +2274,7 @@ $('tabA').addEventListener('click',()=>{colTab='a';renderColl();});
 $('tabS').addEventListener('click',()=>{colTab='s';renderColl();});
 $('col').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b||b.disabled)return;
+  if(b.dataset.h!==undefined){hcPick(b.dataset.h);return;}
   const s=SKINS[+b.dataset.i];if(!s||!skinOk(s))return;
   save.skin=s.id;skinSet();persist();playSound('break_common');renderColl();
 });
@@ -2406,6 +2418,74 @@ function renderStats(){
   if(b)b.onclick=()=>shareText(tr('Mój rekord w grze Mine of Happiness to '+save.best+' m. Spróbuj mnie pobić.'));
 }
 $('tabT').addEventListener('click',()=>{colTab='t';renderColl();});
+
+/* ---------- v20: kolor rękojeści kilofa; skórki zmieniają tylko ślad (głowica zawsze ma kolor kilofa, więc widać, jaki kilof masz) ---------- */
+const HCOLS=[                                                     // c = kolor rękojeści (jasny odcień; ciemniejsze liczy pickSprite); '' = oryginalne drewno
+  {id:'',n:'Drewno',c:'#b9833f'},
+  {id:'bk',n:'Czarny',c:'#4b5563',pm:'hc'},
+  {id:'wh',n:'Biały',c:'#e5e7eb',pm:'hc'},
+  {id:'rd',n:'Czerwony',c:'#ef4444',pm:'hc'},
+  {id:'or',n:'Pomarańczowy',c:'#f97316',pm:'hc'},
+  {id:'yl',n:'Żółty',c:'#facc15',pm:'hc'},
+  {id:'gr',n:'Zielony',c:'#22c55e',pm:'hc'},
+  {id:'tl',n:'Turkusowy',c:'#14b8a6',pm:'hc'},
+  {id:'bl',n:'Niebieski',c:'#3b82f6',pm:'hc'},
+  {id:'pu',n:'Fioletowy',c:'#8b5cf6',pm:'hc'},
+  {id:'pk',n:'Różowy',c:'#ec4899',pm:'hc'},
+  {id:'rb',n:'Tęczowy',c:'#ef4444',rb:1,ach:'chall'}           // tęczowa rękojeść: nagroda za Mistrza wyzwań
+];
+const hcOk=h=>(!h.ach||!!save.ach[h.ach])&&(!h.pm||!!save.prem[h.pm]);
+let HC=null;                                                      // aktualnie wybrana rękojeść (null = oryginalna)
+save.prem={hc:save.prem&&typeof save.prem==='object'&&save.prem.hc?1:0};   // zakupy z Sklepu premium (na razie odblokowuje je tylko kod)
+save.hc=typeof save.hc==='string'?save.hc:'';
+function hcSet(){const h=HCOLS.find(x=>x.id&&x.id===save.hc&&hcOk(x));HC=h||null;if(!h)save.hc='';}
+hcSet();
+const PSC={};
+function pickH(t,key,hcol){const k=t+'|'+key;return PSC[k]||(PSC[k]=pickSprite(TIERS[t].color,hcol));}
+function curPick(){                                               // sprite aktualnego kilofa: głowica wg rodzaju kilofa, rękojeść wg wyboru
+  if(!HC)return PS[tier];
+  if(HC.rb){const i=((performance.now()/90)|0)%12;return pickH(tier,'rb'+i,hsl2hex(i*30,.85,.55));}
+  return pickH(tier,HC.id,HC.c);
+}
+function hcPick(id){
+  const h=HCOLS.find(x=>x.id===id);if(!h)return;
+  if(!hcOk(h)){if(h.pm){$('coll').hidden=true;storeUi();$('store').hidden=false;}return;}   // zablokowany kolor ze sklepu: pokazujemy Sklep premium
+  if((save.hc||'')===h.id)return;
+  save.hc=h.id;hcSet();persist();playSound('break_common');renderColl();
+}
+function renderSkins(){
+  const t=Math.min(tier,TIERS.length-1);
+  $('colp').textContent='Skórki: '+SKINS.filter(skinOk).length+' / '+SKINS.length;
+  const prev=(HC?curPick():PS[t]).toDataURL();
+  const selH=HCOLS.find(h=>h.id===(save.hc||''))||HCOLS[0],lockA=HCOLS.filter(h=>h.ach&&!hcOk(h)),lockP=HCOLS.some(h=>h.pm&&!hcOk(h));
+  const hs=HCOLS.map(h=>{
+    const ok=hcOk(h),sel=(save.hc||'')===h.id&&ok,off=!ok&&!h.pm;     // kolory ze sklepu da się kliknąć (otwiera sklep); tęczowy czeka na osiągnięcie
+    const bg=h.rb?'conic-gradient(#ef4444,#facc15,#22c55e,#06b6d4,#3b82f6,#a855f7,#ef4444)':h.c;
+    return '<button class="hc'+(sel?' sel':'')+(ok?'':' lock')+'" data-h="'+h.id+'" style="background:'+bg+'" aria-label="'+tr(h.n)+'" aria-pressed="'+(sel?'true':'false')+'"'+(off?' disabled':'')+'>'+(ok?(sel?'✓':''):'🔒')+'</button>';
+  }).join('');
+  const sk=SKINS.map((s,i)=>{
+    const ok=skinOk(s),sel=(save.skin||'')===s.id&&ok,a=s.ach&&ACH.find(x=>x.id===s.ach);
+    const cols=s.id?(s.rb?['#ef4444','#facc15','#22c55e','#3b82f6','#a855f7']:s.tr):[];
+    const dots=cols.map((c,j)=>'<i style="width:'+(5+j*2)+'px;height:'+(5+j*2)+'px;background:'+c+';opacity:'+(.35+.65*(j+1)/cols.length).toFixed(2)+'"></i>').join('');
+    return '<div class="sk'+(sel?' sel':'')+(ok?'':' lock')+'"><div class="skp">'+(dots?'<span class="trd">'+dots+'</span>':'<em>bez śladu</em>')+'<img src="'+prev+'" alt=""></div><b>'+s.n+'</b><small>'+(ok?'':'🔒 '+a.n)+'</small><button data-i="'+i+'"'+(ok&&!sel?'':' disabled')+'>'+(sel?'Wybrana':ok?'Wybierz':'Zablokowana')+'</button></div>';
+  }).join('');
+  $('col').innerHTML=
+    '<div class="pv"><img src="'+prev+'" alt=""><div><b style="color:'+TIERS[t].color+'">'+TIERS[t].name+'</b><small>Podgląd kilofa</small></div></div>'+
+    '<div class="sh">Kolor rękojeści</div><div class="hcg">'+hs+'</div>'+
+    '<div class="nmsg">Rękojeść: '+selH.n+'</div>'+
+    (lockP?'<div class="nmsg">🔒 Pozostałe kolory: Sklep premium</div>':'')+
+    lockA.map(h=>{const a=ACH.find(x=>x.id===h.ach);return '<div class="nmsg">🔒 '+h.n+': '+a.n+'</div>';}).join('')+
+    '<div class="sh">Ślad za kilofem</div><div class="skg">'+sk+'</div>';
+}
+
+/* ---------- v21: kolory rękojeści w Sklepie premium (na razie niedostępnym; odblokowuje je kod KOLORY+) ---------- */
+function storeUi(){
+  const own=!!save.prem.hc;
+  $('pmhs').textContent=own?'Odblokowane':'Niedostępne';
+  $('pmhb').textContent=own?'✓':'Wkrótce';
+}
+$('pmhd').innerHTML=HCOLS.filter(h=>h.pm).map(h=>'<i style="background:'+h.c+'"></i>').join('');
+storeUi();
 
 /* ---------- Języki: polski, angielski, chiński, hiszpański, niemiecki (wybór w Ustawieniach) ---------- */
 const LANGS=[['pl','Polski'],['en','English'],['zh','中文'],['es','Español'],['de','Deutsch']];
@@ -2561,7 +2641,7 @@ const TXT=[
 ['Oszczędna: niższa rozdzielczość, bez poświat i mniej efektów. Pomaga, gdy gra się zacina','Lite: lower resolution, no glows and fewer effects. It helps when the game lags','节能：分辨率更低，无发光，特效更少。游戏卡顿时很有用','Ligera: menor resolución, sin brillos y menos efectos. Ayuda cuando el juego va lento','Sparsam: niedrigere Auflösung, kein Leuchten und weniger Effekte. Hilft, wenn das Spiel ruckelt'],
 ['Pełna: najładniejszy obraz. Jeśli gra się zacina, wybierz Oszczędną','Full: the best-looking picture. If the game lags, choose Lite','完整：画面最好。如果游戏卡顿，请选择节能','Completa: la mejor imagen. Si el juego va lento, elige Ligera','Voll: das schönste Bild. Wenn das Spiel ruckelt, wähle Sparsam'],
 ['Raz dziennie odbierasz nagrodę: monety, a w niektóre dni bomby. Kolejne dni z rzędu dają coraz więcej, a po # dniach zaczyna się nowy tydzień. Opuszczony dzień zeruje serię','Once a day you can claim a reward: coins, and bombs on some days. Consecutive days give more and more, and after # days a new week begins. A missed day resets the streak','每天可领取一次奖励：金币，部分日子还有炸弹。连续天数越多奖励越多，#天后开始新的一周。漏掉一天会清零连续记录','Una vez al día recoges un premio: monedas y, algunos días, bombas. Los días seguidos dan cada vez más, y tras # días empieza una semana nueva. Un día perdido reinicia la racha','Einmal am Tag holst du eine Belohnung ab: Münzen und an manchen Tagen Bomben. Aufeinanderfolgende Tage bringen immer mehr, und nach # Tagen beginnt eine neue Woche. Ein verpasster Tag setzt die Serie zurück'],
-['Osiągnięcia dają monety, a niektóre odblokowują skórki kilofa. Skórkę wybierasz w Kolekcji. Zmienia wygląd kilofa i ślad za nim, ale nie jego siłę. Przy kodzie HPXD+ postęp osiągnięć się nie liczy','Achievements give coins, and some unlock pickaxe skins. You pick a skin in the Collection. It changes the look of the pickaxe and its trail, but not its strength. While the HPXD+ code is on, achievement progress does not count','成就奖励金币，部分成就可解锁镐皮肤。在收藏中选择皮肤。皮肤只改变镐的外观和拖尾，不改变威力。开启HPXD+代码时成就进度不计入','Los logros dan monedas y algunos desbloquean aspectos del pico. Eliges el aspecto en la Colección. Cambia el aspecto del pico y su estela, pero no su fuerza. Con el código HPXD+ activo, el progreso de los logros no cuenta','Erfolge geben Münzen, und einige schalten Hacken-Skins frei. Den Skin wählst du in der Sammlung. Er ändert das Aussehen der Hacke und ihre Spur, aber nicht ihre Stärke. Solange der Code HPXD+ aktiv ist, zählt der Erfolgsfortschritt nicht'],
+['Osiągnięcia dają monety, a niektóre odblokowują skórki kilofa. Skórka zmienia ślad za kilofem, a kolor rękojeści wybierasz osobno, w tej samej zakładce Skórki (większość kolorów będzie w Sklepie premium). Głowica zawsze ma kolor Twojego kilofa, więc widać, jaki kilof masz. Nic z tego nie zmienia siły kilofa. Przy kodzie HPXD+ postęp osiągnięć się nie liczy','Achievements give coins, and some unlock pickaxe skins. A skin changes the trail behind the pickaxe, and you pick the handle color separately, in the same Skins tab (most colors will be in the Premium shop). The head always has the color of your pickaxe, so you can see which pickaxe you have. None of this changes the pickaxe strength. While the HPXD+ code is on, achievement progress does not count','成就奖励金币，部分成就可解锁镐皮肤。皮肤只改变镐的拖尾，把手颜色在同一“皮肤”页中单独选择（大部分颜色将在高级商店中提供）。镐头始终保持你当前镐的颜色，所以能看出你用的是哪种镐。这些都不会改变镐的威力。开启HPXD+代码时成就进度不计入','Los logros dan monedas y algunos desbloquean aspectos del pico. Un aspecto cambia la estela del pico, y el color del mango se elige aparte, en la misma pestaña Aspectos (la mayoría de los colores estará en la Tienda premium). La cabeza siempre tiene el color de tu pico, así que se ve qué pico tienes. Nada de esto cambia la fuerza del pico. Con el código HPXD+ activo, el progreso de los logros no cuenta','Erfolge geben Münzen, und einige schalten Hacken-Skins frei. Ein Skin ändert die Spur hinter der Hacke, und die Griff-Farbe wählst du separat, auf demselben Tab Skins (die meisten Farben gibt es im Premium-Shop). Der Kopf hat immer die Farbe deiner Hacke, daran siehst du, welche Hacke du hast. Nichts davon ändert die Stärke der Hacke. Solange der Code HPXD+ aktiv ist, zählt der Erfolgsfortschritt nicht'],
 ['Klasyczny','Classic','经典','Clásico','Klassisch'],
 ['Ognisty','Fiery','烈焰','Ardiente','Feurig'],
 ['Lodowy','Icy','冰霜','Helado','Eisig'],
@@ -2648,6 +2728,29 @@ const TXT=[
 ['Ten telefon lub przeglądarka nie obsługuje wibracji','This phone or browser does not support vibration','此手机或浏览器不支持震动','Este teléfono o navegador no admite la vibración','Dieses Handy oder dieser Browser unterstützt keine Vibration'],
 ['Statystyki i efekty','Statistics and effects','统计与特效','Estadísticas y efectos','Statistik und Effekte'],
 ['Statystyki łączne i przycisk Udostępnij rekord znajdziesz w Kolekcji, w zakładce Statystyki. Po każdej grze możesz też udostępnić swój wynik. W Ustawieniach wyłączysz wibracje, drgania ekranu i błyski','You can find your total stats and the Share record button in the Collection, on the Statistics tab. After every game you can also share your score. In Settings you can turn off vibration, screen shake and flashes','总体统计和“分享纪录”按钮在“收藏”的“统计”页。每局结束后也可以分享你的成绩。在“设置”里可以关闭震动、屏幕震动和闪光','Encontrarás tus estadísticas totales y el botón Compartir récord en la Colección, en la pestaña Estadísticas. Después de cada partida también puedes compartir tu resultado. En Ajustes puedes desactivar la vibración, el temblor de pantalla y los destellos','Deine Gesamtstatistik und die Schaltfläche Rekord teilen findest du in der Sammlung auf dem Tab Statistik. Nach jeder Runde kannst du auch dein Ergebnis teilen. In den Einstellungen kannst du Vibration, Bildschirmwackeln und Blitze ausschalten'],
+['Kolor rękojeści','Handle color','把手颜色','Color del mango','Griff-Farbe'],
+['Rękojeść','Handle','把手','Mango','Griff'],
+['Podgląd kilofa','Pickaxe preview','镐预览','Vista previa del pico','Hacken-Vorschau'],
+['Ślad za kilofem','Pickaxe trail','镐拖尾','Estela del pico','Hacken-Spur'],
+['bez śladu','no trail','无拖尾','sin estela','keine Spur'],
+['Drewno','Wood','木色','Madera','Holz'],
+['Czarny','Black','黑色','Negro','Schwarz'],
+['Biały','White','白色','Blanco','Weiß'],
+['Czerwony','Red','红色','Rojo','Rot'],
+['Pomarańczowy','Orange','橙色','Naranja','Orange'],
+['Żółty','Yellow','黄色','Amarillo','Gelb'],
+['Zielony','Green','绿色','Verde','Grün'],
+['Turkusowy','Teal','青色','Turquesa','Türkis'],
+['Niebieski','Blue','蓝色','Azul','Blau'],
+['Fioletowy','Purple','紫色','Morado','Lila'],
+['Różowy','Pink','粉色','Rosa','Rosa'],
+['Kolory rękojeści','Handle colors','把手配色','Colores de mango','Griff-Farben'],
+['# kolorów rękojeści kilofa do wyboru w Kolekcji. Tęczowy kolor zdobywasz za ukończenie wszystkich wyzwań','# pickaxe handle colors to choose from in the Collection. You earn the rainbow color by completing all challenges','在收藏中可选择#种镐把手颜色。完成所有挑战可获得彩虹色','# colores de mango del pico para elegir en la Colección. El color arcoíris se consigue completando todos los desafíos','# Griff-Farben für deine Hacke zur Auswahl in der Sammlung. Die Regenbogenfarbe erhältst du für alle abgeschlossenen Herausforderungen'],
+['Pozostałe kolory','Other colors','其他颜色','Otros colores','Weitere Farben'],
+['zablokowane','locked','已锁定','bloqueados','gesperrt'],
+['Nieograniczone HP kilofa','Unlimited pickaxe HP','镐耐久无限','PV del pico ilimitados','Unbegrenzte Hacken-HP'],
+['włączone','on','已开启','activado','an'],
+['wyłączone','off','已关闭','desactivado','aus'],
 ['zamknij','Close','关闭','Cerrar','Schließen']
 ];
 const TR={};for(const r of TXT)TR[r[0].toLowerCase()]=r;
